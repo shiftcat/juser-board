@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+
+<beans>
+
+	<!-- JBoard DAO -->
+	<bean id="jboardOraDAO" class="han.juser.dao.ibatis.JBoardOraDAO">
+		<property name="dataSource" ref="dataSource" />
+		<property name="sqlMapClient" ref="juserSqlMapClient" />
+		<property name="namespace" >
+			<value>JBoard</value>
+		</property>
+	</bean>
+	
+	<!-- JBoard Service -->
+	<bean id="jboardServiceTarget" class="han.juser.service.imple.JBoardServiceImple">
+		<property name="JBoardDAO" ref="jboardOraDAO"/>
+		<property name="limit">
+			<value>18</value>
+		</property>
+	</bean>
+	
+	<bean id="jboardService" class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
+		<property name="transactionManager" ref="transactionManager" />
+		<property name="target" ref="jboardServiceTarget"/>
+		<property name="preInterceptors">
+			<list>
+				<ref bean="serviceLoggerAdvice"/>
+				<ref bean="serviceExceptionLoggerAdvice"/>
+			</list>
+		</property>
+		<property name="transactionAttributes">
+			<props>
+				<prop key="insert*">PROPAGATION_REQUIRED</prop>
+				<prop key="update*">PROPAGATION_REQUIRED</prop>
+				<prop key="delete*">PROPAGATION_REQUIRED</prop>
+				<prop key="*">PROPAGATION_REQUIRED,readOnly</prop>
+			</props>
+		</property>
+	</bean>
+	
+	
+	<bean id="jboardManager" class="han.juser.controller.manager.JBoardManager">
+		<property name="roleManager" ref="role" />
+		<property name="loginHandler" ref="loginHandler" />
+		<property name="service" ref="jboardService" />
+		<property name="saveFilePath" >
+			<value>/upload/jboard</value>
+		</property>
+	</bean>
+	
+
+</beans>

@@ -1,0 +1,231 @@
+<!DOCTYPE struts-config PUBLIC 
+	"-//Apache Software Foundation//DTD Struts Configuration 1.3//EN" 
+	"http://jakarta.apache.org/struts/dtds/struts-config_1_3.dtd">
+
+<struts-config>
+
+	<form-beans>
+	
+		<form-bean name="writeForm" 
+					type="han.juser.controller.form.BlogForm" />
+					
+					
+		<form-bean name="searchForm"
+					type="org.apache.struts.validator.DynaValidatorForm" >
+			<form-property name="cate" type="java.lang.Integer" />
+			<form-property name="target" type="java.lang.String" />
+			<form-property name="keyword" type="java.lang.String" />
+		</form-bean>
+		
+		
+		<form-bean name="cgiform" 
+					type="org.apache.struts.validator.DynaValidatorForm">
+		</form-bean>
+	</form-beans>
+
+	
+	
+	<global-exceptions>
+		<exception 
+				type="han.juser.service.ServiceException"
+				key=""
+				handler="han.juser.controller.action.MyExceptionHandler"
+				scope="request"
+				path="error"
+		/>
+		
+		<exception 
+				type="java.lang.Exception"
+				key="errors.java.lang.Exception"
+				scope="request"
+				path="error"
+		/>
+		<exception 
+				type="java.lang.RuntimeException"
+				key="errors.java.lang.RuntimeException"
+				scope="request"
+				path="error"
+		/>
+		
+		<exception 
+				type="han.juser.service.NotOwnerException"
+				key="errors.han.juser.service.NotOwnerException"
+				scope="request"
+				path="error"
+		/>
+		<exception 
+				type="han.juser.service.ContentNotFoundException"
+				key="errors.han.juser.service.ContentNotFoundException"
+				scope="request"
+				path="error"
+		/>
+		<exception 
+				type="han.juser.service.ReplyNotFoundException"
+				key="errors.han.juser.service.ReplyNotFoundException"
+				scope="request"
+				path="error"
+		/>
+		<exception 
+				type="han.juser.service.MemberExistException"
+				key="errors.han.juser.service.MemberExistException"
+				scope="request"
+				path="error"
+		/>
+		<exception 
+				type="han.juser.service.ParentContentNotFoundException"
+				key="errors.han.juser.service.ParentContentNotFoundException"
+				scope="request"
+				path="error"
+		/>
+		
+		<exception 
+				type="han.juser.service.CategoryNotFoundException"
+				key="errors.han.juser.service.CategoryNotFoundException"
+				scope="request"
+				path="error"
+		/>
+		<exception 
+				type="han.juser.service.MissMatchPasswordException"
+				key="errors.han.juser.service.MissMatchPasswordException"
+				scope="request"
+				path="error"
+		/>
+		
+		<exception 
+				type="han.juser.service.MemberNotFoundException"
+				key="errors.han.juser.service.MemberNotFoundException"
+				scope="request"
+				path="error"
+		/>
+		<exception 
+				type="han.juser.controller.manager.UploadException"
+				key="errors.han.juser.controller.manager.UploadException"
+				scope="request"
+				path="error"
+		/>
+	</global-exceptions>
+
+	
+	
+	
+	
+	<global-forwards>
+		<forward name="fw-error" 
+        			path="error" 
+        			redirect="false" />
+        			
+    	<forward name="fw-message" 
+    				path="message" 
+    				redirect="false" />
+    	
+    	<forward name="fw-index" 
+    			 	path="blog.index" />
+    	
+	</global-forwards>
+
+
+	<action-mappings>
+	
+		<action path="/index"
+    			parameter="index"
+    			type="han.juser.controller.action.DelegateActionProxy" />
+
+    	
+    	<action path="/search"
+				parameter="search"
+				type="han.juser.controller.action.DelegateActionProxy"
+				name="searchForm" input="blog.index" validate="true" scope="request" />
+		
+    	
+    	<action path="/content"
+    			parameter="content"
+    			type="han.juser.controller.action.DelegateActionProxy" >
+    		<forward name="fw-content" path="blog.content" />
+    	</action>
+    	
+    	
+    	<action path="/writeForm"
+    			parameter="writeForm"
+    			type="han.juser.controller.action.DelegateActionProxy"
+    			name="writeForm" validate="false" scope="request" >
+    		<forward name="fw-writeForm" path="blog.writeForm" />
+    	</action>
+    	
+    	
+    	<action path="/modifyForm"
+    			parameter="modifyForm"
+    			type="han.juser.controller.action.DelegateActionProxy"
+    			name="writeForm" validate="false" scope="request">
+    		<forward name="fw-modifyForm" path="blog.modifyForm" />
+    	</action>
+    	
+    	
+    	
+    	
+    	
+    	
+    	<action path="/download"
+    			parameter="fileDown"
+    			type="han.juser.controller.action.DelegateActionProxy" />
+    	
+    	<!-- 
+    	<action path="/write"
+    				parameter="write"
+    				type="han.juser.controller.action.DelegateActionProxy"/>
+    	
+    	
+    	<action path="/modify"
+    				parameter="modify"
+    				type="han.juser.controller.action.DelegateActionProxy"/>
+    	 -->
+    	
+    	<action path="/remove"
+    				parameter="remove"
+    				type="han.juser.controller.action.DelegateActionProxy" />
+    				
+    				
+    				
+    				
+    	<action path="/writeReply"
+    				parameter="writeReply"
+    				type="han.juser.controller.action.DelegateActionProxy" />
+    				
+    	<action path="/removeReply"
+    				parameter="removeReply"
+    				type="han.juser.controller.action.DelegateActionProxy" />
+    				
+    	<action path="/replyList"
+    				parameter="replyList"
+    				type="han.juser.controller.action.DelegateActionProxy" >
+			<forward name="fw-replyList" path="/WEB-INF/view/v1/blog/replyListXML.jsp" module=""/>
+    	</action>
+    	
+    	
+    	
+    	
+    	
+    	<action path="/category"
+    	           parameter="category"
+    	           type="han.juser.controller.action.DelegateActionProxy" 
+    	           name="cgiform" validate="false" scope="request">
+    	    <forward name="fw-category" path="blog.category" />  
+    	</action>
+    	
+	</action-mappings>
+	
+	
+	
+	<!-- 
+	<controller processorClass="org.apache.struts.tiles.TilesRequestProcessor" />
+	 -->
+	<controller processorClass="han.role.RoleRequestProcessor" />
+	
+	
+	<message-resources parameter="han/resource/application" /> 
+	
+	<plug-in className="org.apache.struts.validator.ValidatorPlugIn">
+		<set-property property="pathnames" 
+	value="/WEB-INF/config/validator-rules.xml,/WEB-INF/config/multipart-validator-rules.xml,/WEB-INF/config/modules/blog/blog-validation.xml"/>
+	</plug-in>
+
+</struts-config>

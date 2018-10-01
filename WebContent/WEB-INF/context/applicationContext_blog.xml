@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+
+<beans>
+
+	<!--  Blog AOP DAO -->
+	<bean id="blogOraDAO" class="han.juser.dao.ibatis.BlogOraDAO">
+		<property name="dataSource" ref="dataSource" />
+		<property name="sqlMapClient" ref="juserSqlMapClient" />
+		<property name="namespace" >
+			<value>Blog</value>
+		</property>
+	</bean>
+	
+	<!--  Blog Service -->
+	<bean id="blogServiceTarget" class="han.juser.service.imple.BlogServiceImple">
+		<property name="blogDAO" ref="blogOraDAO"/>
+		<property name="limit">
+			<value>3</value>
+		</property>
+	</bean>
+	
+	<bean id="blogService" class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
+		<property name="transactionManager" ref="transactionManager" />
+		<property name="target" ref="blogServiceTarget"/>
+		<property name="preInterceptors">
+			<list>
+				<ref bean="serviceLoggerAdvice"/>
+				<ref bean="serviceExceptionLoggerAdvice"/>
+			</list>
+		</property>
+		<property name="transactionAttributes">
+			<props>
+				<prop key="insert*">PROPAGATION_REQUIRED</prop>
+				<prop key="update*">PROPAGATION_REQUIRED</prop>
+				<prop key="delete*">PROPAGATION_REQUIRED</prop>
+				<prop key="*">PROPAGATION_REQUIRED,readOnly</prop>
+			</props>
+		</property>
+	</bean>
+	
+	
+	
+	<bean id="blogManager" class="han.juser.controller.manager.BlogManager" >
+		<property name="roleManager" ref="role" />
+		<property name="loginHandler" ref="loginHandler" />
+		<property name="service" ref="blogService" />
+	</bean>
+	
+	
+
+	
+</beans>

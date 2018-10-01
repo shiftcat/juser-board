@@ -1,0 +1,401 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE sqlMap      
+    PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"      
+    "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="JBoard">
+
+	<typeAlias alias="jboardDTO" type="han.juser.model.JBoardDTO" />
+
+	<resultMap class="han.juser.model.JBoardDTO" id="jboardList" >
+		<result property="articleId" 		column="ARTICLEID" 		javaType="java.lang.Long"  		jdbcType="NUMBER" 		/>
+		<result property="parentId" 		column="PARENTID" 		javaType="java.lang.Long"  		jdbcType="NUMBER" 		/>
+		<result property="groupId" 			column="GROUPID"	 	javaType="java.lang.Long"  		jdbcType="NUMBER" 		/>
+		<result property="level" 			column="LEVEL" 			javaType="java.lang.Integer"  	jdbcType="NUMBER" 		/>
+		<result property="userId" 			column="USERID" 		javaType="java.lang.String"  	jdbcType="VARCHAR" 		/>
+		<result property="systemFiles" 		column="SYSTEMFILES" 	javaType="java.lang.String"  	jdbcType="VARCHAR" 		/>
+		<result property="originalFiles" 	column="ORIGINALFILES" 	javaType="java.lang.String"  	jdbcType="VARCHAR" 		/>
+		<result property="subject" 			column="SUBJECT" 		javaType="java.lang.String"  	jdbcType="VARCHAR" 		/>
+		<result property="signDate" 		column="SIGNDATE" 		javaType="java.sql.Timestamp"   jdbcType="TIMESTAMP" 	/>
+		<result property="hit" 				column="HIT" 			javaType="java.lang.Integer"  	jdbcType="NUMBER" 		/>
+		<result property="vote" 			column="VOTE" 			javaType="java.lang.Integer" 	jdbcType="NUMBER" 		/>
+		<!--  
+		<result property="rownum" 			column="RN" 			javaType="java.lang.Long"  		jdbcType="NUMBER" 		/>
+		<result property="link" 			column="FLINK" 			javaType="java.lang.String"  	jdbcType="VARCHAR" 		/>
+		<result property="updated" 			column="UPDATED" 		javaType="java.sql.Timestamp"   jdbcType="TIMESTAMP" 	/>
+		<result property="content" 			column="CONTENT" 		javaType="java.lang.String"  	jdbcType="CLOB" 		/>
+		<result property="remoteAddr" 		column="REMOTEADDR" 	javaType="java.lang.String"  	jdbcType="VARCHAR" 		/>
+		-->
+	</resultMap>
+
+	<resultMap class="han.juser.model.JBoardDTO" id="jboard" extends="jboardList">
+		<result property="link" 			column="FLINK" 			javaType="java.lang.String"  	jdbcType="VARCHAR" 		/>
+		<result property="updated" 			column="UPDATED" 		javaType="java.sql.Timestamp"   jdbcType="TIMESTAMP" 	/>
+		<result property="content" 			column="CONTENT" 		javaType="java.lang.String"  	jdbcType="CLOB" 		/>
+		<result property="remoteAddr" 		column="REMOTEADDR" 	javaType="java.lang.String"  	jdbcType="VARCHAR" 		/>
+	</resultMap>
+
+	<resultMap id="summaryResult" class="han.juser.model.SummaryDTO">
+		<result property="contentId"  column="CONTENTID"  javaType="long"               jdbcType="NUMBER"/>
+		<result property="subject"    column="SUBJECT"    javaType="string"             jdbcType="VARCHAR"/>
+		<result property="content"    column="CONTENT"    javaType="string"             jdbcType="CLOB"/>
+		<result property="signDate"   column="SIGNDATE"   javaType="java.sql.Timestamp" jdbcType="TIMESTAMP"/>
+	</resultMap>
+	
+	
+	<sql id="fromByDefault">
+		jboard a
+	</sql>
+	
+	<sql id="fromByContent">
+		<![CDATA[
+                        jboard a
+                        INNER JOIN (
+                                        SELECT groupid
+                                        FROM jboard
+                                        WHERE DBMS_LOB.INSTR ( content , #keyword# ) > 0
+                                        GROUP BY groupid
+                                   ) b ON a.groupid = b.groupid
+		]]>
+	</sql>
+	
+	<sql id="fromBySubject">
+		<![CDATA[
+                        jboard a
+                        INNER JOIN (
+                                        SELECT groupid
+                                        FROM jboard
+                                        WHERE subject LIKE #keyword#
+                                        GROUP BY groupid
+                                   ) b ON a.groupid = b.groupid
+		]]>
+	</sql>
+	
+	
+	<sql id="fromByUserid">
+		<![CDATA[
+                        jboard a
+                        INNER JOIN (
+                                        SELECT groupid
+                                        FROM jboard
+                                        WHERE userid LIKE #keyword#
+                                        GROUP BY groupid
+                                   ) b ON a.groupid = b.groupid
+		]]>
+	</sql>
+	
+	
+	
+	
+	<select id="getChildRowCount" parameterClass="long" resultClass="long">
+        SELECT
+                count('*')
+        FROM
+                jboard
+        START WITH
+                articleid = #articleId#
+        CONNECT BY PRIOR
+                articleid = parentid
+	</select>
+
+
+	<select id="getRowCount" parameterClass="map" resultClass="long">
+        SELECT
+                count('*')
+		FROM
+		<isEmpty property="target">
+			<include refid="fromByDefault"/>
+		</isEmpty>
+		<isEqual property="target" compareValue="SUBJECT">
+			<include refid="fromBySubject"/>
+		</isEqual>
+		<isEqual property="target" compareValue="CONTENT">
+			<include refid="fromByContent"/>
+		</isEqual>
+		<isEqual property="target" compareValue="USERID">
+			<include refid="fromByUserid"/>
+		</isEqual>
+	</select>
+	
+	
+	<select id="getChildList" parameterClass="long" resultMap="jboardList">
+        SELECT
+                rownum      	AS rn
+        ,       articleid		AS articleId
+        ,       level			AS "level"
+        ,       parentid		AS parentId
+        ,       SUBSTR(SYS_CONNECT_BY_PATH(articleid,'/'), 2,
+                       DECODE(INSTR(SYS_CONNECT_BY_PATH(articleid,'/'), '/', 2),
+                              0 , LENGTH(SYS_CONNECT_BY_PATH(articleid,'/'))-1,
+                              INSTR(SYS_CONNECT_BY_PATH(articleid,'/'), '/', 2)-2)
+                ) 				AS groupId
+        ,       userid			AS userId
+        ,       subject			AS subject
+        ,       systemfiles		AS systemFiles
+        ,       originalfiles   AS originalFiles
+        ,       signdate		AS signDate
+        ,       hit				AS hit
+        ,       vote			AS vote
+        FROM
+                jboard
+        START WITH
+                articleid = #articleId#
+        CONNECT BY  PRIOR
+                articleid =  parentid
+	</select>
+	
+	
+	
+	
+	
+
+	
+	
+	
+	
+	
+	<select id="getContentList" parameterClass="map" resultMap="jboardList">
+	<![CDATA[
+        SELECT
+                rownum      	AS rn
+        ,       articleid		AS articleId
+        ,       lev				AS "level"
+        ,       parentid		AS parentId
+        ,       root			AS groupid
+        ,       userid			AS userId
+        ,       subject			AS subject
+        ,       systemfiles		AS systemFiles
+        ,       originalfiles   AS originalFiles
+        ,       signdate		AS signDate
+        ,       hit				AS hit
+        ,       vote			AS vote
+        FROM (
+                SELECT
+                        level lev
+                ,       a.articleid
+                ,       a.parentid
+                ,       SUBSTR(SYS_CONNECT_BY_PATH(articleid,'/'), 2,
+                                   DECODE(INSTR(SYS_CONNECT_BY_PATH(articleid,'/'), '/', 2),
+                                           0 , LENGTH(SYS_CONNECT_BY_PATH(articleid,'/'))-1,
+                                          INSTR(SYS_CONNECT_BY_PATH(articleid,'/'), '/', 2)-2)
+                               ) AS root
+                ,       ROWNUM AS rn
+                ,       a.userid
+                ,       a.subject
+                ,       a.signdate
+                ,       a.hit
+                ,       a.vote
+                ,       a.systemfiles
+                ,       a.originalfiles
+                FROM
+	]]>
+	<isEmpty property="target">
+		<include refid="fromByDefault"/>
+	</isEmpty>
+	<isEqual property="target" compareValue="SUBJECT">
+		<include refid="fromBySubject"/>
+	</isEqual>
+	<isEqual property="target" compareValue="CONTENT">
+		<include refid="fromByContent"/>
+	</isEqual>
+	<isEqual property="target" compareValue="USERID">
+		<include refid="fromByUserid"/>
+	</isEqual>
+	<![CDATA[
+                WHERE
+                        ROWNUM <= #end#
+                START WITH
+                        a.parentid = 0
+                CONNECT BY PRIOR
+                        a.articleid = a.parentid
+                ORDER SIBLINGS BY
+                        a.groupid DESC
+              )
+        WHERE
+                rn > #start#
+	]]>
+	</select>
+	
+	
+	
+	<select id="getContent" parameterClass="long" resultMap="jboard">
+	<![CDATA[
+        SELECT
+                articleid
+        ,       parentid
+        ,       groupid
+        ,       userid
+        ,       systemfiles
+        ,       originalfiles
+        ,       flink
+        ,       subject
+        ,       content
+        ,       signdate
+        ,       updated
+        ,       hit
+        ,       vote
+        ,       remoteaddr
+        ,       0 AS "level"
+        FROM
+                jboard
+        WHERE
+                articleid = #articleId#
+	]]>
+	</select>
+	
+	
+	<select id="getSummary" parameterClass="java.lang.Integer" resultMap="summaryResult">
+	<![CDATA[
+		SELECT
+				/*+ index_desc(jboard ind_jboard_groupid) */ 
+				rownum    AS rn
+		, 		articleid AS contentId
+		, 		subject   AS subject
+		, 		content   AS content
+		, 		signdate  AS signdate
+		FROM 
+				jboard 
+		WHERE 
+				parentid = 0 
+		AND 	rownum <= #limit#
+	]]>
+	</select>
+	
+	
+	<insert id="insertRoot" parameterClass="jboardDTO">
+		<selectKey keyProperty="articleId" resultClass="long">
+			SELECT NVL(MAX(articleid), 0) + 1 FROM jboard
+		</selectKey>
+        INSERT INTO jboard (
+                articleid
+        ,       parentid
+        ,       groupid
+        ,       userid
+        ,       subject
+        ,       content
+        ,       flink
+        ,       systemfiles
+        ,       originalfiles
+        ,       remoteaddr
+        ,		signDate
+        ) VALUES (
+                #articleId:NUMBER#
+        ,       0
+        ,       #articleId:NUMBER#
+        ,       #userId:VARCHAR#
+        ,       #subject:VARCHAR#
+        ,       #content:CLOB#
+        ,       #link:VARCHAR#
+        ,       #systemFiles:VARCHAR#
+        ,       #originalFiles:VARCHAR#
+        ,       #remoteAddr:VARCHAR#
+        ,		SYSDATE )
+	</insert>
+	
+	
+	<insert id="insertChild" parameterClass="jboardDTO">
+		<selectKey keyProperty="articleId" resultClass="long">
+			SELECT NVL(MAX(articleid), 0) + 1 FROM jboard
+		</selectKey>
+        INSERT INTO jboard (
+                articleid
+        ,       parentid
+        ,       groupid
+        ,       userid
+        ,       subject
+        ,       content
+        ,       flink
+        ,       systemfiles
+        ,       originalfiles
+        ,       remoteaddr
+        ,		signDate
+        ) VALUES (
+                #articleId:NUMBER#
+        ,       #parentId:NUMBER#
+        ,       (SELECT
+						articleid
+				 FROM (
+						SELECT
+								articleid, LEVEL lev
+						FROM    jboard b
+						START WITH
+								articleid  = #parentId:NUMBER#
+						CONNECT BY
+								articleid = PRIOR parentid
+						ORDER BY
+								lev DESC
+					  ) WHERE ROWNUM = 1
+				)
+        ,       #userId:VARCHAR#
+        ,       #subject:VARCHAR#
+        ,       #content:CLOB#
+        ,       #link:VARCHAR#
+        ,       #systemFiles:VARCHAR#
+        ,       #originalFiles:VARCHAR#
+        ,       #remoteAddr:VARCHAR#
+        ,		SYSDATE )
+	</insert>
+	
+	
+	<update id="update" parameterClass="jboardDTO">
+        UPDATE jboard SET
+                subject         = #subject:VARCHAR#
+        ,       content         = #content:CLOB#
+	<isNotEmpty property="systemFiles">
+        ,       systemfiles     = #systemFiles:VARCHAR#
+        ,       originalfiles   = #originalFiles:VARCHAR#
+	</isNotEmpty>
+        ,       flink           = #link:VARCHAR#
+        ,       remoteaddr      = #remoteAddr:VARCHAR#
+        ,       updated         = SYSDATE
+        WHERE
+                articleid       = #articleId:NUMBER#
+        AND     userid          = #userId:VARCHAR#
+	</update>
+
+	
+	<update id="updateHit" parameterClass="long">
+		UPDATE jboard SET hit = hit + 1 WHERE articleid = #id#
+	</update>
+	
+	
+	<update id="updateVote" parameterClass="long">
+		UPDATE jboard SET vote = vote + 1 WHERE articleid = #id#
+	</update>
+	
+	
+	<update id="unSetFile" parameterClass="long">
+		UPDATE jboard SET systemfiles = null, originalfiles = null WHERE articleid = #id#
+	</update>
+	
+	
+	
+	<delete id="deleteAll" parameterClass="long">
+	    DELETE FROM jboard
+        WHERE
+                articleid IN (
+                                SELECT articleid
+                                FROM jboard
+                                START WITH
+                                        articleid  = #id#
+                                CONNECT BY PRIOR articleid = parentid
+                             )
+	</delete>
+	
+	
+	
+	
+	<delete id="deleteChild" parameterClass="long">
+	    DELETE FROM jboard
+        WHERE
+                articleid IN (
+                                SELECT articleid
+                                FROM jboard
+                                START WITH
+                                        parentid  = #id#
+                                CONNECT BY PRIOR articleid = parentid
+                             )
+	</delete>
+	
+</sqlMap>

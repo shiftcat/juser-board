@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+	"-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+	"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping package="han.juser.model">
+  <class name="GuestDTO" table="guest">
+  	<id name="gid" column="GID">
+	  	<generator class="increment" />
+  	</id>
+  	
+  	<property name="userId" column="USERID" update="false" />
+  	
+  	<property name="content" column="CONTENT" />
+  	
+  	<property name="logDate" column="LOGDATE" insert="false" update="false" />
+  	
+  	<property name="remoteAddr" column="REMOTEADDR" />
+  </class>
+</hibernate-mapping>

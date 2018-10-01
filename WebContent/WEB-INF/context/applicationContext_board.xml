@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+
+<beans>
+	
+	<!-- Board DAO -->
+	<bean id="boardOraDAO" class="han.juser.dao.ibatis.BoardOraDAO">
+		<!--  
+		<property name="sqlResource">
+			<value>han.juser.dao.core.BoardSQL</value>
+		</property>
+		<property name="lobHandler" ref="lobHandler"/>
+		-->
+		<property name="dataSource" ref="dataSource" />
+		<property name="sqlMapClient" ref="juserSqlMapClient" />
+		<property name="namespace" >
+			<value>Board</value>
+		</property>
+	</bean>
+	
+	<!-- Board Service -->
+	<bean id="boardServiceTarget" class="han.juser.service.imple.BoardServiceImple">
+		<property name="boardDAO" ref="boardOraDAO" />
+		<property name="fileDAO" ref="fileOraDAO" />
+		<property name="limit">
+			<value>18</value>
+		</property>
+	</bean>
+	
+	<bean id="boardService" class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
+		<property name="transactionManager" ref="transactionManager" />
+		<property name="target" ref="boardServiceTarget"/>
+		<property name="preInterceptors">
+			<list>
+				<ref bean="serviceLoggerAdvice"/>
+				<ref bean="serviceExceptionLoggerAdvice"/>
+			</list>
+		</property>
+		<property name="transactionAttributes">
+			<props>
+				<prop key="insert*">PROPAGATION_REQUIRED</prop>
+				<prop key="update*">PROPAGATION_REQUIRED</prop>
+				<prop key="delete*">PROPAGATION_REQUIRED</prop>
+				<prop key="*">PROPAGATION_REQUIRED,readOnly</prop>
+			</props>
+		</property>
+	</bean>
+	
+	
+	<bean id="boardManager" class="han.juser.controller.manager.BoardManager">
+		<property name="roleManager" ref="role" />
+		<property name="loginHandler" ref="loginHandler" />
+		<property name="service" ref="boardService" />
+	</bean>
+	
+	
+	
+	<!--  
+	<bean id="boardManager" class="org.springframework.aop.framework.ProxyFactoryBean">
+		<property name="target" ref="boardManagerTarget" />
+		<property name="interceptorNames">
+			<list>
+				<value>serviceLoggerAdvice</value>
+				<value>serviceExceptionLoggerAdvice</value>
+			</list>
+		</property>
+	</bean>
+	-->
+</beans>

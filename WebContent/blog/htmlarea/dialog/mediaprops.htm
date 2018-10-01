@@ -1,0 +1,362 @@
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="robots" content="all" />
+<title> Media Properties </title>
+<link rel="stylesheet" type="text/css" href="css/dialog.css" />
+<script type="text/JScript.Encode" src="./js/dialog.js"></script>
+<script type="text/JScript.Encode" src="./js/mediaprops.js"></script>
+<style type="text/css">
+	input
+	{
+		text-align: right;
+	}
+</style>
+</head>
+<body onload="Init();">
+<iframe id="upwindow" name="upwindow" src="" style="display: none;"></iframe>
+<table id="mainTable" width="480" height="320" border="0" cellpadding="0" cellspacing="0" onresize="ResizeTo();">
+<form name="frmMedia">
+ <tr>
+  <td valign="top">
+   <table width="100%" height="20" border="0" cellpadding="0" cellspacing="0" class="outTabLine">
+    <tr>
+     <td id="tab0" width="76" align="left" valign="bottom">
+      <table id="tabs" name="tabs" mode="0" width="76" cellpadding="0" cellspacing="0" onclick="ResetFile(); ChangeMode(this); PreviewUpdate();">
+       <tr>
+        <td width="3"><img src="./images/space.gif" width="3" height="20" /></td>
+        <td width="70"><span HABYLang="TabMediaImage">Image</span></td>
+        <td width="3"><img src="./images/space.gif" width="3" height="20" /></td>
+       </tr>
+      </table>
+     </td>
+     <td id="tab3" width="3"><img src="./images/space.gif" width="3" height="20" /></td>
+     <td id="tab1" width="76" align="left" valign="bottom">
+      <table id="tabs" name="tabs" mode="1" width="76" cellpadding="0" cellspacing="0" onclick="ResetFile(); ChangeMode(this); PreviewUpdate();">
+       <tr>
+        <td width="3"><img src="./images/space.gif" width="3" height="20" /></td>
+        <td width="70"><span HABYLang="TabMediaFlash">Flash</span></td>
+        <td><img src="./images/space.gif" width="3" height="20" /></td>
+       </tr>
+      </table>
+     </td>
+     <td id="tab4" width="3"><img src="./images/space.gif" width="3" height="20" /></td>
+     <td id="tab2" width="76" align="left" valign="bottom">
+      <table id="tabs" name="tabs" mode="2" width="76" cellpadding="0" cellspacing="0" onclick="ResetFile(); ChangeMode(this); PreviewUpdate();">
+       <tr>
+        <td width="3"><img src="./images/space.gif" width="3" height="20" /></td>
+        <td width="70"><span HABYLang="TabMediaAVI">Media</span></td>
+        <td width="3"><img src="./images/space.gif" width="3" height="20" /></td>
+       </tr>
+      </table>
+     </td>
+     <td width="100%">
+      <table width="100%" cellpadding="0" cellspacing="0">
+       <tr>
+        <td>
+         <input id="mode" type="hidden" name="mode" value="0">
+         <input id="mediaId" type="hidden" name="mediaId" value="">
+         <input id="uploadId" type="hidden" name="uploadId" value="">
+         <input id="memberId" type="hidden" name="memberId" value="">
+         <input id="tmpwidth" type="hidden" name="tmpwidth" value="">
+         <input id="tmpheight" type="hidden" name="tmpheight" value="">
+         <input id="openfile" type="hidden" name="openfile" value="">
+        </td>
+       </tr>
+      </table>
+     </td>
+    </tr>
+   </table>
+   <table width="100%" height="295" border="0" cellpadding="0" cellspacing="0">
+    <tr>
+     <td align="center" valign="top" class="setupBox">
+      <table width="370" border="0" cellpadding="0" cellspacing="0">
+       <tr height="10"><td colspan="3"></td></tr>
+       <tr height="23">
+        <td width="70" align="right"><span HABYLang="LblMediaLink">Source</span></td>
+        <td width="10"></td>
+        <td width="290">
+         <div id="Loading" HABYLang="LblMediaUploading" style="display: none">Uploading...</div>
+         <div id="onLink">
+          <input id="mediaPath" type="text" name="mediaPath" value="http://" size="46" onchange="LoadImage(this);" onkeyup="LoadImage(this);" onblur="LoadImage(this);" style="text-align:left" />
+          <img id="fileOpen" src="./images/open.gif" align="absmiddle" onclick="MediaUpload();" onmouseover="this.className='onimgBtn';" onmouseout="this.className='offimgBtn';" />
+         </div>
+        </td>
+       </tr>
+       <tr height="5"><td colspan="3"></td></tr>
+      </table>
+
+      <div id="mode0" style="display: none;">
+       <table width="370" border="0" cellpadding="0" cellspacing="0">
+        <tr>
+         <td width="70" align="right"><span HABYLang="LblMediaImageAlt">Alternative</span></td>
+         <td width="10"></td>
+         <td width="290"><input id="imgAlt" type="text" name="imgAlt" size="52" onkeyup="PreviewUpdate();" style="text-align:left"></td>
+        </tr>
+        <tr height="5"><td colspan="3"></td></tr>
+       </table>
+       <table width="370" border="0" cellpadding="0" cellspacing="0">
+        <tr>
+         <td width="150" align="right" valign="top">
+          <table width="150" border="0" cellpadding="0" cellspacing="0">
+           <tr height="2"><td colspan="3"></td></tr>
+           <tr>
+            <td width="70" align="right"><label for="imgRemoteSave" HABYLang="LblRemoteSave">URL Upload</label></td>
+            <td width="10"></td>
+            <td width="70"><input id="imgRemoteSave" type="checkbox" name="imgRemoteSave"></td>
+           </tr>
+           <tr height="5"><td colspan="3"></td></tr>
+           <tr>
+            <td width="70" align="right"><span HABYLang="LblWidth">Width</span></td>
+            <td width="10"></td>
+            <td width="70"><input id="imgWidth" type="text" name="imgWidth" size="5" onkeyup="ResizeImage(this);"> <img src="./images/reset.gif" onclick="ResetSize();" align="absmiddle" style="cursor:pointer" onmouseover="this.className='onimgBtn';" onmouseout="this.className='offimgBtn';" alt="Reset size"></td>
+           </tr>
+           <tr height="2"><td colspan="3"></td></tr>
+           <tr>
+            <td width="70" align="right"><span HABYLang="LblHeight">Height</span></td>
+            <td width="10"></td>
+            <td width="70"><input id="imgHeight" type="text" name="imgHeight" size="5" onkeyup="ResizeImage(this);"> <img id="imgSizeLock" lock="0" src="./images/locked.gif" onclick="ImageSizeLock();" align="absmiddle" style="cursor:pointer" onmouseover="this.className='onimgBtn';" onmouseout="this.className='offimgBtn';" alt="Constrain Proportions"></td>
+           </tr>
+           <tr height="5"><td colspan="3"></td></tr>
+           <tr>
+            <td width="70" align="right"><span HABYLang="LblMediaHspace">Hspace</span></td>
+            <td width="10"></td>
+            <td width="70"><input id="imgHspace" type="text" name="imgHspace" onkeyup="PreviewUpdate();" size="5"></td>
+           </tr>
+           <tr height="2"><td colspan="3"></td></tr>
+           <tr>
+            <td width="70" align="right"><span HABYLang="LblMediaVspace">Vspace</span></td>
+            <td width="10"></td>
+            <td width="70"><input id="imgVspace" type="text" name="imgVspace" onkeyup="PreviewUpdate();" size="5"></td>
+           </tr>
+           <tr height="5"><td colspan="3"></td></tr>
+           <tr>
+            <td width="70" align="right"><span HABYLang="LblBorder">Border</span></td>
+            <td width="10"></td>
+            <td width="70"><input id="imgBorder" type="text" name="imgBorder" onkeyup="PreviewUpdate();" size="5"></td>
+           </tr>
+          </table>
+         </td>
+         <td width="220" align="center" valign="top">
+          <table width="220" border="0" cellpadding="0" cellspacing="0">
+           <tr>
+            <td width="70" align="right"><span HABYLang="LblAlign">Align</span></td>
+            <td width="10"></td>
+            <td width="130">
+             <select id="imgAlign" name="imgAlign" style="font-size:9pt;" onchange="PreviewUpdate();">
+              <option HABYLang="LblNone" value="" selected>none
+              <option HABYLang="LblLeft" value="left">left
+              <option HABYLang="LblRight" value="right">right
+              <option HABYLang="LblTextTop" value="textTop">texttop
+              <option HABYLang="LblAbsMiddle" value="absMiddle">absmiddle
+              <option HABYLang="LblBaseLine" value="baseline">baseline
+              <option HABYLang="LblAbsBottom" value="absBottom">absbottom
+              <option HABYLang="LblBottom" value="bottom">bottom
+              <option HABYLang="LblMiddle" value="middle">middle
+              <option HABYLang="LblTop" value="top">top
+             </select>
+            </td>
+           </tr>
+           <tr height="5"><td colspan="3"></td></tr>
+          </table>
+          <div style="width:207; height:155; border:buttonshadow 1px solid; overflow: hidden;">
+           <table width="100%" height="100%" border="0" cellpadding="5" cellspacing="0">
+            <tr>
+             <td style="background-color:#ffffff" valign="top">
+              <div id="Preview0" name="Preview0" style="overflow: hidden;"></div>
+             </td>
+            </tr>
+           </table>
+          </div>
+         </td>
+        </tr>
+       </table>
+       <table width="370" border="0" cellpadding="0" cellspacing="0">
+        <tr height="5"><td colspan="3"></td></tr>
+        <tr>
+         <td width="70" align="right"><span HABYLang="LblMediaAddLink">HyperLink</span></td>
+         <td width="10"></td>
+         <td width="290">
+          <input id="imgLinkUrl" type="text" name="imgLinkUrl" value="http://" size="31" style="text-align:left">
+          <select id="imgLinkTarget" name="imgLinkTarget">
+           <option HABYLang="LblNone" value="" selected>none
+           <option HABYLang="TargetBlank" value="_blank">_blank
+           <option HABYLang="TargetSelf" value="_self">_self
+           <option HABYLang="TargetTop" value="_top">_top
+           <option HABYLang="TargetParent" value="_parent">_parent
+          </select>
+         </td>
+        </tr>
+        <tr height="5"><td colspan="3"></td></tr>
+       </table>
+      </div>
+
+      <div id="mode1" style="display: none;">
+       <table width="370" border="0" cellpadding="0" cellspacing="0">
+        <tr>
+         <td width="150" align="right" valign="top">
+          <table width="150" border="0" cellpadding="0" cellspacing="0">
+           <tr>
+            <td width="70" align="right"><span HABYLang="LblWidth">Width</span></td>
+            <td width="10"></td>
+            <td width="70"><input id="flsWidth" type="text" name="flsWidth" size="5" onkeyup="MediaSizeCheck();"></td>
+           </tr>
+           <tr height="5"><td colspan="3"></td></tr>
+           <tr>
+            <td width="70" align="right"><span HABYLang="LblMediaHspace">Hspace</span></td>
+            <td width="10"></td>
+            <td width="70"><input id="flsHspace" type="text" name="flsHspace" onkeyup="PreviewUpdate();" size="5" disabled></td>
+           </tr>
+           <tr height="5"><td colspan="3"></td></tr>
+           <tr>
+            <td width="70" align="right"><label for="flsLoop" HABYLang="LblMediaLoop">AutoLoop</label></td>
+            <td width="10"></td>
+            <td width="70"><input id="flsLoop" type="checkbox" name="flsLoop" ononclick="PreviewUpdate();"></td>
+           </tr>
+           <tr height="5"><td colspan="3"></td></tr>
+          </table>
+         </td>
+         <td width="220" align="center" valign="top">
+          <table width="220" border="0" cellpadding="0" cellspacing="0">
+           <tr>
+            <td width="70" align="right"><span HABYLang="LblHeight">Height</span></td>
+            <td width="10"></td>
+            <td width="130"><input id="flsHeight" type="text" name="flsHeight" size="5" onkeyup="PreviewUpdate();"></td>
+           </tr>
+           <tr height="5"><td colspan="3"></td></tr>
+           <tr>
+            <td width="70" align="right"><span HABYLang="LblMediaVspace">Vspace</span></td>
+            <td width="10"></td>
+            <td width="130"><input id="flsVspace" type="text" name="flsVspace" onkeyup="PreviewUpdate();" size="5" disabled></td>
+           </tr>
+           <tr height="5"><td colspan="3"></td></tr>
+           <tr>
+            <td width="70" align="right"><span HABYLang="LblAlign">Align</span></td>
+            <td width="10"></td>
+            <td width="130">
+             <select id="flsAlign" name="flsAlign" style="font-size:9pt;" onchange="PreviewUpdate();">
+              <option HABYLang="LblNone" value="" selected>none
+              <option HABYLang="LblLeft" value="left">left
+              <option HABYLang="LblRight" value="right">right
+              <option HABYLang="LblTextTop" value="textTop">texttop
+              <option HABYLang="LblAbsMiddle" value="absMiddle">absmiddle
+              <option HABYLang="LblBaseLine" value="baseline">baseline
+              <option HABYLang="LblAbsBottom" value="absBottom">absbottom
+              <option HABYLang="LblBottom" value="bottom">bottom
+              <option HABYLang="LblMiddle" value="middle">middle
+              <option HABYLang="LblTop" value="top">top
+             </select>
+            </td>
+           </tr>
+           <tr height="5"><td colspan="3"></td></tr>
+          </table>
+         </td>
+        </tr>
+        <tr height="5"><td colspan="3"></td></tr>
+       </table>
+       <div style="width:350; height:155; border:buttonshadow 1px solid; overflow: hidden;">
+        <table width="100%" height="100%" border="0" cellpadding="5" cellspacing="0">
+         <tr>
+          <td style="background-color:#ffffff" valign="top">
+           <div id="Preview1" name="Preview1" style="overflow: hidden;"></div>
+          </td>
+         </tr>
+        </table>
+       </div>
+      </div>
+
+      <div id="mode2" style="display: none;">
+       <table width="370" border="0" cellpadding="0" cellspacing="0">
+        <tr>
+         <td width="150" align="right" valign="top">
+          <table width="150" border="0" cellpadding="0" cellspacing="0">
+           <tr>
+            <td width="70" align="right"><span HABYLang="LblWidth">Width</span></td>
+            <td width="10"></td>
+            <td width="70"><input id="mplWidth" type="text" name="mplWidth" size="5" onblur="MediaSizeCheck();"></td>
+           </tr>
+           <tr height="3"><td colspan="3"></td></tr>
+           <tr>
+            <td width="70" align="right"><span HABYLang="LblHeight">Height</span></td>
+            <td width="10"></td>
+            <td width="70"><input id="mplHeight" type="text" name="mplHeight" size="5" onblur="PreviewUpdate();"></td>
+           </tr>
+           <tr height="5"><td colspan="3"></td></tr>
+           <tr>
+            <td width="70" align="right"><label for="mplAuto" HABYLang="LblMediaAutoPlay">AutoPlay</label></td>
+            <td width="10"></td>
+            <td width="70"><input id="mplAuto" type="checkbox" name="mplAuto" onclick="PreviewUpdate();" value="true"></td>
+           </tr>
+           <tr height="5"><td colspan="3"></td></tr>
+           <tr>
+            <td width="70" align="right"><label for="mplMenu" HABYLang="LblMediaMenuView">Controls</label></td>
+            <td width="10"></td>
+            <td width="70"><input id="mplMenu" type="checkbox" name="mplMenu" onclick="PreviewUpdate();" value="true"></td>
+           </tr>
+           <tr height="5"><td colspan="3"></td></tr>
+           <tr>
+            <td width="70" align="right"><label for="mplState" HABYLang="LblMediaStateView">StatusBar</label></td>
+            <td width="10"></td>
+            <td width="70"><input id="mplState" type="checkbox" name="mplState" onclick="PreviewUpdate();" value="true"></td>
+           </tr>
+          </table>
+         </td>
+         <td width="220" align="center" valign="top">
+          <div style="width:207; height:207; border:buttonshadow 1px solid; overflow: hidden;">
+           <table width="100%" height="100%" border="0" cellpadding="5" cellspacing="0">
+            <tr>
+             <td style="background-color:#ffffff" valign="top">
+              <div id="Preview2" name="Preview2" style="overflow: hidden;"></div>
+             </td>
+            </tr>
+           </table>
+          </div>
+         </td>
+        </tr>
+       </table>
+      </div>
+
+     </td>
+    </tr>
+   </table>
+  </td>
+  <td width="10"><img src="./images/space.gif" width="10" /></td>
+  <td width="80" align="right" valign="top">
+   <table width="70" height="60" border="0" cellpadding="0" cellspacing="0">
+    <tr>
+     <td>
+      <table width="70" cellpadding="0" cellspacing="0" onclick="CheckMedia();" onmouseover="ButtonPlay(this, 'over');" onmouseout="ButtonPlay(this, 'out');">
+       <tr>
+        <td width="3" class="outBtnBegin"><img src="./images/space.gif" width="3" height="20" /></td>
+        <td width="64" class="outBtn"><span HABYLang="BtnDialogOk">O k</span></td>
+        <td width="3" class="outBtnEnd"><img src="./images/space.gif" width="3" height="20" /></td>
+       </tr>
+      </table>
+     </td>
+    <tr>
+     <td>
+      <table width="70" cellpadding="0" cellspacing="0" onclick="DialogClose();" onmouseover="ButtonPlay(this, 'over');" onmouseout="ButtonPlay(this, 'out');">
+       <tr>
+        <td width="3" class="outBtnBegin"><img src="./images/space.gif" width="3" height="20" /></td>
+        <td width="64" class="outBtn"><span HABYLang="BtnDialogCancel">Cancel</span></td>
+        <td width="3" class="outBtnEnd"><img src="./images/space.gif" width="3" height="20" /></td>
+       </tr>
+      </table>
+     </td>
+    </tr>
+   </table>
+  </td>
+ </tr>
+</form>
+</table>
+<div style="left:0px; top:0px; width:0; height:0; border: 0; overflow: hidden;">
+ <table width="0" border="0" cellpadding="0" cellspacing="0">
+  <tr>
+   <td>
+    <img id="imgOriginal" name="imgOriginal" src="" border="0" style="filter:alpha(opacity=0);opacity:0;moz-opacity:0;">
+   </td>
+  </tr>
+ </table>
+</div>
+</body>
+</html>

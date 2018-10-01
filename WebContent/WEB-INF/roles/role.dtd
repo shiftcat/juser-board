@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="euc-kr" ?>
+
+<!ELEMENT role-config (role+, user+)>
+	<!ELEMENT role (url*)>
+		<!ELEMENT url EMPTY>
+	<!ELEMENT user EMPTY>
+
+<!ATTLIST role name CDATA #REQUIRED 
+               defaultPermission (true|false) "false"
+               extends CDATA #IMPLIED>
+
+<!ATTLIST url path CDATA #REQUIRED 
+              allow (true|false) "false" >
+
+<!ATTLIST user code CDATA #REQUIRED 
+               role CDATA #REQUIRED>

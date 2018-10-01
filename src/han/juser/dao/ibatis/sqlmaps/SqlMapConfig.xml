@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE sqlMapConfig      
+    PUBLIC "-//ibatis.apache.org//DTD SQL Map Config 2.0//EN"      
+    "http://ibatis.apache.org/dtd/sql-map-config-2.dtd">
+
+<sqlMapConfig>
+
+	<settings
+		maxRequests="512"
+		maxSessions="128"
+		maxTransactions="32"
+		cacheModelsEnabled="true"
+		lazyLoadingEnabled="true"
+		enhancementEnabled="false"
+		errorTracingEnabled="true"
+		useStatementNamespaces="true"/>
+		
+	<typeAlias alias="summary" type="han.juser.model.SummaryDTO" />
+    
+  	<typeHandler callback="org.springframework.orm.ibatis.support.ClobStringTypeHandler" javaType="java.lang.String" jdbcType="CLOB" />
+    
+  	<typeHandler callback="org.springframework.orm.ibatis.support.BlobByteArrayTypeHandler" javaType="java.lang.String" jdbcType="BLOB" />
+  
+  
+  	<sqlMap resource="han/juser/dao/ibatis/sqlmaps/Board.xml"/>
+  	<sqlMap resource="han/juser/dao/ibatis/sqlmaps/Guest.xml"/>
+  	<sqlMap resource="han/juser/dao/ibatis/sqlmaps/FileStore.xml"/>
+  	<sqlMap resource="han/juser/dao/ibatis/sqlmaps/Visitor.xml"/>
+  	<sqlMap resource="han/juser/dao/ibatis/sqlmaps/Category.xml"/>
+  	<sqlMap resource="han/juser/dao/ibatis/sqlmaps/JBoard.xml"/>  	
+	<sqlMap resource="han/juser/dao/ibatis/sqlmaps/Blog.xml"/>
+	<sqlMap resource="han/juser/dao/ibatis/sqlmaps/Member.xml"/>
+	
+</sqlMapConfig>

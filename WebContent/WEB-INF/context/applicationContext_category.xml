@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+
+<beans>
+
+	<!--  
+	<bean id="cateOraDAO" class="han.juser.dao.ibatis.CategoryOraDAO">
+		<property name="dataSource" ref="dataSource" />
+		<property name="sqlMapClient" ref="juserSqlMapClient" />
+		<property name="namespace" >
+			<value>Category</value>
+		</property>
+	</bean>
+	-->
+	
+	<!-- Category Service -->
+	<bean id="categoryServiceTarget" class="han.juser.service.imple.CategoryServiceImple">
+		<property name="categoryDAO" ref="blogOraDAO" />
+	</bean>
+	
+	<bean id="categoryService" class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
+		<property name="transactionManager" ref="transactionManager" />
+		<property name="target" ref="categoryServiceTarget"/>
+		<property name="preInterceptors">
+			<list>
+				<ref bean="serviceLoggerAdvice"/>
+				<ref bean="serviceExceptionLoggerAdvice"/>
+			</list>
+		</property>
+		<property name="transactionAttributes">
+			<props>
+				<prop key="insert*">PROPAGATION_REQUIRED</prop>
+				<prop key="update*">PROPAGATION_REQUIRED</prop>
+				<prop key="delete*">PROPAGATION_REQUIRED</prop>
+				<prop key="save*">PROPAGATION_REQUIRED</prop>
+				<prop key="*">PROPAGATION_REQUIRED,readOnly</prop>
+			</props>
+		</property>
+	</bean>
+	
+	<bean id="categoryManager" class="han.juser.controller.manager.CategoryManager" />
+
+</beans>

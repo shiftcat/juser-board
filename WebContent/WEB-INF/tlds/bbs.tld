@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE taglib PUBLIC
+        "-//Sun Microsystems, Inc.//DTD JSP Tag Library 1.2//EN"
+        "http://java.sun.com/dtd/web-jsptaglibrary_1_2.dtd">
+<taglib>
+    <tlib-version>1.3</tlib-version>
+    <jsp-version>1.2</jsp-version>
+    <short-name>bbs</short-name>
+    <uri>bbs-tag</uri>
+    <description>
+    </description>
+    <tag>
+        <name>indexLink</name>
+        <tag-class>han.juser.tag.link.IndexLinkTag</tag-class>
+        <description>
+    	</description>
+    </tag>
+    
+    <tag>
+        <name>writeLink</name>
+        <tag-class>han.juser.tag.link.WriteFormLinkTag</tag-class>
+        <description>
+    	</description>
+    </tag>
+    
+     <tag>
+        <name>modifyLink</name>
+        <tag-class>han.juser.tag.link.ModifyFormLinkTag</tag-class>
+        <description>
+    	</description>
+    	<attribute>
+    		<name>contentId</name>
+    		<required>false</required>
+    		<rtexprvalue>true</rtexprvalue>
+    	</attribute>
+    </tag>
+    
+    <tag>
+        <name>pageLink</name>
+        <tag-class>han.juser.tag.link.PageLinkTag</tag-class>
+        <description>
+    	</description>
+    </tag>
+    
+    
+    <tag>
+    	<name>viewLink</name>
+    	<tag-class>han.juser.tag.link.ViewLinkTag</tag-class>
+    	<description></description>
+    	<attribute>
+    		<name>contentId</name>
+    		<required>true</required>
+    		<rtexprvalue>true</rtexprvalue>
+    	</attribute>
+    </tag>
+    
+    
+    <tag>
+    	<name>hidden</name>
+    	<tag-class>han.juser.tag.link.HiddenTag</tag-class>
+    	<description></description>
+    </tag>
+    
+    
+   <tag>
+    	<name>categorySelect</name>
+    	<tag-class>han.juser.tag.CategorySelectTag</tag-class>
+    	<attribute>
+    		<name>name</name>
+    		<required>true</required>
+    		<rtexprvalue>true</rtexprvalue>
+    	</attribute>
+    	<attribute>
+    		<name>script</name>
+    		<required>false</required>
+    		<rtexprvalue>true</rtexprvalue>
+    	</attribute>
+    	<attribute>
+    		<name>category</name>
+    		<required>false</required>
+    		<rtexprvalue>true</rtexprvalue>
+    	</attribute>
+    	<attribute>
+    		<name>defaultOption</name>
+    		<required>false</required>
+    		<rtexprvalue>true</rtexprvalue>
+    	</attribute>
+    </tag>
+</taglib>

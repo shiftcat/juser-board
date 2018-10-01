@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE sqlMap      
+    PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"      
+    "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="Category">
+	<typeAlias alias="cate" type="han.juser.model.CategoryDTO" />
+	
+	<select id="getCategoryList" resultClass="cate">
+		SELECT
+				cateId
+		,       cateName
+		,		ord
+		FROM 
+				category 
+		ORDER BY 
+				ord ASC
+	</select>
+	
+	<select id="getCategory" parameterClass="int" resultClass="cate">
+		SELECT 
+				cateid
+		, 		catename
+		, 		ord 
+		FROM 
+				category 
+		WHERE 
+				cateid = #value#
+	</select>
+	
+	
+	<insert id="insert" parameterClass="map">
+		<selectKey keyProperty="cateId" resultClass="int">
+			SELECT nvl(max(cateid),0) + 1 FROM category
+		</selectKey>
+		INSERT INTO category (
+				cateid
+		, 		catename
+		, 		ord
+		) VALUES ( 
+				#cateId:NUMBER#
+		, 		#cateName:VARCHAR#
+		, 		#ord:NUMBER# )
+	</insert>
+	
+	<update id="update" parameterClass="map">
+		UPDATE category SET 
+				catename = #cateName:VARCHAR#
+		, 		ord 	 = #ord:NUMBER#
+		WHERE 
+				cateid   = #cateId:NUMBER#
+	</update>
+	
+	<delete id="delete" parameterClass="int">
+		DELETE FROM category WHERE cateid = #value#
+	</delete>
+	
+</sqlMap>

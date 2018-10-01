@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<!ELEMENT replys (reply*)>
+	<!ELEMENT reply (userid, content, signdate, remoteaddr)>
+		<!ELEMENT userid (#PCDATA)>
+		<!ELEMENT content (#PCDATA)>
+		<!ELEMENT signdate (#PCDATA)>
+		<!ELEMENT remoteaddr (#PCDATA)>
+
+<!ATTLIST reply id CDATA #REQUIRED> 

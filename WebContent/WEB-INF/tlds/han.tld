@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE taglib PUBLIC
+        "-//Sun Microsystems, Inc.//DTD JSP Tag Library 1.2//EN"
+        "http://java.sun.com/dtd/web-jsptaglibrary_1_2.dtd">
+<taglib>
+    <tlib-version>1.3</tlib-version>
+    <jsp-version>1.2</jsp-version>
+    <short-name>board</short-name>
+    <uri>han-tag</uri>
+    <description>
+    </description>
+    
+    
+    <tag>
+    	<name>substring</name>
+    	<tag-class>han.juser.tag.SubstringTag</tag-class>
+    	<body-content>JSP</body-content>
+    	<description>
+    		문자열을 지정된 길이로 자른다
+    	</description>
+    	<attribute>
+    		<name>length</name>
+    		<required>true</required>
+    		<rtexprvalue>true</rtexprvalue>
+    		<description>
+    			자르고자 하는 문자 길이
+    		</description>
+    	</attribute>
+    	<attribute>
+    		<name>suffix</name>
+    		<required>false</required>
+    		<rtexprvalue>true</rtexprvalue>
+    		<description>
+    			문자열끝에 붙일 문자
+    		</description>
+    	</attribute>
+    	<attribute>
+    		<name>filter</name>
+    		<required>false</required>
+    		<rtexprvalue>true</rtexprvalue>
+    		<description>필터링 여부</description>
+    	</attribute>
+    	
+    </tag>
+    
+    
+    <tag>
+    	<name>nlTobr</name>
+    	<tag-class>han.juser.tag.NltoBrTag</tag-class>
+    	<description>
+    		개행문자를  br태그로 변환
+    	</description>
+    </tag>
+    
+    
+    <tag>
+    	<name>space</name>
+    	<tag-class>han.juser.tag.SpaceTag</tag-class>
+    	<description>
+    		문자열 앞에 공을 준다.
+    	</description>
+    	<attribute>
+    		<name>space</name>
+    		<required>true</required>
+    		<rtexprvalue>true</rtexprvalue>
+    		<description>공백 수  </description>
+    	</attribute>
+    </tag>
+    
+    
+    <tag>
+    	<name>escapeHTML</name>
+    	<tag-class>han.juser.tag.EscapeHTMLTag</tag-class>
+    	<body-content>JSP</body-content>
+    	<description>body content에서 HTML코드를 제거 한다.</description>
+   	</tag>
+   	
+   	
+   	<tag>
+   		<name>extImage</name>
+   		<tag-class>han.juser.tag.ExtractImageTag</tag-class>
+   		<body-content>JSP</body-content>
+   		<description>body content에서 img태그를 찾아서 새로운 img태그를 출력</description>
+   		<attribute>
+   			<name>width</name>
+   			<required>false</required>
+   			<rtexprvalue>true</rtexprvalue>
+   		</attribute>
+   		<attribute>
+   			<name>height</name>
+   			<required>false</required>
+   			<rtexprvalue>true</rtexprvalue>
+   		</attribute>
+   	</tag>
+   	
+   	
+   	<tag>
+    	<name>memberInfo</name>
+    	<tag-class>han.juser.tag.LoginMemberInfoTag</tag-class>
+    	<description></description>
+    	<attribute>
+    		<name>property</name>
+    		<required>true</required>
+    		<rtexprvalue>true</rtexprvalue>
+    	</attribute>
+    </tag>
+</taglib>

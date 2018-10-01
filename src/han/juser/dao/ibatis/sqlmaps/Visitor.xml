@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE sqlMap      
+    PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"      
+    "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="Visitor">
+	
+	<typeAlias alias="time" type="java.sql.Timestamp" />
+
+	
+	<select id="rowCount" resultClass="long" >
+		SELECT COUNT('*') FROM visitor
+	</select>
+	
+	<select id="rowCountToday" parameterClass="time" resultClass="long">
+	<![CDATA[
+		SELECT COUNT('*') FROM visitor WHERE signdate < #value# + 1 AND signdate >= #value#	
+	]]>
+	</select>
+	
+	<insert id="insert" parameterClass="map">
+		<selectKey keyProperty="idx" resultClass="long">
+			SELECT nvl(max(idx),0)+1 FROM visitor
+		</selectKey>
+		INSERT INTO visitor (
+				idx
+		, 		userAgent
+		, 		remoteAddr
+		, 		remoteHost
+		, 		referer
+		) VALUES ( 
+				#idx:NUMBER#
+		, 		#userAgent:VARCHAR#
+		, 		#remoteAddr:VARCHAR#
+		, 		#remoteHost:VARCHAR#
+		, 		#referer:VARCHAR# )
+	</insert>
+</sqlMap>

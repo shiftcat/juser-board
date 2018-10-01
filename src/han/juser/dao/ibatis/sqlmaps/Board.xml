@@ -1,0 +1,344 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE sqlMap      
+    PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"      
+    "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="Board">
+
+  
+
+  <typeAlias alias="BoardDTO" type="han.juser.model.BoardDTO"/>
+  <typeAlias alias="BoardReplyDTO" type="han.juser.model.BoardReplyDTO" />
+  
+	<resultMap id="summaryResult" class="han.juser.model.SummaryDTO">
+		<result property="contentId"  column="CONTENTID"  javaType="long"               jdbcType="NUMBER"/>
+		<result property="subject"    column="SUBJECT"    javaType="string"             jdbcType="VARCHAR"/>
+		<result property="content"    column="CONTENT"    javaType="string"             jdbcType="CLOB"/>
+		<result property="signDate"   column="SIGNDATE"   javaType="java.sql.Timestamp" jdbcType="TIMESTAMP"/>
+	</resultMap>
+  
+  <resultMap id="BoardResult" class="BoardDTO">
+    <result property="bbsId"            column="BBSID"            javaType="java.lang.Long"          jdbcType="NUMBER"    />
+    <result property="userId"           column="USERID"           javaType="java.lang.String"        jdbcType="VARCHAR"  />
+    <result property="originalFiles"    column="ORIGINALFILES"    javaType="java.lang.String"        jdbcType="VARCHAR"  />
+    <result property="systemFiles"      column="SYSTEMFILES"      javaType="java.lang.String"        jdbcType="VARCHAR"  />
+    <result property="subject"          column="SUBJECT"          javaType="java.lang.String"        jdbcType="VARCHAR"  />
+    <result property="content"          column="CONTENT"          javaType="java.lang.String"        jdbcType="CLOB"      />
+    <result property="logDate"          column="LOGDATE"          javaType="java.sql.Timestamp"      jdbcType="TIMESTAMP" />
+    <result property="hit"              column="HIT"              javaType="java.lang.Integer"       jdbcType="NUMBER"    />
+    <result property="vote"             column="VOTE"             javaType="java.lang.Integer"       jdbcType="NUMBER"    />
+    <result property="link"             column="LINK"             javaType="java.lang.String"        jdbcType="VARCHAR"  />
+    <result property="remoteAddr"       column="REMOTEADDR"       javaType="java.lang.String"        jdbcType="VARCHAR"  />
+    <result property="replyList"        select="Board.boardReplyList" 	column="BBSID" />
+    <!--
+    	복수 컬럼이면 
+    <result property="replyList"         select="Board.boardReplyList" column="{bbsId=BBSID,userId=USERID}" />  
+    -->
+    <!-- 
+    <result property="replyCount"                                 javaType="java.lang.Integer"       jdbcType="INTEGER"   /> 
+    -->
+  </resultMap>
+
+
+  <parameterMap class="BoardDTO" id="BoardParam" >
+    <parameter property="bbsId"            javaType="java.lang.Long"          jdbcType="NUMBER"  />
+    <parameter property="userId"           javaType="java.lang.String"        jdbcType="VARCHAR"  />
+    <parameter property="subject"          javaType="java.lang.String"        jdbcType="VARCHAR"  />
+    <parameter property="content"          javaType="java.lang.String"        jdbcType="CLOB"      />
+    <parameter property="link"             javaType="java.lang.String"        jdbcType="VARCHAR"  />
+    <parameter property="remoteAddr"       javaType="java.lang.String"        jdbcType="CHAR"  />
+    <parameter property="originalFiles"    javaType="java.lang.String"        jdbcType="VARCHAR"  />
+    <parameter property="systemFiles"      javaType="java.lang.String"        jdbcType="VARCHAR"  />
+  </parameterMap>
+  
+  
+   <insert id="boardInsert" parameterMap="BoardParam">
+   		<selectKey keyProperty="bbsId" resultClass="long">
+   			SELECT nvl(max(bbsid), 0) + 1 FROM bbs
+   		</selectKey>
+            INSERT INTO bbs (
+                    bbsid
+            ,       userid
+            ,       subject
+            ,       content
+            ,       link
+            ,       remoteaddr
+            ,       originalfiles
+            ,       systemfiles
+            ) VALUES (
+                    ?
+            ,       ?
+            ,       ?
+            ,       ?
+            ,       ?
+            ,       ?
+            ,       ?
+            ,       ? )
+   </insert>
+   
+   
+   <update id="boardUpdateWithFile" parameterClass="map">
+		    UPDATE bbs SET
+		    		subject 	    = #subject:VARCHAR#
+	        , 		content 	    = #content:CLOB#
+	        , 		link 		    = #link:VARCHAR#
+	        , 		remoteaddr 	    = #remoteAddr:CHAR#
+	        , 		systemfiles     = #systemFiles:VARCHAR#
+	        , 		originalfiles   = #originalFiles:VARCHAR#
+	        , 		logdate         = sysdate
+		    WHERE
+		    		bbsid = #bbsId:NUMBER#
+   </update>
+   
+   
+   <update id="boardUpdate" parameterClass="map">
+		    UPDATE bbs SET
+		    		subject 	    = #subject:VARCHAR#
+	        , 		content 	    = #content:CLOB#
+	        , 		link 		    = #link:VARCHAR#
+	        , 		remoteaddr 	    = #remoteAddr:CHAR#
+	        , 		logdate         = sysdate
+		    WHERE
+		    		bbsid = #bbsId:NUMBER#
+   </update>
+   
+   
+  <resultMap id="BoardReplyResult" class="BoardReplyDTO">
+  	<result property="replId"     column="REPLID"      javaType="java.lang.Long"     jdbcType="NUMBER"    />
+  	<result property="bbsId"      column="BBSID"       javaType="java.lang.Long"     jdbcType="NUMBER"    />
+  	<result property="userId"     column="USERID"      javaType="java.lang.String"   jdbcType="VARCHAR"  />
+  	<result property="reply"      column="REPLE"       javaType="java.lang.String"   jdbcType="VARCHAR"  />
+  	<result property="logdate"    column="LOGDATE"     javaType="java.sql.Timestamp" jdbcType="TIMESTAMP" />
+  	<result property="remoteAddr" column="REMOTEADDR"  javaType="java.lang.String"   jdbcType="VARCHAR"  />
+  </resultMap>
+
+
+  <select id="boardSummary" parameterClass="int" resultMap="summaryResult">
+  	<![CDATA[
+  		SELECT 
+  				/*+ index_desc(bbs pk_bbs_bbsid) */ 
+				rownum    AS rn
+		, 		bbsid     AS contentId
+		, 		subject
+		, 		content
+		, 		logdate   AS signDate
+		FROM 
+				bbs 
+		WHERE 
+				rownum <= #value#
+  	]]>
+  </select>
+  
+  
+  <select id="boardContentList" parameterClass="map" resultClass="BoardDTO">
+  	<![CDATA[
+            SELECT
+                    /*+ index_desc(b, pk_bbs_bbsid) */
+                    b.bbsid
+            ,       b.userid
+            ,       b.subject
+            ,       b.systemfiles
+            ,       b.originalfiles
+            ,       b.logdate
+            ,       b.hit
+            ,       b.vote
+            ,       b.link
+            ,       b.remoteaddr
+            ,       (SELECT count(bbsid) FROM reply WHERE bbsid = b.bbsid) replycount
+            FROM
+                    bbs b
+	]]>
+	<isEmpty property="target">
+	<![CDATA[
+            WHERE
+            		b.bbsid  <= (
+            					  SELECT bbsid
+                                  FROM (
+                                  			SELECT
+                                  					/*+ index_desc( bbs pk_bbs_bbsid)*/
+                                  					rownum rn
+                                  			, 		bbsid
+                                            FROM bbs
+            							)
+            					  WHERE rn = #start#
+                                )
+            AND 	rownum <= #limit#
+	]]>
+	</isEmpty>
+	<isEqual property="target" compareValue="CONTENT">
+	<![CDATA[
+            WHERE
+                    DBMS_LOB.INSTR( content, #keyword#) > 0
+            AND     b.bbsid <= (
+                                 SELECT
+                                        bbsid
+		                         FROM
+		                                (
+		                                    SELECT
+		                                            /*+ index_desc( bbs pk_bbs_bbsid)*/
+		                                            rownum rn
+                                            ,       bbsid
+							                FROM bbs
+							                WHERE DBMS_LOB.INSTR( content , #keyword#) > 0
+							             )
+                                 WHERE rn = #start#
+                               )
+            AND     rownum <= #limit#
+    ]]>
+	</isEqual>
+	<isEqual property="target" compareValue="SUBJECT">
+	<![CDATA[
+	        WHERE
+	                subject LIKE #keyword#
+		    AND     b.bbsid <= (
+		                            SELECT bbsid
+		                            FROM
+		                                (
+		                                    SELECT /*+ index_desc( bbs pk_bbs_bbsid)*/ rownum rn, bbsid
+                                            FROM bbs
+                                            WHERE subject LIKE #keyword#
+                                         )
+                                    WHERE rn = #start#
+                               )
+            AND     rownum <= #limit#
+    ]]>
+	</isEqual>
+	<isEqual property="target" compareValue="USERID">
+	<![CDATA[
+	        WHERE
+	                userid LIKE #keyword#
+		    AND     b.bbsid <= (
+		                            SELECT bbsid
+		                            FROM
+		                                (
+		                                    SELECT /*+ index_desc( bbs pk_bbs_bbsid)*/ rownum rn, bbsid
+                                            FROM bbs
+                                            WHERE userid LIKE #keyword#
+                                         )
+                                    WHERE rn = #start#
+                               )
+            AND     rownum <= #limit#
+    ]]>
+	</isEqual>
+  </select>
+  
+  
+  <select id="boardRowCount" resultClass="long">
+  	SELECT count(bbsid) FROM bbs
+  </select>
+  
+  <select id="boardSearchRowCount" parameterClass="string" resultClass="long">
+  	<![CDATA[
+  		SELECT count(bbsid) FROM bbs WHERE DBMS_LOB.INSTR( content , #keyword# ) > 0
+  	]]>
+  </select>
+  
+  <select id="boardSearchSubjectRowCount" parameterClass="string" resultClass="long">
+  	<![CDATA[
+  		SELECT count(bbsid) FROM bbs WHERE subject LIKE #keyword#
+  	]]>
+  </select>
+  
+  <select id="boardSearchUserRowCount" parameterClass="string" resultClass="long">
+  	<![CDATA[
+  		SELECT count(bbsid) FROM bbs WHERE userid LIKE #keyword#
+  	]]>
+  </select>
+  
+  
+  <select id="boardContent" parameterClass="long" resultMap="BoardResult" >
+            SELECT
+            		userid
+            , 		bbsid
+            , 		originalfiles
+            , 		systemfiles
+            , 		subject
+            , 		content
+            , 		logdate
+            , 		hit
+            , 		vote
+            , 		link
+            , 		remoteaddr
+            FROM
+            		bbs
+            WHERE
+            		bbsid = #value#
+  </select>
+   
+   
+   
+   <select id="boardReplyList" parameterClass="long" resultMap="BoardReplyResult">
+		<![CDATA[
+            SELECT
+                    replid
+            ,       bbsid
+            ,       userid
+            ,       reple
+            ,       logdate
+            ,       remoteaddr
+            FROM
+                    reply
+            WHERE
+                    bbsid = #bbsid#
+            ORDER BY replid DESC
+		]]>
+   </select>
+   
+   
+   <select id="boardReply" parameterClass="long" resultMap="BoardReplyResult">
+		<![CDATA[
+	        SELECT
+                    replid
+            ,       bbsid
+            ,       userid
+            ,       reple
+            ,       logdate
+            ,       remoteaddr
+            FROM
+                    reply
+            WHERE 
+            		replid = #value#
+		]]>
+   </select>
+
+
+
+   <update id="boardUpdateHit" parameterClass="long">
+   		UPDATE bbs SET hit = hit + 1 WHERE bbsId = #bbsId#
+   </update>
+   
+   <update id="boardUpdateVote" parameterClass="long">
+   		UPDATE bbs SET vote = vote + 1 WHERE bbsId = #bbsId#
+   </update>
+   
+   <insert id="boardInsertReply" parameterClass="map" >
+   		<selectKey keyProperty="replyId" resultClass="long">
+   			SELECT nvl(max(replid), 0) + 1 FROM reply
+   		</selectKey>
+            INSERT INTO reply (
+                    replid
+            ,       bbsid
+            ,       userid
+            ,       reple
+            ,       remoteaddr
+            ,       logdate
+            ) VALUES (
+                    #replyId#
+            ,       #bbsId#
+            ,       #userId#
+            ,       #reply#
+            ,       #remoteAddr#
+            ,       sysdate )
+   </insert>
+   
+   
+   <delete id="boardDelete" parameterClass="long">
+   		DELETE FROM bbs WHERE bbsid = #value#
+   </delete>
+   
+   <delete id="boardReplyDelete" parameterClass="long">
+   		DELETE FROM reply WHERE replid = #value#
+   </delete>
+   
+</sqlMap>

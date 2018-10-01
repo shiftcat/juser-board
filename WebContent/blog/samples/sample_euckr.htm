@@ -1,0 +1,85 @@
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=euc-kr" />
+<meta name="keywords" content="HABYEditor" />
+<meta name="robots" content="all" />
+<meta name="reply-to" content="demagogy@edunet4u.net">
+<meta name="build" content="2007. 02. 04">
+</head>
+<script id="HABYEditor" type="text/JScript.Encode" src="../habyeditor.js"></script>
+<script type="text/javascript">
+	var osubmit = function(thisNames)
+	{
+		for(var i = 0; i < thisNames.length; i++)
+		{
+			alert('document.form.' + thisNames[i] + '.value == \n\n' + document.forms[0][thisNames[i]].value);
+		}
+
+	}
+</script>
+<body>
+<form>
+<table cellspacing="0" cellpadding="0" border="0">
+ <tbody>
+  <tr>
+   <td><textarea name="content" style="width: 550px; height: 300px;" class="input_text">Mac 스킨.. 전체 메뉴</textarea></td>
+  </tr>
+  <tr>
+   <td><input type="button" value="O K" onclick="osubmit(['content']);"></td>
+  </tr>
+  <tr>
+   <td><textarea name="content0" style="width: 550px; height: 300px;" class="input_text">기본 스킨.. 전체 메뉴</textarea></td>
+  </tr>
+  <tr>
+   <td ><input type="button" value="O K" onclick="osubmit(['content0']);"></td>
+  </tr>
+  <tr>
+   <td><textarea name="content1" style="width: 550px; height: 300px;" class="input_text">오피스 스킨.. 사용자 선택 메뉴</textarea></td>
+  </tr>
+  <tr>
+   <td ><input type="button" value="O K" onclick="osubmit(['content1']);"></td>
+  </tr>
+  <tr>
+   <td><textarea name="content2" style="width: 550px; height: 300px;" class="input_text">회색 스킨.. 사용자 선택 메뉴</textarea></td>
+  </tr>
+  <tr>
+   <td ><input type="button" value="O K" onclick="osubmit(['content2']);"></td>
+  </tr>
+  <tr>
+   <td><input type="button" value="All OK" onclick="osubmit(['content', 'content0', 'content1', 'content2']);"></td>
+  </tr>
+ </tbody>
+</table>
+</form>
+<script type="text/javascript">
+
+	var newEditor = new HABYeditor('content');
+	newEditor.setConfig["Skin"]       = 'mac';	// 에디터 스킨
+	newEditor.Create();				// 에디터 생성
+
+	var newEditor0 = new HABYeditor('content0');
+	newEditor0.Create();				// 에디터 생성
+
+	var newEditor1 = new HABYeditor('content1');
+	newEditor1.setConfig["Skin"]       = 'office';	// 에디터 스킨
+	newEditor1.setConfig["MenuButton"] = [		// 에디터 툴바 목록 직접입력
+		["SourceView", "Preview", "FullScreen"],
+		["Bold", "Italic", "UnderLine", "StrikeThrough"],
+		["Subscript", "Superscript"],
+		["JustifyLeft", "JustifyCenter", "JustifyRight", "JustifyFull"],
+		["InsertOrderedList", "InsertUnorderedList", "Outdent", "Indent"],
+		["InsertImage", "CreateLink", "UnLink"],
+		"newLine",
+		["FontFormat", "FontName", "FontSize"],
+		["ForeColor", "BackColor"]
+	];
+	newEditor1.Create();				// 에디터 생성
+
+	var newEditor2 = new HABYeditor('content2');
+	newEditor2.setConfig["Skin"]       = 'gray';	// 에디터 스킨
+	newEditor2.setConfig["ToolbarSet"] = "Simple";	// 에디터 툴바 목록 선택
+	newEditor2.Create();				// 에디터 생성
+
+</script>
+</body>
+</html>

@@ -1,0 +1,155 @@
+
+	body
+	{
+		margin: 10px;
+		padding: 0px;
+		background-color: #f7f3ef;
+		border-style: none;
+	}
+
+	body, td, input, select, textarea, button
+	{
+		font-size: 9pt;
+		font-family: tahoma, Gulim;
+	}
+
+	fieldset
+	{
+		font-size: 9pt;
+		font-family: tahoma, Gulim;
+		border: 1px solid #919B9C;
+		margin: 0;
+		padding: 4px;
+	}
+
+	legend
+	{
+		color: #2B6FB6;
+	}
+
+	.setupBox
+	{
+		border-right: #91a7b4 1px solid;
+		border-left: #91a7b4 1px solid;
+		border-bottom: #91a7b4 1px solid;
+		background-color: #fcfcfc;
+	}
+
+	.overBtnBegin
+	{
+		height: 22px;
+		background-image: url('../images/btn_over_begin.gif');
+		background-repeat: no-repeat;
+		background-position: center center;
+		text-align: center;
+		cursor: default;
+	}
+	.overBtn
+	{
+		height: 22px;
+		background-image: url('../images/btn_over_bg.gif');
+		text-align: center;
+		cursor: default;
+	}
+	.overBtnEnd
+	{
+		height: 22px;
+		background-image: url('../images/btn_over_end.gif');
+		background-repeat: no-repeat;
+		background-position: center center;
+		text-align: center;
+		cursor: default;
+	}
+
+	.outBtnBegin
+	{
+		height: 22px;
+		background-image: url('../images/btn_out_begin.gif');
+		background-repeat: no-repeat;
+		background-position: center center;
+		text-align: center;
+		cursor: pointer;
+	}
+	.outBtn
+	{
+		height: 22px;
+		background-image: url('../images/btn_out_bg.gif');
+		text-align: center;
+		cursor: pointer;
+	}
+	.outBtnEnd
+	{
+		height: 22px;
+		background-image: url('../images/btn_out_end.gif');
+		background-repeat: no-repeat;
+		background-position: center center;
+		text-align: center;
+		cursor: pointer;
+	}
+
+	.onTabBegin
+	{
+		height: 20px;
+		background-image: url('../images/tab_on_begin.gif');
+		background-repeat: no-repeat;
+		background-position: center center;
+		text-align: center;
+	}
+	.onTab
+	{
+		height: 20px;
+		background-image: url('../images/tab_on_bg.gif');
+		text-align: center;
+	}
+	.onTabEnd
+	{
+		height: 20px;
+		background-image: url('../images/tab_on_end.gif');
+		background-repeat: no-repeat;
+		background-position: center center;
+		text-align: center;
+	}
+
+	.offTabBegin
+	{
+		height: 20px;
+		background-image: url('../images/tab_off_begin.gif');
+		background-repeat: no-repeat;
+		background-position: center center;
+		text-align: center;
+	}
+	.offTab
+	{
+		height: 20px;
+		background-image: url('../images/tab_off_bg.gif');
+		text-align: center;
+	}
+	.offTabEnd
+	{
+		height: 20px;
+		background-image: url('../images/tab_off_end.gif');
+		background-repeat: no-repeat;
+		background-position: center center;
+		text-align: center;
+	}
+
+	.outTabLine
+	{
+		height: 20px;
+		background-image: url('../images/tab_line.gif');
+	}
+
+	.onimgBtn
+	{
+		border-right: buttonshadow 1px solid;
+		border-top: buttonhighlight 1px solid;
+		border-left: buttonhighlight 1px solid;
+		border-bottom: buttonshadow 1px solid;
+		background-color: threedface;
+		cursor: pointer;
+	}
+	.offimgBtn
+	{
+		background-color: transparent;
+		cursor: pointer;
+	}

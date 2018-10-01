@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+
+<beans>
+
+	<bean name="action" class="han.juser.controller.action.ActionBase" abstract="true">
+		<property name="categoryManager">
+			<ref bean="categoryManager" />
+		</property> 
+		<property name="visitorManager">
+			<ref bean="visitorManager" />
+		</property>
+	</bean>
+
+	<bean name="/index" class="han.juser.controller.action.MainAction" parent="action">
+		<property name="mainManager" >
+			<ref bean="mainManager" />
+		</property>
+	</bean>
+
+	<bean name="/board" class="han.juser.controller.action.BoardAction" parent="action">
+		<property name="boardManager">
+			<ref bean="boardManager" />
+		</property>
+	</bean>
+	
+	<bean name="/blog" class="han.juser.controller.action.BlogAction" parent="action">
+		<property name="blogManager">
+			<ref bean="blogManager" />
+		</property>
+	</bean>
+	
+	
+	<bean name="/guest" class="han.juser.controller.action.GuestAction" parent="action">
+		<property name="guestManager">
+			<ref bean="guestManager" />
+		</property>
+	</bean>
+	
+	
+	<bean name="/jboard" class="han.juser.controller.action.JBoardAction" parent="action">
+		<property name="jboardManager">
+			<ref bean="jboardManager" />
+		</property>
+	</bean>
+	
+	
+	<bean name="/member" class="han.juser.controller.action.MemberAction" parent="action">
+		<property name="memberManager">
+			<ref bean="memberManager" />
+		</property>
+	</bean>
+	
+	<bean name="/admin" class="han.juser.controller.action.AdminAction" parent="action">
+		<property name="memberManager">
+			<ref bean="memberManager" />
+		</property>
+	</bean>
+</beans>

@@ -1,0 +1,316 @@
+	body, td, textarea, input, button, select
+	{
+		color: #000000;
+		font-size: 9pt;
+		font-family: tahoma, Gulim;
+	}
+
+	.HABYEditorMain
+	{
+		padding : 0 3 0 3;
+		background-color : #cfe2fb;
+		border : #9fbddc 1px solid;
+	}
+
+	.HABYEditorArea
+	{
+		margin : 0;
+		background-color : #ffffff;
+		border : #9fbddc 1px solid;
+	}
+
+	.HABYEditorPopup
+	{
+		padding : 2 2 2 2;
+		position : absolute;
+		overflow : auto;
+		background-color : #ffffff;
+		border : #9fbddc 1px solid;
+	}
+
+	.HABYEditorToolbar
+	{
+		margin: 0;
+		padding : 0;
+		display: inline-table;
+		float: left;
+	}
+
+	.HABYButtonCell
+	{
+		margin: 0;
+		padding : 0;
+		width: 23px;
+		height: 25px;
+	}
+
+	.HABYClrButtonCell, 
+	{
+		margin: 0;
+		padding : 0;
+		width: 35px;
+		height: 25px;
+	}
+
+	.HABYComboButtonCell
+	{
+		margin: 0;
+		padding : 1px;
+		background-image: url('../icons/tb_bg.gif');
+	}
+
+	.HABYTagPath
+	{
+		color: blue;
+		font-size: 9px;
+		font-family: tahoma;
+		cursor: pointer;
+	}
+
+	.HABYTmpFlash
+	{
+		border: #aca899 1px solid;
+		background-position: center center;
+		background-image: url('../icons/flashlogo.gif');
+		background-repeat: no-repeat;
+	}
+
+	.HABYTmpMedia
+	{
+		border: #aca899 1px solid;
+		background-position: center center;
+		background-image: url('../icons/medialogo.gif');
+		background-repeat: no-repeat;
+	}
+
+	.HABYPopupColorDefault
+	{
+		border: #f9f8f7 1px solid;
+		background-color: #f9f8f7;
+		cursor: pointer;
+	}
+
+	.HABYPopupColorOver
+	{
+		border: #0a246a 1px solid;
+		background-color: #ffd9a0;
+		cursor: pointer;
+	}
+
+	.HABYButtonDiv
+	{
+		margin: 0px;
+		width: 23px;
+		height: 25px;
+	}
+
+	.HABYButtonClrDiv
+	{
+		margin: 0px;
+		width: 23px;
+		height: 25px;
+	}
+
+	.HABYButtonArrDiv
+	{
+		margin: 0px;
+		width: 12px;
+		height: 25px;
+	}
+
+	.HABYButtonImage, .HABYButtonClrImage
+	{
+		margin: 0px;
+		padding: 0px;
+		width: 23px;
+		height: 25px;
+		overflow : hidden;
+		position: absolute;
+		clip: rect(0 23 25 0);
+		cursor:pointer;
+	}
+
+	.HABYButtonArrImage
+	{
+		margin: 0px;
+		padding: 0px;
+		width: 12px;
+		height: 25px;
+		overflow : hidden;
+		position: absolute;
+		clip: rect(0 12 25 0);
+		cursor:pointer;
+	}
+
+	.HABYBeginButton
+	{
+		margin: 0px;
+		width: 10px;
+		height: 25px;
+		background-color: transparent;
+		cursor: default;
+	}
+
+	.HABYSparatorButton
+	{
+		margin: 0px;
+		width: 5px;
+		height: 25px;
+		background-color: transparent;
+		cursor: default;
+	}
+
+	.HABYEndButton
+	{
+		margin: 0;
+		width: 5px;
+		height: 25px;
+		border: none;
+		background-color: transparent;
+		cursor: default;
+	}
+
+	.HABYButtonDefault, .HABYClrButtonDefault
+	{
+		margin: 0px;
+		left: 0px;
+		width: 92px;
+		height: 1800px;
+		position: absolute;
+		cursor: pointer;
+	}
+
+	.HABYButtonOver, .HABYClrButtonOver
+	{
+		margin: 0px;
+		left: -23px;
+		width: 92px;
+		height: 1800px;
+		position: absolute;
+		cursor: pointer;
+	}
+
+	.HABYButtonEnable
+	{
+		margin: 0px;
+		left: -46px;
+		width: 92px;
+		height: 1800px;
+		position: absolute;
+		cursor: pointer;
+	}
+
+	.HABYButtonDisable, .HABYClrButtonDisable
+	{
+		margin: 0px;
+		left: -69px;
+		width: 92px;
+		height: 1800px;
+		position: absolute;
+		cursor: default;
+	}
+
+	.HABYArrButtonDefault
+	{
+		margin: 0px;
+		left: 0px;
+		width: 48px;
+		height: 25px;
+		position: absolute;
+		cursor: pointer;
+	}
+
+	.HABYArrButtonOver
+	{
+		margin: 0px;
+		left: -12px;
+		width: 48px;
+		height: 25px;
+		position: absolute;
+		cursor: pointer;
+	}
+
+	.HABYArrButtonDisable
+	{
+		margin: 0px;
+		left: -36px;
+		width: 48px;
+		height: 25px;
+		position: absolute;
+		cursor: default;
+	}
+
+
+	.HABYComboDefault
+	{
+		margin: 1px;
+		border: none;
+		background-color: transparent;
+		cursor: pointer;
+	}
+
+	.HABYComboOver
+	{
+		margin: 0px;
+		border: #0a246a 1px solid;
+		background-color: #ffd9a0;
+		cursor: pointer;
+	}
+
+	.HABYComboDisable
+	{
+		margin: 1px;
+		border: none;
+		filter: gray() alpha(opacity=35); opacity: 0.35;
+		cursor: default;
+	}
+
+	.HABYComboLabel
+	{
+		width: 100%;
+		height: 20px;
+		margin: 0;
+		padding: 0;
+		border: none;
+		background-color: #ffffff;
+	}
+
+	.offButtonInput
+	{
+		width: 100%;
+		height: 20px;
+		margin: 0;
+		padding: 0;
+		border: none;
+		cursor: default;
+		background-color: #ffffff;
+	}
+
+	.HABYPopupMenuDefault
+	{
+		height: 22px;
+		border: none;
+		cursor: pointer;
+		display: ;
+	}
+	.HABYPopupMenuOver
+	{
+		height: 20px;
+		cursor: pointer;
+		border: #0a246a 1px solid;
+		background-color: #ffd9a0;
+		display: ;
+	}
+	.HABYPopupMenuDisable
+	{
+		border: none;
+		color : gray;
+		filter: gray() alpha(opacity=35); opacity: 0.35;
+		cursor: default;
+		background-color: transparent;
+		display: ;
+	}
+	.HABYPopupMenuHidden
+	{
+		display: none;
+	}

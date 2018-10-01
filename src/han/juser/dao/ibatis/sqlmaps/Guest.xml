@@ -1,0 +1,189 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE sqlMap      
+    PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"      
+    "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="Guest">
+
+	<typeAlias alias="GuestDTO" type="han.juser.model.GuestDTO"/>
+	
+	<!-- 
+	gid, userid, content, logdate, remoteaddr
+	 -->
+	<resultMap class="GuestDTO" id="GuestResult">
+		<result property="gid"         column="gid"        javaType="java.lang.Long"     jdbcType="NUMBER"    />
+		<result property="content"     column="content"    javaType="java.lang.String"   jdbcType="VARCHAR2"  />
+		<result property="logDate"     column="logdate"    javaType="java.sql.Timestamp" jdbcType="TIMESTAMP" />
+		<result property="remoteAddr"  column="remoteaddr" javaType="java.lang.String"   jdbcType="VARCHAR2"  />
+		<result property="userId"      column="userid"     javaType="java.lang.String"   jdbcType="VARCHAR2"  />
+	</resultMap>
+	
+	
+	<!-- 
+	<select id="" parameterClass="" resultClass="">
+	
+	</select>
+	-->
+	
+	<sql id="fromByDefault">
+		<![CDATA[
+            WHERE 
+            		gid <= ( 
+            					SELECT 
+            							gid 
+                           		FROM (
+                           				SELECT 
+                           						/*+ index_desc(guest, pk_guest_gid)*/ 
+						              			rownum rn
+						              	, 		gid 
+						          		FROM 
+						          				guest 
+						          	  ) 
+						    	WHERE rn = #start#
+						    )
+			AND 	rownum <= #limit#
+		]]>
+	</sql>
+	
+	
+	<sql id="fromByUserId">
+		<![CDATA[
+			WHERE 
+					userid = #userid#
+			AND 	gid <= ( 
+								SELECT gid 
+                             	FROM  
+                             		( 
+                             			SELECT 
+                             					/*+ index_desc(guest, pk_guest_gid)*/ 
+                                                rownum rn
+										, 		gid 
+                                        FROM 
+                                        		guest 
+                                        WHERE 
+                                        		userid = #userid#
+									)
+								WHERE rn = #start#
+							)
+			AND 	rownum <= #limit#
+		]]>
+	</sql>
+	
+	
+	<select id="guestContentList" parameterClass="map" resultMap="GuestResult" >
+		
+			SELECT 
+					/*+ index_desc(guest, pk_guest_gid)*/ 
+                 	rownum rn
+            , 		gid
+            , 		userid
+            , 		content
+            , 		logdate
+            , 		remoteaddr 
+            FROM 
+            		guest 
+		<isEmpty property="userid">
+			<include refid="fromByDefault"/>
+		</isEmpty>
+		<isNotEmpty property="userid">
+			<include refid="fromByUserId"/>
+		</isNotEmpty>
+	</select>
+	
+	
+	
+	<select id="guestContent" parameterClass="java.lang.Long" resultMap="GuestResult">
+		<![CDATA[
+			SELECT 
+					gid
+			, 		userid
+			, 		content
+			, 		logdate
+			, 		remoteaddr 
+            FROM 
+            		guest
+			WHERE 
+					gid = #value#
+		]]>
+	</select>
+	
+	
+	
+	<select id="guestSummary" parameterClass="java.lang.Integer" resultClass="summary">
+		<![CDATA[
+			SELECT 
+					/*+ index_desc(guest pk_guest_gid)*/ 
+					rownum   AS rn
+			, 		gid      AS contentId
+			, 		content
+			, 		logdate  AS signDate
+			FROM 
+					guest 
+			WHERE 
+					rownum <= #value#
+		]]>
+	</select>
+	
+	
+	<select id="guestRowCount"  resultClass="java.lang.Long">
+		<![CDATA[
+			SELECT count(gid) FROM guest
+		]]>
+	</select>
+	
+	
+	<select id="guestUserRowCount" parameterClass="java.lang.String" resultClass="java.lang.Long">
+		<![CDATA[
+			SELECT count(gid) FROM guest WHERE userid = #value#
+		]]>
+	</select>
+	
+	
+	<select id="guestMaxId" resultClass="java.lang.Long" >
+		<![CDATA[
+			SELECT max(gid) FROM guest
+		]]>
+	</select>
+	
+	
+	<delete id="guestDelete" parameterClass="java.lang.Long">
+		<![CDATA[
+			DELETE FROM guest WHERE gid = #value#
+		]]>
+	</delete>
+	
+	
+	<insert id="guestInsert" parameterClass="map">
+		<selectKey keyProperty="gid" resultClass="long">
+			SELECT nvl(max(gid),0)+1 FROM guest
+		</selectKey>
+		<![CDATA[
+			INSERT INTO guest(
+					gid
+			, 		userid
+			, 		content
+			, 		logdate
+			, 		remoteaddr
+			) VALUES (
+					#gid:NUMBER#
+			, 		#userid:VARCHAR#
+			, 		#content:VARCHAR#
+			, 		sysdate
+			, 		#remoteAddr:VARCHAR#
+			)
+		]]>
+	</insert>
+	
+	
+	<update id="guestUpdate" parameterClass="map">
+		<![CDATA[
+			UPDATE guest SET 
+					content 	= #content:VARCHAR#
+			, 		remoteaddr 	= #remoteAddr:VARCHAR#
+			WHERE 
+					gid = #gid#
+		]]>
+	</update>
+	
+</sqlMap>

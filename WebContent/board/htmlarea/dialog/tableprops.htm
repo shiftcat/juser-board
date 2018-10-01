@@ -1,0 +1,272 @@
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="robots" content="all" />
+<title> Table Properties </title>
+<link rel="stylesheet" type="text/css" href="css/dialog.css" />
+<script type="text/JScript.Encode" src="./js/dialog.js"></script>
+<script type="text/JScript.Encode" src="./js/tableprops.js"></script>
+<style type="text/css">
+	input
+	{
+		text-align: right;
+	}
+
+	.offinput
+	{
+		color: #cccccc;
+		background-color: #f5f5f5;
+		border: buttonshadow 1px solid;
+		text-align: right;
+	}
+</style>
+</head>
+<body onload="Init();">
+<table id="mainTable" width="480" height="210" border="0" cellpadding="0" cellspacing="0" onresize="ResizeTo();">
+ <tr>
+  <td align="center" valign="top">
+   <form name="frmTable">
+   <table width="100%" height="20" border="0" cellpadding="0" cellspacing="0" class="outTabLine">
+    <tr>
+     <td id="tabTable" width="76" align="left" valign="bottom">
+      <table id="tabs" name="tabs" mode="0" width="76" cellpadding="0" cellspacing="0" style="cursor:default;">
+       <tr>
+        <td width="3"><img src="./images/space.gif" width="3" height="20" /></td>
+        <td width="70"><span HABYLang="TabTableSelf">Table</span></td>
+        <td width="3"><img src="./images/space.gif" width="3" height="20" /></td>
+       </tr>
+      </table>
+     </td>
+     <td id="tabCell" width="76" align="left" valign="bottom">
+      <table id="tabs" name="tabs" mode="1" width="76" cellpadding="0" cellspacing="0" style="cursor:default;">
+       <tr>
+        <td width="3"><img src="./images/space.gif" width="3" height="20" /></td>
+        <td width="70"><span HABYLang="TabTableCell">Cell</span></td>
+        <td><img src="./images/space.gif" width="3" height="20" /></td>
+       </tr>
+      </table>
+     </td>
+     <td width="100%">
+      <table width="100%" cellpadding="0" cellspacing="0">
+       <tr>
+        <td>
+         <input type="hidden" name="style" value="">
+        </td>
+       </tr>
+      </table>
+     </td>
+    </tr>
+   </table>
+
+   <table width="100%" border="0" cellpadding="0" cellspacing="0" class="setupBox">
+    <tr height="10"><td></td></tr>
+    <tr>
+     <td align="center">
+
+      <table id="mode0" border="0" cellpadding="0" cellspacing="0">
+       <tr>
+        <td height="25" align="right"><span HABYLang="LblTableRows">Rows</span></td>
+        <td width="10" height="25"></td>
+        <td height="25"><input type="text" id="tablerows" name="tablerows" value="3" size="3" maxlength="2"></td>
+        <td width="10" height="25"></td>
+        <td height="25" align="right"><span HABYLang="LblWidth">Width</span></td>
+        <td width="10" height="25"></td>
+        <td height="25">
+         <input type="text" name="tableintwidth" value="200" size="4" maxlength="4">
+         <select name="tabletypewidth">
+          <option value="px">px</option>
+          <option value="%">%</option>
+         </select>
+        </td>
+       </tr>
+       <tr>
+        <td height="25" align="right"><span HABYLang="LblTableCols">Columns</span></td>
+        <td width="10" height="25"></td>
+        <td height="25"><input type="text" id="tablecols" name="tablecols" value="2" size="3" maxlength="2"></td>
+        <td width="10" height="25"></td>
+        <td height="25" align="right"><span HABYLang="LblHeight">Height</span></td>
+        <td width="10" height="25"></td>
+        <td height="25">
+         <input type="text" name="tableintheight" value="100" size="4" maxlength="4">
+         <select name="tabletypeheight">
+          <option value="px">px</option>
+          <option value="%">%</option>
+         </select>
+        </td>
+       </tr>
+       <tr height="5"><td colspan="7"></td></tr>
+       <tr>
+        <td height="25" align="right"><span HABYLang="LblTableSpacing">CellSpacing</span></td>
+        <td width="10" height="25"></td>
+        <td height="25"><input type="text" name="tablespacing" value="4" size="3" maxlength="2"></td>
+        <td width="10" height="25"></td>
+        <td height="25" align="right"><span HABYLang="LblTablePadding">CellPadding</span></td>
+        <td width="10" height="25"></td>
+        <td height="25"><input type="text" name="tablepadding" value="4" size="3" maxlength="2"></td>
+       </tr>
+       <tr>
+        <td height="25" align="right"><span HABYLang="LblBorder">Border</span></td>
+        <td width="10" height="25"></td>
+        <td height="25"><input type="text" name="tableborder" value="1" size="3" maxlength="2"></td>
+        <td width="10" height="25"></td>
+        <td height="25" align="right"><span HABYLang="LblAlign">Align</span></td>
+        <td width="10" height="25"></td>
+        <td height="25">
+         <select name="tablealign">
+          <option value="" selected></option>
+          <option HABYLang="LblLeft" value="left">left</option>
+          <option HABYLang="LblCenter" value="center">center</option>
+          <option HABYLang="LblRight" value="right">right</option>
+         </select>
+        </td>
+       </tr>
+       <tr height="5"><td colspan="6"></td></tr>
+       <tr>
+        <td height="25" align="right"><span HABYLang="LblBorderColor">BorderColor</span></td>
+        <td width="10" height="25"></td>
+        <td height="25"><input type="text" id="bordercolor" name="bordercolor" value="" size="7" maxlength="7"> <img id="bordercolorpicker" src="./images/colorpicker.gif" onclick="SelectColor('bordercolor');" align="absmiddle" style="cursor:pointer"></td>
+        <td width="10" height="25"></td>
+        <td height="25" align="right"><span HABYLang="LblBgColor">BackColor</span></td>
+        <td width="10" height="25"></td>
+        <td height="25"><input type="text" id="backcolor" name="backcolor" value="" size="7" maxlength="7"> <img id="backcolorpicker" src="./images/colorpicker.gif" onclick="SelectColor('backcolor');" align="absmiddle" style="cursor:pointer"></td>
+       </tr>
+       <tr>
+        <td height="25" align="right"><span HABYLang="LblBgImage">BackImage</span></td>
+        <td width="10" height="25"></td>
+        <td height="25" colspan="5"><input type="text" id="background" name="background" value="" size="43" style="text-align: left;"></td>
+       </tr>
+      </table>
+
+      <table id="mode1" border="0" cellpadding="0" cellspacing="0" style="display: none;">
+       <tr>
+        <td height="25" align="right"><span HABYLang="LblWidth">Width</span></td>
+        <td width="10" height="25"></td>
+        <td height="25">
+         <input type="text" name="cellintwidth" value="" size="4" maxlength="4">
+         <select name="celltypewidth">
+          <option value="px">px</option>
+          <option value="%">%</option>
+         </select>
+        </td>
+        <td width="10" height="25"></td>
+        <td height="25" align="right"><span HABYLang="LblTableHalign">Align</span></td>
+        <td width="10" height="25"></td>
+        <td height="25">
+         <select name="cellalign">
+          <option value="" selected></option>
+          <option HABYLang="LblLeft" value="left">left</option>
+          <option HABYLang="LblCenter" value="center">center</option>
+          <option HABYLang="LblRight" value="right">right</option>
+         </select>
+        </td>
+       </tr>
+       <tr>
+        <td height="25" align="right"><span HABYLang="LblHeight">Height</span></td>
+        <td width="10" height="25"></td>
+        <td height="25">
+         <input type="text" name="cellintheight" value="" size="4" maxlength="4">
+         <select name="celltypeheight">
+          <option value="px">px</option>
+          <option value="%">%</option>
+         </select>
+        </td>
+        <td width="10" height="25"></td>
+        <td height="25" align="right"><span HABYLang="LblTableValign">Valign</span></td>
+        <td width="10" height="25"></td>
+        <td height="25">
+         <select name="cellvalign">
+          <option value=""></option>
+          <option HABYLang="LblTop" value="top">top</option>
+          <option HABYLang="LblMiddle" value="middle">middle</option>
+          <option HABYLang="LblBottom" value="bottom">bottom</option>
+          <option HABYLang="LblBaseLine" value="baseline">baseline</option>
+         </select>
+        </td>
+       </tr>
+       <tr height="5"><td colspan="7"></td></tr>
+       <tr>
+        <td height="25" align="right"><label for="cellwrap" HABYLang="LblTableCellWrap">Word Wrap</label></td>
+        <td width="10" height="25"></td>
+        <td height="25"><input type="checkbox" id="cellwrap" name="cellwrap"></td>
+        <td width="10" height="25"></td>
+        <td height="25" align="right"><label for="cellheading" HABYLang="LblTableCellHeading">Heading(th)</label></td>
+        <td width="10" height="25"></td>
+        <td height="25"><input type="checkbox" id="cellheading" name="cellheading"></td>
+       </tr>
+       <tr height="5"><td colspan="7"></td></tr>
+       <tr>
+        <td height="25" align="right"><span HABYLang="LblBorderColor">BorderColor</span></td>
+        <td width="10" height="25"></td>
+        <td height="25"><input type="text" id="cellbordercolor" name="cellbordercolor" value="" size="7" maxlength="7"> <img id="cellbordercolorpicker" src="./images/colorpicker.gif" onclick="SelectColor('cellbordercolor');" align="absmiddle" style="cursor:pointer"></td>
+        <td width="10" height="25"></td>
+        <td height="25" align="right"><span HABYLang="LblBorderLight">BorderLight</span></td>
+        <td width="10" height="25"></td>
+        <td height="25"><input type="text" id="cellborderlight" name="cellborderlight" value="" size="7" maxlength="7"> <img id="cellborderlightpicker" src="./images/colorpicker.gif" onclick="SelectColor('cellborderlight');" align="absmiddle" style="cursor:pointer"></td>
+       </tr>
+       <tr>
+        <td height="25" align="right"><span HABYLang="LblBgColor">BackColor</span></td>
+        <td width="10" height="25"></td>
+        <td height="25"><input type="text" id="cellbackcolor" name="cellbackcolor" value="" size="7" maxlength="7"> <img id="cellbackcolorpicker" src="./images/colorpicker.gif" onclick="SelectColor('cellbackcolor');" align="absmiddle" onmouseover="this.className='onimgBtn';" onmouseout="this.className='offimgBtn';" /></td>
+        <td width="10" height="25"></td>
+        <td height="25" align="right"><span HABYLang="LblBorderDark">BorderDark</span></td>
+        <td width="10" height="25"></td>
+        <td height="25"><input type="text" id="cellborderdark" name="cellborderdark" value="" size="7" maxlength="7"> <img id="cellborderdarkpicker" src="./images/colorpicker.gif" onclick="SelectColor('cellborderdark');" align="absmiddle" onmouseover="this.className='onimgBtn';" onmouseout="this.className='offimgBtn';" /></td>
+       </tr>
+       <tr>
+        <td height="25" align="right"><span HABYLang="LblBgImage">BackImage</span></td>
+        <td width="10" height="25"></td>
+        <td height="25" colspan="5"><input type="text" id="cellbackground" name="cellbackground" value="" size="43" style="text-align: left;"></td>
+       </tr>
+      </table>
+
+     </td>
+    </tr>
+    <tr height="10"><td></td></tr>
+   </table>
+  </td>
+  <td width="10"><img src="./images/space.gif" width="10" /></td>
+  <td width="80" align="right" valign="top">
+   <table width="70" height="60" border="0" cellpadding="0" cellspacing="0">
+    <tr>
+     <td>
+      <table width="70" cellpadding="0" cellspacing="0" onclick="CreateTable();" onmouseover="ButtonPlay(this, 'over');" onmouseout="ButtonPlay(this, 'out');">
+       <tr>
+        <td width="3" class="outBtnBegin"><img src="./images/space.gif" width="3" height="20" /></td>
+        <td width="64" class="outBtn"><span HABYLang="BtnDialogOk">O k</span></td>
+        <td width="3" class="outBtnEnd"><img src="./images/space.gif" width="3" height="20" /></td>
+       </tr>
+      </table>
+     </td>
+    </tr>
+    <tr height="5"><td></td></tr>
+    <tr>
+     <td>
+      <table width="70" cellpadding="0" cellspacing="0" onclick="DialogClose();" onmouseover="ButtonPlay(this, 'over');" onmouseout="ButtonPlay(this, 'out');">
+       <tr>
+        <td width="3" class="outBtnBegin"><img src="./images/space.gif" width="3" height="20" /></td>
+        <td width="64" class="outBtn"><span HABYLang="BtnDialogCancel">Cancel</span></td>
+        <td width="3" class="outBtnEnd"><img src="./images/space.gif" width="3" height="20" /></td>
+       </tr>
+      </table>
+     </td>
+    </tr>
+    <tr height="15"><td></td></tr>
+    <tr>
+     <td>
+      <table width="70" cellpadding="0" cellspacing="0" onclick="TableStyle();" onmouseover="ButtonPlay(this, 'over');" onmouseout="ButtonPlay(this, 'out');">
+       <tr>
+        <td width="3" class="outBtnBegin"><img src="./images/space.gif" width="3" height="20" /></td>
+        <td width="64" class="outBtn"><span HABYLang="BtnStyle">Style..</span></td>
+        <td width="3" class="outBtnEnd"><img src="./images/space.gif" width="3" height="20" /></td>
+       </tr>
+      </table>
+     </td>
+    </tr>
+   </table>
+   </form>
+  </td>
+ </tr>
+</table>
+
+</body>
+</html>

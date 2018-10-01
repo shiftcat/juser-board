@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE sqlMap      
+    PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"      
+    "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="Member">
+	
+	<typeAlias alias="memberDTO" type="han.juser.model.MemberDTO"/>
+	
+	
+	<resultMap id="memberList" class="memberDTO">
+		<result property="num" 		column="RN" 	javaType="long" 				jdbcType="NUMBER"/>
+		<result property="userId" 	column="USERID" 	javaType="string" 				jdbcType="VARCHAR"/>
+		<result property="userName" column="USERNAME" 	javaType="string" 				jdbcType="VARCHAR"/>
+		<result property="email" 	column="EMAIL" 		javaType="string" 				jdbcType="VARCHAR"/>
+		<result property="level" 	column="LEV" 		javaType="int" 					jdbcType="NUMBER"/>
+		<result property="logDate" 	column="LOGDATE" 	javaType="java.sql.Timestamp" 	jdbcType="TIMESTAMP"/>
+	</resultMap>
+	
+	<resultMap id="member" class="memberDTO" extends="memberList">
+		<result property="passwd" 			column="PASSWD" 	javaType="string" 				jdbcType="VARCHAR"/>
+		<result property="juminNumber" 		column="JUMIN" 		javaType="string" 				jdbcType="VARCHAR"/>		
+		<result property="phoneNumber" 		column="PHONE" 		javaType="string" 				jdbcType="VARCHAR"/>
+		<result property="mobileNumber" 	column="MOBILE" 	javaType="string" 				jdbcType="VARCHAR"/>
+		<result property="lastLogin" 		column="LASTLOGIN" 	javaType="java.sql.Timestamp" 	jdbcType="TIMESTAMP"/>
+	</resultMap>
+	
+	
+	<select id="getMemberList" parameterClass="map" resultMap="memberList">
+	<![CDATA[
+        SELECT 
+                ROW_NUMBER() OVER(ORDER BY userid) AS "rn"
+        ,       userid
+        ,       username
+        ,       email
+        ,       lev
+        ,       logdate
+        FROM 
+                member
+        WHERE 
+                userid >= ( 
+                            SELECT userid
+                            FROM (
+                                    SELECT 
+                                            userid AS userid
+                                    ,       rownum AS rn
+                                    FROM 
+                                            member
+                                    ORDER BY 
+                                    		userid
+                                  )
+                            WHERE rn = #start#
+                          )
+        AND     rownum <= #limit#
+     ]]>
+	</select>
+
+
+
+	<select id="getRowCount" resultClass="long">
+		SELECT count('*') FROM member
+	</select>
+	
+	
+	<select id="getMember" parameterClass="string" resultMap="member">
+        SELECT 
+                userid
+        ,       passwd
+        ,       email
+        ,       jumin
+        ,       username
+        ,       phone
+        ,       mobile
+        ,       lev
+        ,       logdate
+        ,       lastlogin
+        ,		1 AS "RN"
+        FROM 
+                member 
+        WHERE 
+                userid = #value#
+	</select>
+	
+	
+	<insert id="insert" parameterClass="memberDTO">
+        INSERT INTO member (
+                userid
+        ,       passwd
+        ,       username
+        ,       jumin
+        ,       email
+        ,       phone
+        ,       mobile
+        ,       logdate
+        ,       lastlogin
+        ,       lev
+        ) VALUES (
+                #userId:VARCHAR#
+        ,       #passwd:VARCHAR#
+        ,       #userName:VARCHAR#
+        ,       #juminNumber:VARCHAR#
+        ,       #email:VARCHAR#
+        ,       #phoneNumber:VARCHAR#
+        ,       #mobileNumber:VARCHAR#
+        ,       sysdate
+        ,       sysdate
+        ,       #level:NUMBER# )
+	</insert>
+	
+	
+	<update id="update" parameterClass="memberDTO">
+        UPDATE member SET 
+                username    = #userName:VARCHAR#
+        ,       email       = #email:VARCHAR#
+        ,       phone       = #phoneNumber:VARCHAR#
+        ,       mobile      = #mobileNumber:VARCHAR#
+        WHERE 
+                userid      = #userId:VARCHAR#
+	</update>
+	
+	
+	<delete id="delete" parameterClass="string">
+		DELETE FROM member WHERE userid = #value#
+	</delete>
+	
+	
+	<update id="updatePassword" parameterClass="map">
+		UPDATE member SET passwd = #passwd# WHERE userid = #userId#
+	</update>
+	
+	<update id="updateLevel" parameterClass="map">
+		UPDATE member SET lev = #level# WHERE userid = #userId#
+	</update>
+	
+	<update id="updateLastLongin" parameterClass="string">
+		UPDATE member SET lastlogin = sysdate WHERE userid = #value#
+	</update>
+</sqlMap>

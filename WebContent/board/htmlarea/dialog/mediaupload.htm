@@ -1,0 +1,159 @@
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="robots" content="all" />
+<title> Media Properties </title>
+<link rel="stylesheet" type="text/css" href="css/dialog.css" />
+<script type="text/JScript.Encode" src="./js/dialog.js"></script>
+<script type="text/JScript.Encode" src="./js/mediaupload.js"></script>
+</head>
+<body onload="Init();">
+<table id="mainTable" width="670" height="630" border="0" cellpadding="0" cellspacing="0" onresize="ResizeTo();">
+<form name="frmMedia">
+ <tr>
+  <td width="590" valign="top">
+   <table width="100%" height="20" border="0" cellpadding="0" cellspacing="0" class="outTabLine">
+    <tr>
+     <td id="tab0" width="76" align="left" valign="bottom">
+      <table id="tabs" name="tabs" mode="0" width="76" cellpadding="0" cellspacing="0" onclick="ChangeMode(this); ChangeList('main', '0-0-0-0-0-0', 1);">
+       <tr>
+        <td width="3"><img src="./images/space.gif" width="3" height="20" /></td>
+        <td width="70"><span HABYLang="TabMediaImage">Image</span></td>
+        <td width="3"><img src="./images/space.gif" width="3" height="20" /></td>
+       </tr>
+      </table>
+     </td>
+     <td id="tab3" width="3"><img src="./images/space.gif" width="3" height="20" /></td>
+     <td id="tab1" width="76" align="left" valign="bottom">
+      <table id="tabs" name="tabs" mode="1" width="76" cellpadding="0" cellspacing="0" onclick="ChangeMode(this); ChangeList('main', '0-0-0-0-0-0', 1);">
+       <tr>
+        <td width="3"><img src="./images/space.gif" width="3" height="20" /></td>
+        <td width="70"><span HABYLang="TabMediaFlash">Flash</span></td>
+        <td><img src="./images/space.gif" width="3" height="20" /></td>
+       </tr>
+      </table>
+     </td>
+     <td id="tab4" width="3"><img src="./images/space.gif" width="3" height="20" /></td>
+     <td id="tab2" width="76" align="left" valign="bottom">
+      <table id="tabs" name="tabs" mode="2" width="76" cellpadding="0" cellspacing="0" onclick="ChangeMode(this); ChangeList('main', '0-0-0-0-0-0', 1);">
+       <tr>
+        <td width="3"><img src="./images/space.gif" width="3" height="20" /></td>
+        <td width="70"><span HABYLang="TabMediaAVI">Media</span></td>
+        <td width="3"><img src="./images/space.gif" width="3" height="20" /></td>
+       </tr>
+      </table>
+     </td>
+     <td width="100%">
+      <table width="100%" cellpadding="0" cellspacing="0">
+       <tr>
+        <td>
+         <input id="mode" type="hidden" name="mode" value="0">
+         <input id="ct" type="hidden" name="ct">
+         <input id="mcd" type="hidden" name="mcd">
+         <input id="mediaPath" type="hidden" name="mediaPath">
+         <input id="uploadId" type="hidden" name="uploadId" value="">
+         <input id="memberId" type="hidden" name="memberId" value="">
+         <input id="openfile" type="hidden" name="openfile" value="">
+        </td>
+       </tr>
+      </table>
+     </td>
+    </tr>
+   </table>
+   <table width="590" height="600" border="0" cellpadding="0" cellspacing="0">
+    <tr>
+     <td width="590" height="600" align="center" valign="top" class="setupBox">
+      <table width="570" border="0" cellpadding="0" cellspacing="0">
+       <tr><td height="10" colspan="3"></td></tr>
+       <tr>
+        <td colspan="3">
+         <fieldset>
+          <legend align="left"><span HABYLang="LblMediaDirPath">Dir Path</span></legend>
+          <iframe id="folderpath" name="folderpath" src="" frameborder="0" scrolling="no" style="width:570px;height:20px;"></iframe>
+         </fieldset>
+        </td>
+       </tr>
+       <tr>
+        <td width="245" align="center" valign="top">
+         <fieldset>
+          <legend align="left"><span HABYLang="LblMediaFolder">Folder</span></legend>
+          <iframe id="folderlist" name="folderlist" src="" frameborder="0" scrolling="no" style="width:240px;height:250px;"></iframe>
+         </fieldset>
+         <fieldset>
+          <legend align="left"><span HABYLang="LblMediaPreview">Preview</span></legend>
+          <div style="width:240px; height:250px; border:buttonshadow 1px solid; overflow: hidden;">
+           <table width="100%" height="100%" border="0" cellpadding="5" cellspacing="0">
+            <tr>
+             <td align="center" style="background-color:#ffffff">
+              <div align="center" id="Preview" name="Preview"></div>
+             </td>
+            </tr>
+           </table>
+          </div>
+         </fieldset>
+        </td>
+        <td width="5" align="center" valign="top">&nbsp;</td>
+        <td width="305" align="center" valign="top">
+         <fieldset>
+          <legend align="left"><span HABYLang="LblMediaList">File list</span></legend>
+          <iframe id="filelist" name="filelist" src="" frameborder="0" scrolling="no" style="width:300px; height:450px;"></iframe>
+         </fieldset>
+         <fieldset>
+          <legend align="left"><span HABYLang="LblMediaUpload">Upload</span></legend>
+          <table id="Loading" width="300" height="50" border="0" cellpadding="0" cellspacing="0" style="display: none;">
+           <tr>
+            <td align="center"><span HABYLang="LblMediaUploading">Uploading..</span></td>
+           </tr>
+          </table>
+          <table id="onUpload" width="300" height="50" border="0" cellpadding="0" cellspacing="0" style="display: ;">
+           <tr>
+            <td width="300" height="25" align="center"><input type="text" name="mediaText" style="width:300px; text-align:left" align="absmiddle" readonly></td>
+           </tr>
+           <tr>
+            <td width="300" height="25" align="right">
+             <div id="btnFile" style="width:73px; height:16px; background-image:url('./images/filebrowser_out.gif'); background-repeat: no-repeat; background-position: center center;" onmouseover="this.style.backgroundImage='url(./images/filebrowser_over.gif)';" onmouseout="this.style.backgroundImage='url(./images/filebrowser_out.gif)';">
+              <input id="mediaFile" type="file" name="mediaFile" size="1" style="width:73px;height:16px;filter:alpha(opacity=0);cursor:pointer;opacity:0;moz-opacity:0;" onchange="MediaUpload();">
+             </div>
+            </td>
+           </tr>
+          </table>
+         </fieldset>
+        </td>
+       </tr>
+       <tr><td height="10" colspan="3"></td></tr>
+      </table>
+     </td>
+    </tr>
+   </table>
+  </td>
+  <td width="10"><img src="./images/space.gif" width="10" /></td>
+  <td width="80" align="right" valign="top">
+   <table width="70" border="0" cellpadding="0" cellspacing="0">
+    <tr height="30">
+     <td>
+      <table width="70" cellpadding="0" cellspacing="0" onclick="ReturnSource();" onmouseover="ButtonPlay(this, 'over');" onmouseout="ButtonPlay(this, 'out');">
+       <tr>
+        <td width="3" class="outBtnBegin"><img src="./images/space.gif" width="3" height="20" /></td>
+        <td width="64" class="outBtn"><span HABYLang="BtnDialogOk">O k</span></td>
+        <td width="3" class="outBtnEnd"><img src="./images/space.gif" width="3" height="20" /></td>
+       </tr>
+      </table>
+     </td>
+    <tr height="30">
+     <td>
+      <table width="70" cellpadding="0" cellspacing="0" onclick="DialogClose();" onmouseover="ButtonPlay(this, 'over');" onmouseout="ButtonPlay(this, 'out');">
+       <tr>
+        <td width="3" class="outBtnBegin"><img src="./images/space.gif" width="3" height="20" /></td>
+        <td width="64" class="outBtn"><span HABYLang="BtnDialogCancel">Cancel</span></td>
+        <td width="3" class="outBtnEnd"><img src="./images/space.gif" width="3" height="20" /></td>
+       </tr>
+      </table>
+     </td>
+    </tr>
+   </table>
+  </td>
+ </tr>
+</form>
+</table>
+</body>
+</html>

@@ -1,0 +1,95 @@
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="robots" content="all" />
+<title> HyperLink Infomation </title>
+<link rel="stylesheet" type="text/css" href="css/dialog.css" />
+<script type="text/JScript.Encode" src="./js/dialog.js"></script>
+<script type="text/JScript.Encode" src="./js/createlink.js"></script>
+<style type="text/css">
+	input
+	{
+		color: #000000;
+		background-color: #FFFFFF;
+		border: buttonshadow 1 solid;
+		height: 18px;
+	}
+</style>
+</head>
+<body onload="Init();">
+<form name="frmLink">
+<table id="mainTable" width="480" cellpadding="0" cellspacing="0" border="0" onresize="ResizeTo();">
+ <tr>
+  <td width="400" align="center">
+   <fieldset>
+    <legend align="left"><font HABYLang="TtlHpLinkTitle" color="#0000ff">HyperLink Infomation</font></legend>
+    <table width="380" cellpadding="0" cellspacing="0" border="0">
+     <tr height="25">
+      <td width="50" align="right"><span HABYLang="LblHpLinkType">Type</span> :&nbsp;</td>
+      <td width="140">
+       <input type="hidden" name="text" value="">
+       <select name="protocol" onchange="ChangeProtocol(this.options[this.selectedIndex].value)">
+        <option value="" HABYLang="LblHpLinkDefaultType">(Other)
+        <option value="file://">file:
+        <option value="ftp://">ftp:
+        <option value="gopher://">gopher:
+        <option value="http://" selected>http:
+        <option value="https://">https:
+        <option value="mailto:">mailto:
+        <option value="news:">news:
+        <option value="telnet:">telnet:
+        <option value="wias:">wias:
+       </select>
+      </td>
+      <td width="50" align="right"><span HABYLang="LblHpLinkTaget">Taget</span> :&nbsp;</td>
+      <td width="140">
+       <select name="target">
+        <option value="">
+        <option value="_self">_self
+        <option value="_blank" selected="selected">_blank
+        <option value="_parent">_parent
+        <option value="_top">_top
+       </select>
+      </td>
+     </tr>
+     <tr height="25">
+      <td align="right"><span HABYLang="LblHpLinkURL">URL</span> :&nbsp;</td>
+      <td colspan="3"><input type="text" name="link" value="http://" size="53"></td>
+     </tr>
+     <tr height="25">
+      <td align="right"><span HABYLang="LblHpLinkLabel">Title</span> :&nbsp;</td>
+      <td colspan="3"><input type="text" name="title" value="" size="53"></td>
+     </tr>
+    </table>
+   </fieldset>
+  </td>
+  <td width="10"><img src="./images/space.gif" width="10" /></td>
+  <td width="80" valign="top" align="right">
+   <table width="70" height="60" border="0" cellpadding="0" cellspacing="0">
+    <tr>
+     <td>
+      <table width="70" cellpadding="0" cellspacing="0" onclick="InsertLink();" onmouseover="ButtonPlay(this, 'over');" onmouseout="ButtonPlay(this, 'out');">
+       <tr>
+        <td width="3" class="outBtnBegin"><img src="./images/space.gif" width="3" height="20" /></td>
+        <td width="64" class="outBtn"><span HABYLang="BtnDialogOk">O k</span></td>
+        <td width="3" class="outBtnEnd"><img src="./images/space.gif" width="3" height="20" /></td>
+       </tr>
+      </table>
+     </td>
+    <tr>
+     <td>
+      <table width="70" cellpadding="0" cellspacing="0" onclick="DialogClose();" onmouseover="ButtonPlay(this, 'over');" onmouseout="ButtonPlay(this, 'out');">
+       <tr>
+        <td width="3" class="outBtnBegin"><img src="./images/space.gif" width="3" height="20" /></td>
+        <td width="64" class="outBtn"><span HABYLang="BtnDialogCancel">Cancel</span></td>
+        <td width="3" class="outBtnEnd"><img src="./images/space.gif" width="3" height="20" /></td>
+       </tr>
+      </table>
+     </td>
+    </tr>
+   </table>
+  </tr>
+</table>
+</form>
+</body>
+</html>

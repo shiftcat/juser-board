@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="euc-kr" ?>
+
+<role-config>
+	<!--  -->
+	<role name="default" >
+		<url path="/error.do" allow="true" />
+		<url path="/index.do" allow="true" />
+
+		<url path="/board/index.do" allow="true" />
+		<url path="/board/view.do" allow="true" />
+		<url path="/board/search.do" allow="true" />
+		
+		<url path="/jboard/index.do" allow="true" />
+		<url path="/jboard/view.do" allow="true" />
+		<url path="/jboard/search.do" allow="true" />
+		
+		<url path="/guest/index.do" allow="true" />
+		<url path="/blog/index.do" allow="true" />
+		<url path="/blog/content.do" allow="true" />
+		<url path="/blog/replyList.do" allow="true" />
+		
+		<url path="/member/frm-account.do" allow="true" />
+		<url path="/member/account.do" allow="true" />
+		<url path="/member/login.do" allow="true" />
+		<url path="/member/idCheckForm.do" allow="true" />
+		<url path="/member/idCheck.do" allow="true" />
+		<url path="/member/loginForm.do" allow="true" />
+		<url path="/member/myInfo.do" allow="true" />
+	</role>
+	
+	
+	<role name="userRole" >
+		<url path="/member/logout.do" allow="true" />
+		<url path="/member/frm-really.do" allow="true" />
+		<url path="/member/frm-verify.do" allow="true" />
+		<url path="/member/frm-newPasswd.do" allow="true" />
+		<url path="/member/frm-modify.do" allow="true" />
+		<url path="/member/modify.do" allow="true" />
+		<url path="/member/secede.do" allow="true" />
+		<url path="/member/changePasswd.do" allow="true" />
+		<url path="/member/loginMemberList.do" allow="true" />
+		
+		
+		<url path="/board/index.do" allow="true" />
+		<url path="/board/download.do" allow="true" />
+		<url path="/board/frm-bbsWrite.do" allow="true" />
+		<url path="/board/frm-bbsModify.do" allow="true" />
+		<url path="/board/writeAction.do" allow="true" />
+		<url path="/board/modifyAction.do" allow="true" />
+		<url path="/board/removeAction.do" allow="true" />
+		<url path="/board/replyWriteAction.do" allow="true" />
+		<url path="/board/replyRemoveAction.do" allow="true" />
+		<url path="/board/view.do" allow="true" />
+		<url path="/board/search.do" allow="true" />
+		<url path="/board/vote.do" allow="true" />
+		
+		<url path="/jboard/download.do" allow="true" />
+		<url path="/jboard/writeForm.do" allow="true" />
+		<url path="/jboard/modifyForm.do" allow="true" />
+		<url path="/jboard/reWriteForm.do" allow="true" />
+		<url path="/jboard/write.do" allow="true" />
+		<url path="/jboard/modify.do" allow="true" />
+		<url path="/jboard/remove.do" allow="true" />
+		<url path="/jboard/vote.do" allow="true" />
+		<url path="/jboard/deleteFile.do" allow="true" />
+		
+		
+		<url path="/blog/index.do" allow="true" />
+		<url path="/blog/search.do" allow="true" />
+		<url path="/blog/writeForm.do" allow="true" />
+		<url path="/blog/modifyForm.do" allow="true" />
+		<url path="/blog/write.do" allow="true" />
+		<url path="/blog/modify.do" allow="true" />
+		<url path="/blog/remove.do" allow="true" />
+		<url path="/blog/writeReply.do" allow="true" />
+		<url path="/blog/replyList.do" allow="true" />
+		<url path="/blog/removeReply.do" allow="true" />
+		<url path="/blog/content.do" allow="true" />
+		
+		
+		<url path="/guest/write.do" allow="true" />
+		<url path="/guest/delete.do" allow="true" />
+		<url path="/guest/modify.do" allow="true" />
+	</role>
+	
+	<!--  -->
+	<role name="admin" defaultPermission="true" >
+	</role>
+	
+	<!--  -->
+	<role name="anonymous" extends="default">
+
+	</role>
+	
+	<!--  -->
+	<role name="user" extends="default,userRole" >
+	</role>
+	
+	<user code="1" role="admin" />
+	<user code="2" role="user" />
+	<user code="0" role="anonymous" />
+</role-config>

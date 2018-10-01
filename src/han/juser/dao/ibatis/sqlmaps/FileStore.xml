@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE sqlMap      
+    PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"      
+    "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="File">
+	
+	<typeAlias alias="fileDto" type="han.juser.model.FileDTO" />
+	
+	<resultMap class="fileDto" id="fileResult">
+		<result property="tableName" column="TABLE_NAME"   jdbcType="VARCHAR"  />
+		<result property="seq"       column="SEQ"          jdbcType="NUMBER"   />
+		<result property="fileName"  column="FILE_NAME"    jdbcType="VARCHAR"  />
+		<result property="binary"    column="UP_FILE"      jdbcType="BLOB"     />
+	</resultMap>
+	
+	<select id="getFile" parameterClass="fileDto" resultMap="fileResult">
+		SELECT 
+				table_name
+		, 		seq
+		, 		file_name
+		, 		up_file
+		FROM 
+				file_store 
+		WHERE 
+				table_name = #tableName# 
+		AND 	seq        = #seq#
+	</select>
+	
+	<insert id="saveFile" parameterClass="fileDto">
+		<![CDATA[
+		INSERT INTO file_store ( 
+				table_name
+		, 		seq
+		, 		file_name
+		, 		up_file
+		) VALUES (
+				#tableName:VARCHAR#
+		, 		#seq:NUMBER#
+		, 		#fileName:VARCHAR#
+		, 		#binary:BLOB# )
+		]]>
+	</insert>
+	<!--  
+			MERGE INTO FILE_STORE A
+			USING ( 
+					SELECT
+							#tableName:VARCHAR# AS TABLE_NAME
+					,		#seq:NUMBER#        AS SEQ
+					FROM DUAL 
+				  ) B
+			ON (
+					A.TABLE_NAME = B.TABLE_NAME
+				AND A.SEQ        = B.SEQ 
+			   )
+			WHEN MATCHED THEN
+				UPDATE SET 
+						file_name  = #fileName:VARCHAR#
+				, 		up_file    = #binary:BLOB#
+			WHEN NOT MATCHED THEN
+				INSERT ( 
+						table_name
+				, 		seq
+				, 		file_name
+				, 		up_file
+				) VALUES (
+						#tableName:VARCHAR#
+				, 		#seq:NUMBER#
+				, 		#fileName:VARCHAR#
+				, 		#binary:BLOB# )	
+	-->
+	
+	
+	<update id="updateFile" parameterClass="fileDto">
+		UPDATE file_store SET 
+				file_name  = #fileName:VARCHAR#
+		, 		up_file    = #binary:BLOB#
+		WHERE 
+				table_name = #tableName:VARCHAR#
+		AND     seq        = #seq:NUMBER#
+	</update>
+	
+	<delete id="deleteFile" parameterClass="fileDto">
+		DELETE FROM file_store 
+		WHERE table_name = #tableName# AND seq = #seq#
+	</delete>
+</sqlMap>

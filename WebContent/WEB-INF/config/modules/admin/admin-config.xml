@@ -1,0 +1,181 @@
+<!DOCTYPE struts-config PUBLIC 
+	"-//Apache Software Foundation//DTD Struts Configuration 1.3//EN" 
+	"http://jakarta.apache.org/struts/dtds/struts-config_1_3.dtd">
+
+<struts-config>
+
+	<form-beans>
+		
+		<form-bean name="cgiform" 
+					type="org.apache.struts.validator.DynaValidatorForm">
+		</form-bean>
+		
+		<!-- 회원 등급 설정 폼 -->
+    	<form-bean name="changeLevelForm" 
+    					type="org.apache.struts.validator.DynaValidatorForm">
+    		<form-property name="level" type="java.lang.String" />
+    		<form-property name="userId" type="java.lang.String" />
+    	</form-bean>
+    	
+	</form-beans>
+
+
+	
+	<global-exceptions>
+		<exception 
+				type="han.juser.service.ServiceException"
+				key=""
+				handler="han.juser.controller.action.MyExceptionHandler"
+				scope="request"
+				path="error"
+		/>
+		
+		<exception 
+				type="java.lang.Exception"
+				key="errors.java.lang.Exception"
+				scope="request"
+				path="error"
+		/>
+		<exception 
+				type="java.lang.RuntimeException"
+				key="errors.java.lang.RuntimeException"
+				scope="request"
+				path="error"
+		/>
+		
+		<exception 
+				type="han.juser.service.NotOwnerException"
+				key="errors.han.juser.service.NotOwnerException"
+				scope="request"
+				path="error"
+		/>
+		<exception 
+				type="han.juser.service.ContentNotFoundException"
+				key="errors.han.juser.service.ContentNotFoundException"
+				scope="request"
+				path="error"
+		/>
+		<exception 
+				type="han.juser.service.ReplyNotFoundException"
+				key="errors.han.juser.service.ReplyNotFoundException"
+				scope="request"
+				path="error"
+		/>
+		<exception 
+				type="han.juser.service.MemberExistException"
+				key="errors.han.juser.service.MemberExistException"
+				scope="request"
+				path="error"
+		/>
+		<exception 
+				type="han.juser.service.ParentContentNotFoundException"
+				key="errors.han.juser.service.ParentContentNotFoundException"
+				scope="request"
+				path="error"
+		/>
+		
+		<exception 
+				type="han.juser.service.CategoryNotFoundException"
+				key="errors.han.juser.service.CategoryNotFoundException"
+				scope="request"
+				path="error"
+		/>
+		<exception 
+				type="han.juser.service.MissMatchPasswordException"
+				key="errors.han.juser.service.MissMatchPasswordException"
+				scope="request"
+				path="error"
+		/>
+		
+		<exception 
+				type="han.juser.service.MemberNotFoundException"
+				key="errors.han.juser.service.MemberNotFoundException"
+				scope="request"
+				path="error"
+		/>
+		<exception 
+				type="han.juser.controller.manager.UploadException"
+				key="errors.han.juser.controller.manager.UploadException"
+				scope="request"
+				path="error"
+		/>
+	</global-exceptions>
+
+	
+	
+	
+	
+	<global-forwards>
+		<forward name="fw-error" 
+        			path="error" 
+        			redirect="false" />
+        			
+    	<forward name="fw-message" 
+    				path="message" 
+    				redirect="false" />
+    	
+    	<forward name="fw-memberList"
+    				path="admin.memberList" />
+    				
+    	<forward name="fw-memberInfo" 
+    				path="admin.memberInfo" />
+    				
+	</global-forwards>
+
+
+	<action-mappings >
+	
+		<action path="/index"
+    			parameter="index"
+    			type="han.juser.controller.action.DelegateActionProxy"
+		/>
+
+    	
+    	<action path="/memberList"
+    			parameter="memberList"
+    			type="han.juser.controller.action.DelegateActionProxy" 
+		/>
+    			
+    	<action path="/memberInfo"
+    			parameter="memberInfo"
+    			type="han.juser.controller.action.DelegateActionProxy" 
+		/>
+    			
+    	<action path="/changeLevel"
+    			parameter="changeLevel"
+    			type="han.juser.controller.action.DelegateActionProxy" 
+    			name="changeLevelForm"
+    			validate="true"
+    			input="error"
+    			scope="request" 
+		/>
+    			
+    	
+    	<action path="/category"
+    	        parameter="category"
+    	        type="han.juser.controller.action.DelegateActionProxy" 
+    	        name="cgiform" 
+    	        validate="false" 
+    	        scope="request" >
+    	    <forward name="fw-category" path="blog.category" />  
+    	</action>
+    	
+	</action-mappings>
+	
+	
+	
+	<!-- 
+	<controller processorClass="org.apache.struts.tiles.TilesRequestProcessor" />
+	 -->
+	 <!-- TilesRequestProcessor를 상속 구현한 사용자정의 Processor -->
+	<controller processorClass="han.role.RoleRequestProcessor" />
+	
+	
+	<message-resources parameter="han/resource/application" /> 
+	
+	<plug-in className="org.apache.struts.validator.ValidatorPlugIn">
+		<set-property property="pathnames" 
+	value="/WEB-INF/config/validator-rules.xml,/WEB-INF/config/multipart-validator-rules.xml,/WEB-INF/config/modules/blog/blog-validation.xml"/>
+	</plug-in>
+
+</struts-config>

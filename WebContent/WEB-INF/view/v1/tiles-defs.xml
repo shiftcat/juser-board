@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="EUC-KR" ?>
+
+<!DOCTYPE tiles-definitions PUBLIC
+      "-//Apache Software Foundation//DTD Tiles Configuration 1.3//EN"
+      "http://struts.apache.org/dtds/tiles-config_1_3.dtd">
+
+<tiles-definitions>
+	
+	<definition name="download" path="/WEB-INF/view/v1/board/fileDownUtil.jsp">
+	</definition>
+	
+	
+	<!-- global -->
+	<definition name="index" path="/WEB-INF/view/v1/layout/defaultLayout.jsp">
+		<put name="title"   value="Y.Han's Home"          />
+		<put name="head"    value="/WEB-INF/view/v1/_head.jsp"         />
+		<put name="login"   value="/WEB-INF/view/v1/member/_login.jsp" />
+		<put name="statistics" value="/WEB-INF/view/v1/_statistics.jsp" />
+		<put name="submenu"   value="/WEB-INF/view/v1/category/_cate.jsp" />
+		<put name="mainmenu"    value="/WEB-INF/view/v1/_mainMenu.jsp"         />
+		<put name="bodyTop" value="/WEB-INF/view/v1/_bodyTop.jsp" />
+		<put name="bodyCenter"    value="/WEB-INF/view/v1/index.jsp"         />
+		<put name="bodyBottom" value="/WEB-INF/view/v1/_bodyBottom.jsp" />
+		<put name="bottom"  value="/WEB-INF/view/v1/_bottom.jsp"       />
+	</definition>
+	
+	<definition name="message" path="/WEB-INF/view/v1/layout/simpleLayout.jsp">
+		<put name="title" value="처리결과" />
+		<put name="body" value="/WEB-INF/view/v1/message.jsp" />
+	</definition>
+	
+	<definition name="error" path="/WEB-INF/view/v1/layout/simpleLayout.jsp">
+		<put name="title"  value="에러메시지"></put>
+		<put name="body" value="/WEB-INF/view/v1/error.jsp" />
+	</definition>
+	
+	<definition name="systemError" path="/WEB-INF/view/v1/layout/simpleLayout.jsp">
+		<put name="title"  value="시스템 에러메시지"></put>
+		<put name="body" value="/WEB-INF/view/v1/systemError.jsp" />
+	</definition>
+	
+	
+	
+	<!-- 방명록 -->
+	<definition name="guest.index" extends="index">
+		<put name="title"   value="Y.Han's Home - 방명록"/>
+		<put name="bodyCenter"    value="/WEB-INF/view/v1/guest/index.jsp" />
+	</definition>
+	
+	
+	
+	<!-- admin -->
+	
+	<definition name="admin.memberInfo" extends="index">
+		<put name="title" value="Y.Han's Home - 회원정보" />
+		<put name="bodyCenter" value="/WEB-INF/view/v1/admin/memberInfo.jsp" />
+	</definition>
+	
+	<definition name="admin.memberList" extends="index">
+		<put name="title" value="Y.Han's Home - 회원정보" />
+		<put name="bodyCenter" value="/WEB-INF/view/v1/admin/memberList.jsp" />
+	</definition>
+	
+	
+	
+	
+	<!-- 회원-->
+	<definition name="member.myinfo" extends="index">
+		<put name="title"   value="Y.Han's Home - 회원정보"/>
+		<put name="bodyCenter"    value="/WEB-INF/view/v1/member/myinfo.jsp" />
+	</definition>
+	
+	<definition name="member.accountForm" extends="index">
+		<put name="title"   value="Y.Han's Home - 회원가입"/>
+		<put name="bodyCenter"    value="/WEB-INF/view/v1/member/accountForm.jsp" />
+	</definition>
+	
+	<definition name="member.verifyForm" extends="index">
+		<put name="title"   value="Y.Han's Home - 아이디,패스워드 입력"/>
+		<put name="bodyCenter"    value="/WEB-INF/view/v1/member/verifyForm.jsp" />
+	</definition>
+	
+	<definition name="member.newPasswdForm" extends="index">
+		<put name="title"   value="Y.Han's Home - 암호변경"/>
+		<put name="bodyCenter"    value="/WEB-INF/view/v1/member/changePasswdForm.jsp" />
+	</definition>
+	
+	<definition name="member.modifyForm" extends="index">
+		<put name="title"   value="Y.Han's Home - 회원정보 변경"/>
+		<put name="bodyCenter"    value="/WEB-INF/view/v1/member/modifyForm.jsp" />
+	</definition>
+	
+	<definition name="member.reallyForm" extends="index">
+		<put name="title"   value="Y.Han's Home - 회원탈퇴"/>
+		<put name="bodyCenter"    value="/WEB-INF/view/v1/member/reallyForm.jsp" />
+	</definition>
+	
+	<definition name="member.loginForm" extends="index">
+		<put name="title"   value="Y.Han's Home - 로그인" />
+		<put name="bodyCenter" value="/WEB-INF/view/v1/member/loginForm.jsp" />
+	</definition>
+	
+	<definition name="member.idCheckForm" path="/WEB-INF/view/v1/layout/simpleLayout.jsp">
+		<put name="title" value="Y.Han's Home - 아이디 중복검사" />
+		<put name="body" value="/WEB-INF/view/v1/member/idCheckForm.jsp" />
+	</definition>
+	
+	<definition name="member.idCheckResult" path="/WEB-INF/view/v1/layout/simpleLayout.jsp">
+		<put name="title" value="Y.Han's Home - 아이디 중복검사" />
+		<put name="body" value="/WEB-INF/view/v1/member/idCheckResult.jsp" />
+	</definition>
+	
+	
+	
+	
+	<!-- bbs -->
+	<definition name="bbs.writeForm" extends="index">
+		<put name="title"   value="Y.Han's Home - 글입력"/>
+		<put name="bodyCenter"    value="/WEB-INF/view/v1/board/writeForm.jsp" />
+	</definition>
+	
+	<definition name="bbs.index" extends="index">
+		<put name="title"   value="Y.Han's Home - 게시판"/>
+		<put name="bodyCenter"    value="/WEB-INF/view/v1/board/index.jsp" />
+	</definition>
+	
+	<definition name="bbs.view" extends="index">
+		<put name="title"   value="Y.Han's Home - 게시판"/>
+		<put name="bodyTop" value="/WEB-INF/view/v1/board/view.jsp" />
+		<put name="bodyCenter"    value="/WEB-INF/view/v1/board/reply.jsp" />
+		<put name="bodyBottom" value="/WEB-INF/view/v1/board/index.jsp" />
+	</definition>
+	
+	
+	
+	
+	<!-- jboard -->
+	<definition name="jboard.index" extends="index">
+		<put name="title"   value="Y.Han's Home - 게시판"/>
+		<put name="bodyCenter"    value="/WEB-INF/view/v1/jboard/index.jsp" />
+	</definition>
+	
+	<definition name="jboard.view" extends="index">
+		<put name="title"   value="Y.Han's Home - 게시판"/>
+		<put name="bodyCenter"    value="/WEB-INF/view/v1/jboard/view.jsp" />
+	</definition>
+	
+	<definition name="jboard.writeForm" extends="index">
+		<put name="title"   value="Y.Han's Home - 글입력"/>
+		<put name="bodyCenter"    value="/WEB-INF/view/v1/jboard/writeForm.jsp" />
+	</definition>
+	
+	<definition name="jboard.modifyForm" extends="index">
+		<put name="title"   value="Y.Han's Home - 글수정"/>
+		<put name="bodyCenter"    value="/WEB-INF/view/v1/jboard/modifyForm.jsp" />
+	</definition>
+	
+	
+	
+	
+	<!-- blog -->
+	<definition name="blog.index" extends="index">
+		<put name="title"   value="Y.Han's Home - 블로그"/>
+		<put name="bodyCenter"    value="/WEB-INF/view/v1/blog/index.jsp" />
+	</definition>
+	
+	
+	<definition name="blog.view" extends="index">
+		<put name="title"   value="Y.Han's Home - 블로그"/>
+		<put name="bodyCenter"    value="/WEB-INF/view/v1/blog/view.jsp" />
+	</definition>
+	
+	<definition name="blog.writeForm" extends="index">
+		<put name="title"   value="Y.Han's Home - 글입력"/>
+		<put name="bodyCenter"    value="/WEB-INF/view/v1/blog/writeForm.jsp" />
+	</definition>
+	
+	<definition name="blog.modifyForm" extends="index">
+		<put name="title"   value="Y.Han's Home - 글수정"/>
+		<put name="bodyCenter"    value="/WEB-INF/view/v1/blog/writeForm.jsp" />
+	</definition>
+	
+	<definition name="blog.content" path="/WEB-INF/view/v1/layout/simpleLayout.jsp">
+		<put name="title" value="" />
+		<put name="body" value="/WEB-INF/view/v1/blog/content.jsp" />
+	</definition>
+	
+	
+	<definition name="blog.category" extends="index" >
+		<put name="title" value="Y.Han's Home - 카테고리 설정" />
+		<put name="bodyCenter" value="/WEB-INF/view/v1/category/category.jsp" />
+	</definition>
+</tiles-definitions> 

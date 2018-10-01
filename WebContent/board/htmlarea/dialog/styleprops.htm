@@ -1,0 +1,578 @@
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="robots" content="all" />
+<title> Style Properties </title>
+<link rel="stylesheet" type="text/css" href="css/dialog.css" />
+<script type="text/JScript.Encode" src="./js/dialog.js"></script>
+<script type="text/JScript.Encode" src="./js/styleprops.js"></script>
+<style type="text/css">
+	.offinput
+	{
+		color: #cccccc;
+		background-color: #f5f5f5;
+		border: buttonshadow 1px solid;
+		text-align: right;
+	}
+
+	.colorButton
+	{
+		border-right: buttonshadow 1px solid;
+		border-top: buttonhighlight 1px solid;
+		border-left: buttonhighlight 1px solid;
+		border-bottom: buttonshadow 1px solid;
+		background-color: threedface;
+		color: #000000;
+		text-align: center;
+		cursor: pointer;
+	}
+
+	.inputTable
+	{
+		height: 18px;
+		border: buttonshadow 1px solid;
+	}
+
+	.inputBox
+	{
+		border: buttonshadow 1px solid;
+	}
+
+	.inputText
+	{
+		width: 20px;
+		height: 18px;
+		border: none;
+	}
+
+	.updownButton
+	{
+		width: 17px;
+		height: 9px;
+		font-size:4px;
+		border-right: buttonshadow 2px solid;
+		border-top: buttonhighlight 1px solid;
+		border-left: buttonhighlight 1px solid;
+		border-bottom: buttonshadow 2px solid;
+		background-color: threedface;
+		color: #000000;
+		text-align: center;
+		cursor: pointer;
+	}
+
+	.onSelected
+	{
+		background-color: #316ac5;
+	}
+
+	.offSelected
+	{
+		background-color: #ffffff;
+	}
+</style>
+</head>
+<body onload="Init();">
+<table id="mainTable" width="500" height="275" border="0" cellpadding="0" cellspacing="0" onresize="ResizeTo();">
+ <tr>
+  <td align="center" valign="top">
+   <form name="frmStyle">
+   <table width="100%" height="20" border="0" cellpadding="0" cellspacing="0" class="outTabLine">
+    <tr>
+     <td width="76" align="left" valign="bottom">
+      <table id="tabs" name="tabs" mode="0" width="76" cellpadding="0" cellspacing="0" onclick="ChangeMode(this);">
+       <tr>
+        <td width="3"><img src="./images/space.gif" width="3" height="20" /></td>
+        <td width="70"><span HABYLang="TabFont">Font</span></td>
+        <td width="3"><img src="./images/space.gif" width="3" height="20" /></td>
+       </tr>
+      </table>
+     </td>
+     <td width="3"><img src="./images/space.gif" width="3" height="20" /></td>
+     <td width="76" align="left" valign="bottom">
+      <table id="tabs" name="tabs" mode="1" width="76" cellpadding="0" cellspacing="0" onclick="ChangeMode(this);">
+       <tr>
+        <td width="3"><img src="./images/space.gif" width="3" height="20" /></td>
+        <td width="70"><span HABYLang="TabBorder">Border</span></td>
+        <td><img src="./images/space.gif" width="3" height="20" /></td>
+       </tr>
+      </table>
+     </td>
+     <td width="100%">
+      <table width="100%" cellpadding="0" cellspacing="0">
+       <tr>
+        <td>
+         <input id="mode" type="hidden" name="mode" value="0">
+        </td>
+       </tr>
+      </table>
+     </td>
+    </tr>
+   </table>
+
+   <table width="100%" height="250" border="0" cellpadding="0" cellspacing="0" class="setupBox">
+    <tr height="5"><td></td></tr>
+    <tr>
+     <td align="center" valign="top">
+      <table id="mode0" border="0" cellpadding="0" cellspacing="10" style="display:;">
+       <tr>
+        <td width="150" align="center" valign="top">
+         <table width="150" cellpadding="0" cellspacing="0" border="0">
+          <tr height="20">
+           <td><span HABYLang="LblFont">Font</span> :&nbsp;</td>
+          </tr>
+          <tr height="25">
+           <td><input type="text" id="font_value" name="font_value" value="" style="width:150px;" readonly></td>
+          </tr>
+          <tr height="25">
+           <td>
+            <select id="font_name" name="font_name" style="width:150px;" size="12" onchange="document.getElementById('font_value').value = this.options[this.selectedIndex].value;">
+             <option HABYLang="LblFontGulim" value="Gulim">Gulim
+             <option HABYLang="LblFontGulimChe" value="GulimChe">GulimChe
+             <option HABYLang="LblFontDotum" value="Dotum">Dotum
+             <option HABYLang="LblFontDotumChe" value="DotumChe">DotumChe
+             <option HABYLang="LblFontBatang" value="Batang">Batang
+             <option HABYLang="LblFontBatangChe" value="BatangChe">BatangChe
+             <option HABYLang="LblFontGungsuh" value="Gungsuh">Gungsuh
+             <option HABYLang="LblFontGungsuhChe" value="GungsuhChe">GungsuhChe
+             <option value="Arial">Arial
+             <option value="Courier New">Courier New
+             <option value="Tahoma">Tahoma
+             <option value="Times New Roman">Times New Roman
+             <option value="Verdana">Verdana
+            </select>
+           </td>
+          </tr>
+         </table>
+        </td>
+        <td width="210" align="center" valign="top">
+         <table width="210" cellpadding="0" cellspacing="0" border="0">
+          <tr>
+           <td width="105" align="left">
+            <table width="100" cellpadding="0" cellspacing="0" border="0">
+             <tr height="20">
+              <td><span HABYLang="LblFontStyle">Font Style</span> :&nbsp;</td>
+             </tr>
+             <tr height="25">
+              <td><input type="text" id="style_value" name="style_value" value="" style="width:100px;" readonly></td>
+             </tr>
+             <tr height="25">
+              <td>
+               <select id="font_style" name="font_style" style="width:100px;" size="5" onchange="document.getElementById('style_value').value = this.options[this.selectedIndex].value;">
+                <option value="Regular">Regular
+                <option value="Italic">Italic
+                <option value="Bold">Bold
+                <option value="Bold Italic">Bold Italic
+               </select>
+              </td>
+             </tr>
+            </table>
+           </td>
+           <td width="105" align="right">
+            <table width="100" cellpadding="0" cellspacing="0" border="0">
+             <tr height="20">
+              <td><span HABYLang="LblFontSize">Font Size</span> :&nbsp;</td>
+             </tr>
+             <tr height="25">
+              <td><input type="text" id="size_value" name="size_value" value="" style="width:100px;" readonly></td>
+             </tr>
+             <tr height="25">
+              <td>
+               <select id="font_size" name="font_size" style="width:100px;" size="5" onchange="document.getElementById('size_value').value = this.options[this.selectedIndex].value;">
+                <option value="8pt">8
+                <option value="9pt">9
+                <option value="10pt">10
+                <option value="12pt">12
+                <option value="14pt">14
+                <option value="16pt">16
+                <option value="18pt">18
+                <option value="20pt">20
+                <option value="22pt">22
+                <option value="24pt">24
+                <option value="26pt">26
+                <option value="28pt">28
+                <option value="36pt">36
+                <option value="48pt">48
+                <option value="72pt">72
+               </select>
+              </td>
+             </tr>
+            </table>
+           </td>
+          </tr>
+          <tr height="5"><td colspan="2"></td></tr>
+          <tr>
+           <td width="105" align="left">
+            <table width="100" cellpadding="0" cellspacing="0" border="0">
+             <tr height="20">
+              <td><span HABYLang="LblDecoration">Decoration</span> :&nbsp;</td>
+             </tr>
+             <tr height="25">
+              <td>
+               <select id="text_decoration" name="text_decoration" style="width:100px;">
+                <option HABYLang="LblNone" value="none">none
+                <option HABYLang="LblUnderline" value="underline">underline
+                <option HABYLang="LblOverline" value="overline">overline
+                <option HABYLang="LblLinethrough" value="line-through">line through
+               </select>
+              </td>
+             </tr>
+            </table>
+           </td>
+           <td width="105" align="right">
+            <table width="100" cellpadding="0" cellspacing="0" border="0">
+             <tr height="20">
+              <td><span HABYLang="LblForeground">Foreground</span> :&nbsp;</td>
+             </tr>
+             <tr height="25">
+              <td>
+               <table width="100" height="20" border="0" cellpadding="0" cellspacing="0" class="colorButton" onclick="SelectColor('foreground');">
+                <tr>
+                 <td width="84" align="center"><input type="text" id="foreground" name="foreground" value="" style="width:80px; height:12px; cursor:pointer;" readonly></td>
+                 <td width="3" align="right"><span HABYLang="LblLine_a" style="font-size:9px; color:buttonshadow;">|</span></td>
+                 <td width="13" align="center"><span HABYLang="BtnDnButton" style="font-size:9px;"></span></td>
+                </tr>
+               </table>
+              </td>
+             </tr>
+            </table>
+           </td>
+          </tr>
+          <tr>
+           <td width="105" align="left">&nbsp;</td>
+           <td width="105" align="right">
+            <table width="100" cellpadding="0" cellspacing="0" border="0">
+             <tr height="20">
+              <td><span HABYLang="LblBackground">Background</span> :&nbsp;</td>
+             </tr>
+             <tr height="25">
+              <td>
+               <table width="100" height="20" border="0" cellpadding="0" cellspacing="0" class="colorButton" onclick="SelectColor('background');">
+                <tr>
+                 <td width="84" align="center"><input type="text" id="background" name="background" value="" style="width:80px; height:12px; cursor:pointer;" readonly></td>
+                 <td width="3" align="right"><span HABYLang="LblLine_a" style="font-size:9px; color:buttonshadow;">|</span></td>
+                 <td width="13" align="center"><span HABYLang="BtnDnButton" style="font-size:9px;"></span></td>
+                </tr>
+               </table>
+              </td>
+             </tr>
+            </table>
+           </td>
+          </tr>
+         </table>
+        </td>
+       </tr>
+      </table>
+
+      <table id="mode1" border="0" cellpadding="0" cellspacing="10" style="display:none;">
+       <tr>
+        <td width="180" align="center" valign="top">
+         <fieldset>
+          <legend align="left"><span HABYLang="LblBorderStyle">Style</span></legend>
+          <table width="160" cellpadding="0" cellspacing="0" border="0">
+           <tr height="25">
+            <td width="60" align="right"><span HABYLang="LblLeft">Left</span> :&nbsp;</td>
+            <td width="100">
+             <select id="left_style" name="left_style" style="width:90px;" onchange="AllChange('style', this.value);">
+              <option value="" selected>
+              <option value="none">none
+              <option value="solid">solid
+              <option value="dotted">dotted
+              <option value="dashed">dashed
+              <option value="double">double
+              <option value="groove">groove
+              <option value="ridge">ridge
+              <option value="inset">inset
+              <option value="outset">outset
+             </select>
+            </td>
+           </tr>
+           <tr height="25">
+            <td width="60" align="right"><span HABYLang="LblRight">Right</span> :&nbsp;</td>
+            <td width="100">
+             <select id="right_style" name="right_style" style="width:90px;">
+              <option value="" selected>
+              <option value="none">none
+              <option value="solid">solid
+              <option value="dotted">dotted
+              <option value="dashed">dashed
+              <option value="double">double
+              <option value="groove">groove
+              <option value="ridge">ridge
+              <option value="inset">inset
+              <option value="outset">outset
+             </select>
+            </td>
+           </tr>
+           <tr height="25">
+            <td width="60" align="right"><span HABYLang="LblTop">Top</span> :&nbsp;</td>
+            <td width="100">
+             <select id="top_style" name="top_style" style="width:90px;">
+              <option value="" selected>
+              <option value="none">none
+              <option value="solid">solid
+              <option value="dotted">dotted
+              <option value="dashed">dashed
+              <option value="double">double
+              <option value="groove">groove
+              <option value="ridge">ridge
+              <option value="inset">inset
+              <option value="outset">outset
+             </select>
+            </td>
+           </tr>
+           <tr height="25">
+            <td width="60" align="right"><span HABYLang="LblBottom">Bottom</span> :&nbsp;</td>
+            <td width="100">
+             <select id="bottom_style" name="bottom_style" style="width:90px;">
+              <option value="" selected>
+              <option value="none">none
+              <option value="solid">solid
+              <option value="dotted">dotted
+              <option value="dashed">dashed
+              <option value="double">double
+              <option value="groove">groove
+              <option value="ridge">ridge
+              <option value="inset">inset
+              <option value="outset">outset
+             </select>
+            </td>
+           </tr>
+          </table>
+         </fieldset>
+        </td>
+        <td width="180" align="center" valign="top">
+         <fieldset>
+          <legend align="left"><span HABYLang="LblStyleColor">Color</span></legend>
+          <table width="160" cellpadding="0" cellspacing="0" border="0">
+           <tr height="25">
+            <td width="60" align="right"><span HABYLang="LblLeft">Left</span> :&nbsp;</td>
+            <td width="100">
+             <table width="90" height="20" border="0" cellpadding="0" cellspacing="0" class="colorButton" onclick="SelectColor('left_color', 1);">
+              <tr>
+               <td width="74" align="center"><input type="text" id="left_color" name="left_color" value="" style="width:70px; height:12px; cursor:pointer;" readonly></td>
+               <td width="3" align="right"><span HABYLang="LblLine_a" style="font-size:9px; color:buttonshadow;">|</span></td>
+               <td width="13" align="center"><span HABYLang="BtnDnButton" style="font-size:9px;"></span></td>
+              </tr>
+             </table>
+            </td>
+           </tr>
+           <tr height="25">
+            <td width="60" align="right"><span HABYLang="LblRight">Right</span> :&nbsp;</td>
+            <td width="100">
+             <table width="90" height="20" border="0" cellpadding="0" cellspacing="0" class="colorButton" onclick="SelectColor('right_color');">
+              <tr>
+               <td width="74" align="center"><input type="text" id="right_color" name="right_color" value="" style="width:70px; height:12px; cursor:pointer;" readonly></td>
+               <td width="3" align="right"><span HABYLang="LblLine_a" style="font-size:9px; color:buttonshadow;">|</span></td>
+               <td width="13" align="center"><span HABYLang="BtnDnButton" style="font-size:9px;"></span></td>
+              </tr>
+             </table>
+            </td>
+           </tr>
+           <tr height="25">
+            <td width="60" align="right"><span HABYLang="LblTop">Top</span> :&nbsp;</td>
+            <td width="100">
+             <table width="90" height="20" border="0" cellpadding="0" cellspacing="0" class="colorButton" onclick="SelectColor('top_color');">
+              <tr>
+               <td width="73" align="center"><input type="text" id="top_color" name="top_color" value="" style="width:70px; height:12px; cursor:pointer;" readonly></td>
+               <td width="4" align="right"><span HABYLang="LblLine_a" style="font-size:9px; color:buttonshadow;">|</span></td>
+               <td width="13" align="center"><span HABYLang="BtnDnButton" style="font-size:9px;"></span></td>
+              </tr>
+             </table>
+            </td>
+           </tr>
+           <tr height="25">
+            <td width="60" align="right"><span HABYLang="LblBottom">Bottom</span> :&nbsp;</td>
+            <td width="100">
+             <table width="90" height="20" border="0" cellpadding="0" cellspacing="0" class="colorButton" onclick="SelectColor('bottom_color');">
+              <tr>
+               <td width="74" align="center"><input type="text" id="bottom_color" name="bottom_color" value="" style="width:70px; height:12px; cursor:pointer;" readonly></td>
+               <td width="3" align="right"><span HABYLang="LblLine_a" style="font-size:9px; color:buttonshadow;">|</span></td>
+               <td width="13" align="center"><span HABYLang="BtnDnButton" style="font-size:9px;"></span></td>
+              </tr>
+             </table>
+            </td>
+           </tr>
+          </table>
+         </fieldset>
+        </td>
+       </tr>
+       <tr>
+        <td width="370" align="center" valign="top" colspan="2">
+         <fieldset>
+          <legend align="left"><span HABYLang="LblStyleWidth">Width</span></legend>
+          <table width="340" cellpadding="0" cellspacing="0" border="0">
+           <tr height="25">
+            <td width="60" align="right"><span HABYLang="LblLeft">Left</span> :&nbsp;</td>
+            <td width="30">
+             <table border="0" cellpadding="0" cellspacing="0" class="inputTable">
+              <tr>
+               <td align="right">
+                <input type="text" id="left_width" name="left_width" value="" class="inputText" onkeyup="IsNumber(this); AllChange('width', this.value);">
+               </td>
+               <td align="left">
+                <table border="0" cellpadding="0" cellspacing="0">
+                 <tr>
+                  <td valign="bottom"><input HABYLang="BtnUpButton" type="button" value="" class="updownButton" onclick="UpDownBotton('left_width', true, 'Up');"></td>
+                 </tr>
+                 <tr>
+                  <td valign="top"><input HABYLang="BtnDnButton" type="button" value="" class="updownButton" onclick="UpDownBotton('left_width', true, 'Down');"></td>
+                 </tr>
+                </table>
+               </td>
+              </tr>
+             </table>
+            </td>
+            <td width="5"></td>
+            <td>
+             <select id="left_type" name="left_type" style="width:60px;" onchange="AllChange('type', this.value);">
+              <option value="" selected>
+              <option value="px">pixel
+              <option value="pt">point
+              <option value="pc">pica
+              <option value="mm">mm
+              <option value="cm">cm
+              <option value="in">inch
+             </select>
+            </td>
+            <td width="10"></td>
+            <td width="60" align="right"><span HABYLang="LblTop">Top</span> :&nbsp;</td>
+            <td width="30">
+             <table border="0" cellpadding="0" cellspacing="0" class="inputTable">
+              <tr>
+               <td align="right">
+                <input type="text" id="top_width" name="top_width" value="" class="inputText" onkeyup="IsNumber(this);">
+               </td>
+               <td align="left">
+                <table border="0" cellpadding="0" cellspacing="0">
+                 <tr>
+                  <td valign="bottom"><input HABYLang="BtnUpButton" type="button" value="" class="updownButton" onclick="UpDownBotton('top_width', false, 'Up');"></td>
+                 </tr>
+                 <tr>
+                  <td valign="top"><input HABYLang="BtnDnButton" type="button" value="" class="updownButton" onclick="UpDownBotton('top_width', false, 'Down');"></td>
+                 </tr>
+                </table>
+               </td>
+              </tr>
+             </table>
+            </td>
+            <td width="5"></td>
+            <td>
+             <select id="top_type" name="top_type" style="width:60px;">
+              <option value="" selected>
+              <option value="px">pixel
+              <option value="pt">point
+              <option value="pc">pica
+              <option value="mm">mm
+              <option value="cm">cm
+              <option value="in">inch
+             </select>
+            </td>
+           </tr>
+           <tr height="25">
+            <td width="60" align="right"><span HABYLang="LblRight">Right</span> :&nbsp;</td>
+            <td width="30">
+             <table border="0" cellpadding="0" cellspacing="0" class="inputTable">
+              <tr>
+               <td align="right">
+                <input type="text" id="right_width" name="right_width" value="" class="inputText" onkeyup="IsNumber(this);">
+               </td>
+               <td align="left">
+                <table border="0" cellpadding="0" cellspacing="0">
+                 <tr>
+                  <td valign="bottom"><input HABYLang="BtnUpButton" type="button" value="" class="updownButton" onclick="UpDownBotton('right_width', false, 'Up');"></td>
+                 </tr>
+                 <tr>
+                  <td valign="top"><input HABYLang="BtnDnButton" type="button" value="" class="updownButton" onclick="UpDownBotton('right_width', false, 'Down');"></td>
+                 </tr>
+                </table>
+               </td>
+              </tr>
+             </table>
+            </td>
+            <td width="5"></td>
+            <td>
+             <select id="right_type" name="right_type" style="width:60px;">
+              <option value="" selected>
+              <option value="px">pixel
+              <option value="pt">point
+              <option value="pc">pica
+              <option value="mm">mm
+              <option value="cm">cm
+              <option value="in">inch
+             </select>
+            </td>
+            <td width="10"></td>
+            <td width="60" align="right"><span HABYLang="LblBottom">Bottom</span> :&nbsp;</td>
+            <td width="30">
+             <table border="0" cellpadding="0" cellspacing="0" class="inputTable">
+              <tr>
+               <td align="right">
+                <input type="text" id="bottom_width" name="bottom_width" value="" class="inputText" onkeyup="IsNumber(this);">
+               </td>
+               <td align="left">
+                <table border="0" cellpadding="0" cellspacing="0">
+                 <tr>
+                  <td valign="bottom"><input HABYLang="BtnUpButton" type="button" value="" class="updownButton" onclick="UpDownBotton('bottom_width', false, 'Up');"></td>
+                 </tr>
+                 <tr>
+                  <td valign="top"><input HABYLang="BtnDnButton" type="button" value="" class="updownButton" onclick="UpDownBotton('bottom_width', false, 'Down');"></td>
+                 </tr>
+                </table>
+               </td>
+              </tr>
+             </table>
+            </td>
+            <td width="5"></td>
+            <td>
+             <select id="bottom_type" name="bottom_type" style="width:60px;">
+              <option value="" selected>
+              <option value="px">pixel
+              <option value="pt">point
+              <option value="pc">pica
+              <option value="mm">mm
+              <option value="cm">cm
+              <option value="in">inch
+             </select>
+            </td>
+           </tr>
+          </table>
+         </fieldset>
+        </td>
+       </tr>
+      </table>
+     </td>
+    </tr>
+    <tr height="5"><td></td></tr>
+   </table>
+  </td>
+  <td width="10"><img src="./images/space.gif" width="10" /></td>
+  <td width="80" align="right" valign="top">
+   <table width="70" height="60" border="0" cellpadding="0" cellspacing="0">
+    <tr>
+     <td>
+      <table width="70" cellpadding="0" cellspacing="0" onclick="StyleOk();" onmouseover="ButtonPlay(this, 'over');" onmouseout="ButtonPlay(this, 'out');">
+       <tr>
+        <td width="3" class="outBtnBegin"><img src="./images/space.gif" width="3" height="20" /></td>
+        <td width="64" class="outBtn"><span HABYLang="BtnDialogOk">O k</span></td>
+        <td width="3" class="outBtnEnd"><img src="./images/space.gif" width="3" height="20" /></td>
+       </tr>
+      </table>
+     </td>
+    <tr>
+     <td>
+      <table width="70" cellpadding="0" cellspacing="0" onclick="DialogClose();" onmouseover="ButtonPlay(this, 'over');" onmouseout="ButtonPlay(this, 'out');">
+       <tr>
+        <td width="3" class="outBtnBegin"><img src="./images/space.gif" width="3" height="20" /></td>
+        <td width="64" class="outBtn"><span HABYLang="BtnDialogCancel">Cancel</span></td>
+        <td width="3" class="outBtnEnd"><img src="./images/space.gif" width="3" height="20" /></td>
+       </tr>
+      </table>
+     </td>
+    </tr>
+   </table>
+   </form>
+  </td>
+ </tr>
+</table>
+</body>
+</html>

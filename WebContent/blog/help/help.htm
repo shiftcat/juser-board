@@ -1,0 +1,365 @@
+﻿<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="robots" content="all" />
+<title> 하비에디터 </title>
+<meta http-equiv="Content-Type" content="text/html; charset=euc-kr">
+<style type="text/css">
+	body
+	{
+		margin: 0px;
+		padding: 0px;
+		border-style: none;
+	}
+
+	body, td, input, select, textarea, button
+	{
+		font-size: 9pt;
+		font-family: 굴림, 돋음;
+	}
+
+	input
+	{
+		color: #000000;
+		background-color: #FFFFFF;
+		border: buttonshadow 1 solid;
+		height: 18px;
+	}
+</style>
+</head>
+<body>
+<table width="100%" height="100%" border="0" cellpadding="0" cellspacing="0">
+ <tr>
+  <td height="55" background="./images/headerbg.jpg">
+   <table width="100%" border="0" cellpadding="0" cellspacing="0">
+    <tr>
+     <td height="55"><img src="./images/header.jpg"></td>
+    </tr>
+   </table>
+  </td>
+ </tr>
+ <tr>
+  <td height="10"> </td>
+ </tr>
+   <tr>
+      <td valign="top" align="center" width="100%" height="100%">
+<table height="98%" cellspacing="0" cellpadding="0" width="100%" border="0">
+  <tbody>
+  <tr>
+    <td valign="top" align="center" width="100%" height="100%">
+    <table style="BORDER-RIGHT: #c0c0c0 1px solid; BORDER-TOP: #c0c0c0 1px solid; BORDER-LEFT: #c0c0c0 1px solid; BORDER-BOTTOM: #c0c0c0 1px solid; TEXT-DECORATION: none" height="100%" cellspacing="0" cellpadding="10" width="800" border="0">
+      <tbody>
+      <tr>
+        <td valign="top">
+        <ol>
+          <li><div>잡담 :<br />
+          <br />
+          2003년에 쇼핑몰에 사용하려고 개발(걍 맹근) 허접 에디터 였습니다.<br />
+          걍 내버려둔것을 ActiveX의 호환성문제로 JAVA Applet, Javascript 고민중..<br />
+          공개된것 쓰려다 라이센스, 제작자표기 등의 문제로.. 드뎌 빛을 보게된 에디터!! .<br />
+          <br />
+          </div>
+          </li>
+          <li>
+          <p>기능/특징 : </p>
+          <ul>
+            <li>100%(?)Javascript로 어느환경에서든 사용가능.(Upload ASP, PHP) </li>
+            <li>심혈을 기울인 완벽에 가까운 테이블 기능 구현.(오류, 보완하느라 이것만 2주 걸림 == 머리가 나빠서..) </li>
+            <li>플스크린 모드, 자동 세로크기 증가, 드레그엔드롭사이즈 조절 기능. </li>
+            <li>이미지, 플래쉬, 미디어 업로드 기능. </li>
+            <li>미사용 업로드 파일 자동 삭제 기능 </li>
+            <li>타계정(URL) 이미지&nbsp;가져오기 기능.(리모트업로드) </li>
+            <li>깔끔(?)한 다이얼로그창, 팝업창, 콘텍스트 메뉴 기능. </li>
+            <li>다중 에디터, 다중 스킨 기능.(다중스킨은 F버젼만 해당. T(0.8X.. 현재 업안함)버젼은 한페이지 동일스킨) </li>
+            <li>간단한 Config, Toolbar 설정기능. </li>
+            <li>기타 등등... 제작자가 귀차니즘의 고수라서.. 머리쓰기를 싫어함. <br />
+            <br />
+            </li>
+         </ul>
+         </li>
+         <li>설치 과정 : 이미지 자동삭제 구현 DB사용으로 좀 어려울 수도 있음 <br />
+         <br />
+         </li>
+         <ul>
+           <li>파일을 다운로드 한후 압축을 풉니다.(설정먼저 하고 계정에 올리는것이 좋겠죠.) <br />
+           </li>
+           <li>루트디렉토리에 올리면 홈페이지 전체에서 사용하기 편하겠죠!<br />
+           </li>
+           <li>에디터를 생성할 페이지 상단에.. 아래 내용 추가.<br />
+           <br />
+           &lt;script id=&quot;HABYEditor&quot; type=&quot;text/JScript.Encode&quot; src=&quot;에디터 상대경로/habyeditor.js&quot;&gt;&lt;/script&gt; <br />
+           <br />
+           </li>
+           <li>페이지 하단에.. form밑이면 되겠죠. 아래 내용 추가.<br />
+           <br />
+           &lt;script language=&quot;javascript&quot;&gt;<br />
+           &nbsp;var newEditor&nbsp; = new HABYeditor('Textarea ID'); Textarea에 name하고 동일한&nbsp;id를 주세요.<br />
+           &nbsp;newEditor.setConfig[&quot;Skin&quot;]&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; = '에디터 스킨 디렉토리명';&nbsp;<br />
+           &nbsp;newEditor.setConfig[&quot;ServerLanguage&quot;] = '사용 서버스크립트(asp, php)';<br />
+           &nbsp;newEditor.setConfig[&quot;MemberId&quot;] = '회원아이디'; 업파일 공개/비공개<br />
+           <br />
+           툴바선택은 두종류입니다.<br />
+           &nbsp;newEditor1.setConfig[&quot;MenuButton&quot;] = [&nbsp;&nbsp;에디터 툴바 목록 직접입력 예제<br />
+           &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; [&quot;SourceView&quot;, &quot;Preview&quot;, &quot;FullScreen&quot;],<br />
+           &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;[&quot;Bold&quot;, &quot;Italic&quot;, &quot;UnderLine&quot;, &quot;StrikeThrough&quot;],<br />
+           &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; [&quot;Subscript&quot;, &quot;Superscript&quot;],<br />
+           &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;[&quot;JustifyLeft&quot;, &quot;JustifyCenter&quot;, &quot;JustifyRight&quot;, &quot;JustifyFull&quot;],<br />
+           &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; [&quot;InsertOrderedList&quot;, &quot;InsertUnorderedList&quot;, &quot;Outdent&quot;, &quot;Indent&quot;],<br />
+           &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; [&quot;InsertImage&quot;, &quot;CreateLink&quot;, &quot;UnLink&quot;],<br />
+           &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &quot;newLine&quot;,<br />
+           &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; [&quot;FontFormat&quot;, &quot;FontName&quot;, &quot;FontSize&quot;],<br />
+           &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; [&quot;ForeColor&quot;, &quot;BackColor&quot;]<br />
+           &nbsp;];&nbsp;이렇게 직접 추가햐셔도 되며..&nbsp;<br />
+           <br />
+           newEditor.setConfig[&quot;ToolbarSet&quot;] = &quot;Simple&quot;;<br />
+           이렇게&nbsp;/conf/menulist.conf.js파일안에 미리 정의해 두신후 불러서 사용하셔도 됩니다.<br />
+           <br />
+           &nbsp;newEditor.setConfig[&quot;ToggleHtmlId&quot;]&nbsp;&nbsp;&nbsp;&nbsp; = 'html/text 체크박스 ID'; 체크박스에 name하고 동일한&nbsp;id를 주세요.<br />
+           &nbsp;newEditor.setConfig[&quot;ToggleHtmlOn&quot;]&nbsp;&nbsp; = 'html&nbsp;기본 value';&nbsp;에디터에서 자동으로 생성.<br />
+           &nbsp;newEditor.Create();<br />
+           &lt;/script&gt; <br />
+           <br />
+           </li>
+           <li>setConfig항목은 /conf/setconfig.conf.js의 내용을 변경(영구적)하시든지..<br />
+           위 처럼 editor.setConfig[항목]으로 정의하시면 됩니다.<br />
+           새로운 사용자 설정도 위 파일에 넣으시든지 editor.setConfig[새로운항목]추가하시면 됩니다.<br />
+           <br />
+           </li>
+           <li>다음은 업로드 설정입니다. 데이타베이스를 사용합니다.<br />
+           <br />
+           ASP:<br />
+           업로드&nbsp;폴더 리스트<br />
+           CREATE TABLE [habyeditor_folder] (<br />
+           &nbsp;[cno] [int] IDENTITY (1, 1) NOT NULL ,<br />
+           &nbsp;[pcd] [varchar] (900) COLLATE Korean_Wansung_CI_AS NOT NULL ,<br />
+           &nbsp;[mcd] [varchar] (900) COLLATE Korean_Wansung_CI_AS NOT NULL ,<br />
+           &nbsp;[rct] [int] NOT NULL ,<br />
+           &nbsp;[lct] [int] NOT NULL ,<br />
+           &nbsp;[sct] [int] NOT NULL ,<br />
+           &nbsp;[csc] [int] NULL ,<br />
+           &nbsp;[ctn] [varchar] (20) COLLATE Korean_Wansung_CI_AS NULL <br />
+           ) ON [PRIMARY]<br />
+           <br />
+           업로드 파일 리스트<br />
+           &nbsp;CREATE TABLE [habyeditor_media] (<br />
+           &nbsp; [mcd] varchar(900) COLLATE Korean_Wansung_CI_AS&nbsp;NULL,<br />
+           &nbsp; [mediaid] int NOT NULL,<br />
+           &nbsp; [member] varchar(20) COLLATE Korean_Wansung_CI_AS NOT NULL,<br />
+           &nbsp; [filetype] char(1) NOT NULL,<br />
+           &nbsp; [filepath] varchar(255) COLLATE Korean_Wansung_CI_AS NOT NULL,<br />
+           &nbsp; [filename] varchar(50) COLLATE Korean_Wansung_CI_AS NOT NULL,<br />
+           &nbsp; [imgwidth] smallint&nbsp;NULL,<br />
+           &nbsp; [imgheight] smallint&nbsp;NULL,<br />
+           &nbsp; [usefile] tinyint NULL,<br />
+           &nbsp; [openfile] bit NULL,<br />
+           &nbsp; [regdate] smalldatetime NOT NULL<br />
+           &nbsp;) ON [PRIMARY]<br />
+           <br />
+           사용 파일 리스트<br />
+           CREATE TABLE [habyeditor_usedata] (<br />
+           &nbsp; [mediaid] int NOT NULL,<br />
+           &nbsp; [boardid] varchar(50) COLLATE Korean_Wansung_CI_AS NOT NULL,<br />
+           &nbsp; [parent] int&nbsp;NULL,<br />
+           &nbsp; [child] int&nbsp;NULL<br />
+           ) ON [PRIMARY]<br />
+           <br />
+           PHP:<br />
+           업로드 폴더 리스트<br />
+           CREATE TABLE `habyeditor_folder` (<br />
+           &nbsp; `cno` int(11) NOT NULL auto_increment,<br />
+           &nbsp; `pcd` varchar(900) NOT NULL,<br />
+           &nbsp; `mcd` varchar(900) NOT NULL,<br />
+           &nbsp; `rct` int(11) NOT NULL,<br />
+           &nbsp; `lct` int(11) NOT NULL,<br />
+           &nbsp; `sct` int(11) NOT NULL,<br />
+           &nbsp; `csc` int(11) default NULL,<br />
+           &nbsp; `ctn` varchar(20) default NULL,<br />
+           &nbsp; PRIMARY KEY  (`cno`)<br />
+           ) ENGINE=MyISAM;<br />
+           <br />
+           업로드 파일 리스트<br />
+           &nbsp;CREATE TABLE `habyeditor_media` (<br />
+           &nbsp; `mcd`&nbsp; varchar(900)&nbsp;default NULL,<br />
+           &nbsp; `mediaid` int(11) NOT NULL,<br />
+           &nbsp; `member` varchar(20) NOT NULL,<br />
+           &nbsp; `filetype` char(1) NOT NULL,<br />
+           &nbsp; `filepath` varchar(255) NOT NULL,<br />
+           &nbsp; `filename` varchar(50) NOT NULL,<br />
+           &nbsp; `imgwidth` smallint(6) default NULL,<br />
+           &nbsp; `imgheight` smallint(6) default NULL,<br />
+           &nbsp; `usefile` tinyint(4) default NULL,<br />
+           &nbsp; `openfile` char(1) default NULL,<br />
+           &nbsp; `regdate` datetime NOT NULL<br />
+           &nbsp;) ENGINE=MyISAM;<br />
+           <br />
+           사용 파일 리스트<br />
+           CREATE TABLE `habyeditor_usedata` (<br />
+           &nbsp; `mediaid` int(11) NOT NULL,<br />
+           &nbsp; `boardid` varchar(50) NOT NULL,<br />
+           &nbsp; `parent` int(11) default NULL,<br />
+           &nbsp; `child` int(11) default NULL<br />
+           ) ENGINE=MyISAM;<br />
+           <br />
+           제게시판에 있던것 그대로입니다. 귀차나서.. 걍.. <br />
+           <br />
+           </li>
+           <li>이젠.. /htmlarea/dialog/lib/asp(php)/의 모든 파일들을 열고..<br />
+           자신의 설정을 하시면 됩니다. DB, 업로드 절대경로, 상대경로, 파일URL등등..<br />
+           모르시면 테스트 게시판의 설치 설명을 참조하세요.<br />
+           <br />
+           </li>
+           <li>미사용 업로드파일 자동삭제기능을 사용 안하실거면 여기까지 하시면 됩니다.<br />
+           업로드만 하고 그냥 나가버린다면.. 좀비파일들이 많이 생기겠죠.<br />
+           <br />
+           </li>
+           <li>이젠 자동삭제 기능 구현입니다. 사용하는 게시판에 맞게 넣으시면 됩니다.<br />
+           <br />
+           먼저... 전게시판(홈페이지)의 공용파일에.. (예:제로보드의 경우 lib.php겠죠..)<br />
+           <br />
+           ASP : &lt;!--#include file=&quot;에디터상대경로/filemanager/asp/habyfunction.asp&quot;--&gt;<br />
+           <br />
+           PHP : include(&quot;에디터상대경로/filemanager/php/habyfunction.php&quot;);<br />
+           <br />
+           위 항목을 인클루드 시키세요. 위 파일을 열어보시면 아주 기초적인 코딩이거든여.<br />
+           수정해서 사용하셔도됩니다. 수정후 오류시엔 전 모름@@;;<br />
+           <br />
+           </li>
+           <li>이젠 글 저장/수정 완료하는 페이지에.. <br />
+           <br />
+           사용된 업로드 파일만 가져오기..<br />
+           <br />
+           ASP:<br />
+           <br />
+           habyupids = upload.form(&quot;HABYMedia&quot;);<br />
+           <br />
+           PHP: 제로보드는 write_ok.php<br />
+           <br />
+           $habyupids = stripslashes($_POST[&quot;HABYMedia&quot;]);<br />
+           <br />
+           글 수정시에만..&nbsp;사용된&nbsp;업로드 파일을 초기화 합니다.&nbsp;수정시 제거된&nbsp;파일이 존재할 수 있으므로...<br />
+           <br />
+           ASP:<br />
+           <br />
+           '위지윅에디터 업로드 파일 미사용<br />
+           call deleteHABYMedia(db연결명, 게시판ID, 글고유번호1, 글고유번호2, 게시판제거시에만 사용)<br />
+           <br />
+           '사용 예제입니다. 제 테스트 게시판을 참조하세요.<br />
+           call deleteHABYMedia(db, td, parent, child,&nbsp;false)<br />
+           <br />
+           제 테스트 게시판&nbsp;글 접근을&nbsp;idx가 아닌..&nbsp;parent, child&nbsp;두개를 사용합니다. 보통 idx하나로 접근하니..<br />
+           call deleteHABYMedia(dbconn, boardid, idx, 0,&nbsp;false) child엔&nbsp;0을 넣어주세요.&nbsp;&quot;&quot;로 넣어도 됩니다.<br />
+           &nbsp;&nbsp;&nbsp;&nbsp;<br />
+           <br />
+           PHP: 제로보드는 write_ok.php<br />
+           //위지윅 파일 삭제<br />
+           @deleteHABYMedia($connect, $id, $no, 0, 0);<br />
+           위는 제로보드 예입니다. 설명은 ASP에서 했으므로..<br />
+           <br />
+           위 사항은 꼭 수정글에만 해당됩니다. 새글/답글 일땐 안됩니다. 오작동합니다.<br />
+           <br />
+           아래 내용은 새글/답글/수정모두 해당됩니다. 뭐 맨 마지막 디비닫기 전에 넣으면 되겠죠!<br />
+           <br />
+           사용이미지 처리 부분입니다. 새글 / 답글 /수정글 모두 해당<br />
+           <br />
+           ASP:<br />
+           '위지윅에디터 업로드 파일 사용<br />
+           call insertHABYMedia(db, habyupids, tb, parent, child) <br />
+           <br />
+           위 수정에서 설명했듯이.. 뭐뭐 넣는진&nbsp;아실겁니다.<br />
+           <br />
+           PHP: 제로보드는 write_ok.php<br />
+           //위지윅에디터 업로드 파일 사용<br />
+           &nbsp;@insertHABYMedia($connect, $habyupids, $id, $no, 0);<br />
+           제로보드 예제입니다.<br />
+           <br />
+           여기까지.. 글 저장 / 변경 할때입니다. 다음은 글/게시판 삭제시입니다.<br />
+           </li>
+           <li>이젠 삭제 페이지에.. 업로드 파일 제거.. 뭐 글 수정시에 넣은거랑 똑같습니다.<br />
+           단!! 게시판 완전 게거시엔.. 마지막에.. 몬지 아시져!! 밑을 보세여@!<br />
+           <br />
+           ASP:<br />
+           <br />
+           '위지윅에디터 업로드 파일 미사용<br />
+           call deleteHABYMedia(db연결명, 게시판ID, 글고유번호1, 글고유번호2, 게시판 제거시에만 사용)<br />
+           <br />
+           네.. 게시판 완전 게거시 사용..!! 이건 게시판 완전히 제거할때.. 만 사용하는겁니다.<br />
+           글삭제. 관리자메뉴 굴삭제시엔 해당 없습니다. <br />
+           게시판 제거아닌시 true를 넣으면.. 완전히 제거됩니다. 조심!!<br />
+           <br />
+           '사용 예제입니다. 제 테스트 게시판을 참조하세요.<br />
+           call deleteHABYMedia(db, td, parent, child,&nbsp;false)<br />
+           <br />
+           '게시판 완전 게거.<br />
+           call deleteHABYMedia(db, td, 0, 0,&nbsp;true)<br />
+           <br />
+           이걸 어디에 넣느야.. 글 삭제 부분에 모두 넣어줍니다.<br />
+           삭제부분이라함은.. 일반글삭제.. 전체선택글 삭제.. 관리자 불량글 삭제.. 기타 등등 삭제 부분에 넣어줍니다.<br />
+           <br />
+           PHP:<br />
+           //위지윅 파일 삭제<br />
+           &nbsp;@deleteHABYMedia($connect, $id, $s_data[no], 0, 0); 제로보드는 delete_ok.php<br />
+           <br />
+           //위지윅 파일 삭제<br />
+           @deleteHABYMedia($connect, $id, $selected[$i], 0, 0); 제로보드는 list_all.php<br />
+           <br />
+           아래는 게시판 완전 제거입니다. <br />
+           완전 게거시엔.. parent, child 0으로 넣어주세요.<br />
+           <br />
+           //위지윅 파일 삭제<br />
+           @deleteHABYMedia($connect, $table_name, 0, 0, 1); 제로보드 admin_exec_board.php<br />
+           <br />
+           삭제부분이 더 있다면.. 다 찾아서 넣어주세요.<br />
+           <br />
+           요기까지 삭제 부분입니다.<br />
+           <br />
+           다음은 게시글 카피, 이동입니다.<br />
+           <br />
+           </li>
+           <li>게시글 카피, 이동은.. <br />
+           <br />
+           ASP : <br />
+           <br />
+           '위지윅에디터 업로드 파일 이동/복사 <br />
+           call copyHABYMedia(db연결명, 원본게시판ID, 원본글고유번호1, 원본글고유번호2,&nbsp;이동할게시판ID, 이동된글고유번호1, 이동된글고유번호2)<br />
+           <br />
+           원본글은 아시겠고.. 이동할 곳의 게시판ID와 이동글,, insert사용할 글고유번호를 입력하시면 됩니다.<br />
+           <br />
+           PHP: 제로보드는 list_all.php 부분의 게시글 이동/복사부분..<br />
+           <br />
+           //위지윅 파일 이동 복사<br />
+           @copyHABYMedia($connect, $id, $data[no], 0, $board_name, $no, 0);&nbsp;// Comment 정리라는 문구 위에 넣으세요.<br />
+           <br />
+           제로보드는4ph18에서 테스트 했습니다.<br />
+           <br />
+           그누보드는 무료계정이라서인지 접속이 잘안되어 철수 했습니다.<br />
+           제가 설치해본 결과 그누보드 설정이나 제로보드 설정이나 거의 동일하니..<br />
+           디비명과, 글고유번호명만 변경해주시면 됩니다.<br />
+           글구 그누보드는.. 스킨을 보니 다른에디터에 적용이 되어있어 좀 번거롭더군요.<br />
+           시간 나면 그누보드 설명서 올리겠습니다. </li>
+        </ul>
+        </ol>
+        </td>
+     </tr>
+     </tbody>
+  </table>
+  </td>
+  </tr>
+  </tbody>
+  </table>
+         </td>
+      </tr>
+ <tr>
+  <td height="10"> </td>
+ </tr>
+ <tr>
+  <td height="55" background="./images/footerbg.jpg">
+   <table width="100%" border="0" cellpadding="0" cellspacing="0">
+    <tr>
+     <td height="55"><img src="./images/copyright.jpg" class="default_image"></td>
+    </tr>
+   </table>
+  </td>
+ </tr>
+</table>
+</body>
+</html>

@@ -1,0 +1,340 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!DOCTYPE struts-config PUBLIC 
+	"-//Apache Software Foundation//DTD Struts Configuration 1.3//EN" 
+	"http://jakarta.apache.org/struts/dtds/struts-config_1_3.dtd">
+
+<struts-config>
+
+	<!-- 폼빈  -->
+    <form-beans>
+    
+		<!-- 회원가입 폼  -->
+    	<form-bean name="accountFormBean" 
+    				type="han.juser.controller.form.MemberAccountForm"  />
+    	
+    	<!-- 회원정보 변경폼  -->	
+		<form-bean name="modifyFormBean"
+					type="han.juser.controller.form.MemberModifyForm" />
+		
+    	<!-- 로그인 폼  -->
+    	<form-bean name="loginForm" 
+    				type="org.apache.struts.validator.DynaValidatorForm">
+    		<form-property name="userId" 
+    						type="java.lang.String" />
+    						
+    		<form-property name="passwd" 
+    						type="java.lang.String" />
+    	</form-bean>
+    	
+    	
+    	<!--  패스워드 변경 폼  -->
+    	<form-bean name="changePasswdForm" 
+    				type="org.apache.struts.validator.DynaValidatorForm">
+    		<form-property name="currentPasswd" 
+    						type="java.lang.String" />
+    						
+    		<form-property name="newPasswd" 
+    						type="java.lang.String" />
+    						
+    		<form-property name="checkPasswd" 
+    						type="java.lang.String" />
+    	</form-bean>
+    	
+    	
+    	
+    	
+    	<!-- 회원가입시 아이디 중복 검사 폼 -->
+    	<form-bean name="idCheckForm" type="org.apache.struts.validator.DynaValidatorForm">
+    		<form-property name="userId" type="java.lang.String" />
+    	</form-bean>
+    	
+    	
+    	<form-bean name="dumy" type="org.apache.struts.validator.DynaValidatorForm">
+    	</form-bean>
+    </form-beans>
+    
+	
+	<!--  에러처리  -->
+	<global-exceptions>
+		<exception 
+				type="han.juser.service.ServiceException"
+				key=""
+				handler="han.juser.controller.action.MyExceptionHandler"
+				scope="request"
+				path="error"
+		/>
+		
+		<exception 
+				type="java.lang.Exception"
+				key="errors.java.lang.Exception"
+				scope="request"
+				path="error"
+		/>
+		<exception 
+				type="java.lang.RuntimeException"
+				key="errors.java.lang.RuntimeException"
+				scope="request"
+				path="error"
+		/>
+		
+		<exception 
+				type="han.juser.service.NotOwnerException"
+				key="errors.han.juser.service.NotOwnerException"
+				scope="request"
+				path="error"
+		/>
+		<exception 
+				type="han.juser.service.ContentNotFoundException"
+				key="errors.han.juser.service.ContentNotFoundException"
+				scope="request"
+				path="error"
+		/>
+		<exception 
+				type="han.juser.service.ReplyNotFoundException"
+				key="errors.han.juser.service.ReplyNotFoundException"
+				scope="request"
+				path="error"
+		/>
+		<exception 
+				type="han.juser.service.MemberExistException"
+				key="errors.han.juser.service.MemberExistException"
+				scope="request"
+				path="error"
+		/>
+		<exception 
+				type="han.juser.service.ParentContentNotFoundException"
+				key="errors.han.juser.service.ParentContentNotFoundException"
+				scope="request"
+				path="error"
+		/>
+		
+		<exception 
+				type="han.juser.service.CategoryNotFoundException"
+				key="errors.han.juser.service.CategoryNotFoundException"
+				scope="request"
+				path="error"
+		/>
+		<exception 
+				type="han.juser.service.MissMatchPasswordException"
+				key="errors.han.juser.service.MissMatchPasswordException"
+				scope="request"
+				path="error"
+		/>
+		
+		<exception 
+				type="han.juser.service.MemberNotFoundException"
+				key="errors.han.juser.service.MemberNotFoundException"
+				scope="request"
+				path="error"
+		/>
+		<exception 
+				type="han.juser.controller.manager.UploadException"
+				key="errors.han.juser.controller.manager.UploadException"
+				scope="request"
+				path="error"
+		/>
+	</global-exceptions>
+
+
+    <global-forwards>
+        <forward 
+        		name="fw-error" 
+        		path="error" 
+        		redirect="false" 
+		/>
+		
+    	<forward 
+    			name="fw-message" 
+				path="message" 
+    			redirect="false" 
+		/>
+    				
+    	<forward 
+    			name="fw-accountform" 
+    			path="member.accountForm" 
+    			redirect="false" 
+		/>
+    				
+    	<forward 
+    			name="fw-myinfo" 
+    			path="member.myinfo" 
+    			redirect="false" 
+    	/>
+    				
+    	<forward 
+    			name="fw-verifyModeModify"
+    			path="/frm-verify.do?mode=modify" 
+    	/>
+    	
+    	<forward 
+    			name="fw-verifyModeSecede"
+    			path="/frm-verify.do?mode=secede" 
+    	/>
+    				
+    	
+    	<forward 
+    			name="fw-index"
+    			path="index" 
+    			redirect="true" 
+    	/>
+    				
+    	<forward 
+    			name="fw-loginForm"
+    			path="member.loginForm" 
+    			redirect="true"
+    	/>
+    </global-forwards>
+
+	
+	
+	<!--  액션 맵핑  -->
+	<action-mappings>
+		
+		<!-- 아이디 중복 검사 액션 폼 -->
+		<action path="/idCheckForm" 
+    			forward="member.idCheckForm" />
+    	
+    	<action path="/idCheck"
+    			parameter="checkId"
+    			type="han.juser.controller.action.DelegateActionProxy" 
+    			name="idCheckForm" validate="true" input="member.idCheckForm" scope="request" >
+			<forward name="fw-idCheckResult"
+					path="member.idCheckResult" redirect="false" />
+		</action>
+		
+		<!--  회원가입폼  액션 (로그인 되어있다면 fw-myinfo로 이동) -->
+    	<action path="/frm-account" 
+    				parameter="accountForm"
+    				type="han.juser.controller.action.DelegateActionProxy" />
+    	
+    	
+  		<!-- 회원정보 변경폼  (frm-verify로 부터 다시 로그인 되어야 함) -->
+    	<action path="/frm-modify" 
+    			parameter="modifyForm" 
+    			type="han.juser.controller.action.DelegateActionProxy" 
+    			name="loginForm" validate="true" input="error" scope="request">
+    		<forward name="fw-modifyform" 
+    					path="member.modifyForm" 
+    					redirect="false" />
+    	</action>
+    	
+    	
+		
+		<!--  회원 탈퇴시 정말 탈퇴할지 여부를 묻는 폼 
+			( frm-verify로 부터 다시 로그인 되어야 함)  -->
+		
+    	<action path="/frm-really" 
+    			parameter="reallyForm" 
+    			type="han.juser.controller.action.DelegateActionProxy" 
+    			name="loginForm" validate="true" input="error" scope="request">
+    		<forward name="fw-reallyform" 
+    					path="member.reallyForm" 
+    					redirect="false" />
+    	</action>
+    	
+		
+		
+		<!--  회원정보의 변경 또는 탈퇴시 다시 로그인 하기위한 폼
+			 정상적으로 입력 되었다면 frm-modify 또는 frm-really 으로 이동 -->
+    	<action path="/frm-verify" 
+    			parameter="verifyForm" 
+    			type="han.juser.controller.action.DelegateActionProxy" >
+    		<forward name="fw-verifyfrom" 
+    					path="member.verifyForm" 
+    					redirect="false" />
+    	</action>
+    	
+    	<action path="/loginForm"
+    			parameter="loginForm"
+    			type="han.juser.controller.action.DelegateActionProxy" >
+    	</action>
+    	
+    	<action path="/myInfo"
+    			parameter="myInfo"
+    			type="han.juser.controller.action.DelegateActionProxy" />
+    	
+    	
+    	<!--  패스워드 변경 폼  -->
+    	<action path="/frm-newPasswd"
+    			parameter="passwdForm"
+    			type="han.juser.controller.action.DelegateActionProxy">
+    		<forward name="fw-newPasswdForm" 
+    					path="member.newPasswdForm" 
+    					redirect="false" />
+    	</action>
+    
+		
+		<!--  회원가입 처리  -->
+    	<action path="/account" 
+    			parameter="account" 
+    			type="han.juser.controller.action.DelegateActionProxy" 
+    			name="accountFormBean" 
+    			validate="true" 
+    			input="/frm-account.do" 
+    			scope="request" />
+    	
+    	
+    	<!--  회원정보 변경 처리  -->
+    	<action path="/modify" 
+    			parameter="modify" 
+    			type="han.juser.controller.action.DelegateActionProxy" 
+    			name="modifyFormBean" 
+    			validate="true"
+    			input="error"
+    			scope="request" />
+    	
+    	
+    	<!--  회원 탈퇴 처리  -->
+    	<action path="/secede" 
+    			parameter="secede" 
+    			type="han.juser.controller.action.DelegateActionProxy" 
+    			name="dumy" validate="false" input="error" scope="request"/>
+    	
+    	
+    	<!--  패스워드 변경 처리 -->
+    	<action path="/changePasswd" 
+    			parameter="changePasswd" 
+    			type="han.juser.controller.action.DelegateActionProxy" 
+    			name="changePasswdForm" 
+    			validate="true" 
+    			input="/frm-newPasswd.do" 
+    			scope="request" />
+    	
+
+		
+		<!-- 로그인  -->
+    	<action path="/login" 
+    			parameter="login" 
+    			type="han.juser.controller.action.DelegateActionProxy" 
+    			name="loginForm" 
+    			validate="false"
+    			scope="request"/>
+    	
+    	
+    	<!--  로그아웃 -->
+    	<action path="/logout" 
+    			parameter="logout" 
+    			type="han.juser.controller.action.DelegateActionProxy" />
+    			
+    	
+    	
+    	<action path="/loginMemberList"
+    			parameter="loginMemberList"
+    			type="han.juser.controller.action.DelegateActionProxy">
+    		<forward name="fw-loginMemberList" path="/WEB-INF/view/v1/member/loginMemberList.jsp" module=""></forward>
+    	</action>
+    </action-mappings>
+    
+    
+    
+	<controller processorClass="han.role.RoleRequestProcessor" />
+	
+	<message-resources parameter="han/resource/application" /> 
+	
+	
+	<plug-in className="org.apache.struts.validator.ValidatorPlugIn">
+		<set-property property="pathnames" 
+					value="/WEB-INF/config/validator-rules.xml,/WEB-INF/config/modules/member/validation.xml"/>
+	</plug-in>
+</struts-config>

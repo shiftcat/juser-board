@@ -1,0 +1,279 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE sqlMap      
+    PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"      
+    "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="Blog">
+
+	<typeAlias alias="blogDTO" type="han.juser.model.BlogDTO"/>
+	<typeAlias alias="blogReplyDTO" type="han.juser.model.BlogReplyDTO"/>
+
+	<resultMap id="summaryResult" class="han.juser.model.SummaryDTO">
+		<result property="contentId"  column="CONTENTID"  javaType="long"               jdbcType="NUMBER"/>
+		<result property="subject"    column="SUBJECT"    javaType="string"             jdbcType="VARCHAR"/>
+		<result property="content"    column="CONTENT"    javaType="string"             jdbcType="CLOB"/>
+		<result property="signDate"   column="SIGNDATE"   javaType="java.sql.Timestamp" jdbcType="TIMESTAMP"/>
+	</resultMap>
+
+	<select id="summary" parameterClass="int" resultMap="summaryResult">
+	<![CDATA[
+		SELECT 
+				/*+ index_desc(blog pk_blog_articleid) */ 
+				rownum 		AS rn
+		, 		articleid	AS contentId
+		, 		subject		AS subject
+		, 		content		AS content
+		, 		signdate 	AS signdate
+		FROM 
+				blog 
+		WHERE 
+				rownum <= #value#
+	]]>
+	</select>
+
+
+	<select id="getContent" parameterClass="long" resultClass="blogDTO">
+        SELECT
+                articleid
+        ,       cateid
+        ,       userid
+        ,       systemfiles
+        ,       originalfiles
+        ,       subject
+        ,       content
+        ,       signdate
+        ,       updated
+        ,       remoteaddr
+        FROM
+                blog
+        WHERE
+                articleid = #value#
+	</select>
+
+
+
+
+	<sql id="selectList">
+        SELECT
+                /*+ index_desc(b, pk_blog_articleid) */
+                ROWNUM rn
+        ,       articleid
+        ,       cateid
+        ,       userid
+        ,       subject
+        ,       systemfiles
+        ,       originalfiles
+        ,       signdate
+        ,       updated
+        ,       remoteaddr
+        ,       (SELECT count(replyid)
+                 FROM blog_reply
+                 WHERE articleid = b.articleid) replyCount
+        FROM
+                blog b
+	</sql>
+
+
+	
+	<sql id="searchCondition">
+		<dynamic>
+			<isEmpty property="target">
+				1=1
+			</isEmpty>
+			<isEqual property="target" compareValue="CONTENT">
+				<![CDATA[
+				DBMS_LOB.INSTR(content, #keyword# ) > 0
+				]]>
+			</isEqual>
+			<isEqual property="target" compareValue="SUBJECT">
+				subject LIKE #keyword#
+			</isEqual>
+			<isEqual property="target" compareValue="USERID">
+				userid LIKE #keyword#
+			</isEqual>
+		</dynamic>
+	</sql>
+
+
+
+	<sql id="fromByDefault">
+        WHERE
+        <include refid="searchCondition" />
+	<![CDATA[
+		AND		articleid <= (
+    ]]>
+                                SELECT articleid
+	                            FROM (
+	                                    SELECT
+                                                /*+ index_desc(blog pk_blog_articleid) */
+                                                rownum rn
+                                        ,       articleid
+                                        FROM
+                                                blog
+                                        WHERE
+                                        <include refid="searchCondition" />
+                                      )
+                                WHERE  rn = #start#
+                              )
+	<![CDATA[
+        AND     rownum <= #limit#
+    ]]>
+	</sql>
+
+
+
+	<sql id="fromByCategory">
+        WHERE
+                cateid = #cateId#
+        AND    <include refid="searchCondition" />
+	<![CDATA[
+		AND		articleid <= (
+    ]]>
+                                SELECT articleid
+	                            FROM (
+	                                    SELECT
+                                                /*+ index_desc(blog pk_blog_articleid) */
+                                                rownum rn
+                                        ,       articleid
+                                        FROM
+                                                blog
+                                        WHERE
+                                                cateid = #cateId#
+                                        AND		<include refid="searchCondition" />
+                                      )
+                                WHERE  rn = #start#
+                              )
+	<![CDATA[
+        AND     rownum <= #limit#
+    ]]>
+	</sql>
+
+
+	<select id="getRowCount" parameterClass="map" resultClass="long">
+		SELECT count('*') FROM blog WHERE
+		<isNotEmpty property="cateId">
+			cateid = #cateId# AND
+		</isNotEmpty>
+		<include refid="searchCondition"/>
+	</select>
+
+	<select id="getContentList" parameterClass="map" resultClass="blogDTO">
+		<include refid="selectList"/>
+		<isNotEmpty property="cateId">
+			<include refid="fromByCategory"/>
+		</isNotEmpty>
+		<isEmpty property="cateId">
+			<include refid="fromByDefault"/>
+		</isEmpty>
+	</select>
+
+
+	<select id="getReplyList" parameterClass="long" resultClass="blogReplyDTO">
+        SELECT
+                replyid
+        ,       userid
+        ,       articleid
+        ,       content
+        ,       signdate
+        ,       remoteaddr
+        FROM
+                blog_reply
+        WHERE
+                articleid = #value#
+		ORDER BY 
+				signdate DESC
+	</select>
+	
+	
+	<select id="getReplyContent" parameterClass="long" resultClass="blogReplyDTO">
+        SELECT
+                replyid
+        ,       userid
+        ,       articleid
+        ,       content
+        ,       signdate
+        ,       remoteaddr
+        FROM
+                blog_reply
+        WHERE
+                replyid = #value#
+	</select>
+	
+	
+	<insert id="insertBlog" parameterClass="blogDTO">
+		<selectKey keyProperty="articleId" resultClass="long">
+			SELECT nvl(max(articleid),0)+1 FROM blog
+		</selectKey>
+        INSERT INTO blog(
+                articleid
+        ,       cateid
+        ,       userid
+        ,       systemfiles
+        ,       originalfiles
+        ,       subject
+        ,       content
+        ,       remoteaddr
+        ) VALUES (
+                #articleId:NUMBER#
+        ,       #cateId:NUMBER#
+        ,       #userId:VARCHAR#
+        ,       #systemFiles:VARCHAR#
+        ,       #originalFiles:VARCHAR#
+        ,       #subject:VARCHAR#
+        ,       #content:CLOB#
+        ,       #remoteAddr:VARCHAR# )
+	</insert>
+
+	
+	<update id="updateBlog" parameterClass="blogDTO">
+        UPDATE blog SET
+                cateid          = #cateId:NUMBER#
+        ,       systemfiles     = #systemFiles:VARCHAR#
+        ,       originalfiles   = #originalFiles:VARCHAR#
+        ,       content         = #content:CLOB#
+        ,       subject         = #subject:VARCHAR#
+        ,       updated         = SYSDATE
+        ,       remoteaddr      = #remoteAddr:VARCHAR#
+        WHERE
+                articleid       = #articleId:NUMBER#
+	</update>
+
+
+	<update id="unsetFile" parameterClass="long">
+		UPDATE blog SET 
+				systemfiles 	= null
+		, 		originalfiles 	= null 
+		WHERE 
+				articleid 		= #value#
+	</update>
+
+
+
+	<delete id="deleteBlog" parameterClass="long">
+		DELETE FROM blog WHERE articleid = #value#
+	</delete>
+	
+	
+	<insert id="insertReply" parameterClass="blogReplyDTO">
+		<selectKey keyProperty="replyId" resultClass="int">
+			SELECT nvl(max(replyid),0)+1 FROM blog_reply 
+		</selectKey>
+		INSERT INTO blog_reply (
+                replyid
+        ,       articleid
+        ,       userid
+        ,       content
+        ,       remoteaddr
+        ) VALUES (
+                #replyId:NUMBER#
+        ,       #articleId:NUMBER#
+        ,       #userId:VARCHAR#
+        ,       #content:VARCHAR#
+        ,       #remoteAddr:VARCHAR# )
+	</insert>
+	
+	<delete id="deleteReply" parameterClass="long">
+		DELETE FROM blog_reply WHERE replyid = #value#
+	</delete>
+</sqlMap>

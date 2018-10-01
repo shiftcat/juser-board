@@ -1,0 +1,375 @@
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="robots" content="all" />
+<title> Color Properties </title>
+<link rel="stylesheet" type="text/css" href="css/dialog.css" />
+<script type="text/JScript.Encode" src="./js/dialog.js"></script>
+<script type="text/JScript.Encode" src="./js/colorprops.js"></script>
+<style type="text/css">
+	.inputTable
+	{
+		height: 18px;
+		border-right: buttonhighlight 1px solid;
+		border-top: buttonshadow 1px solid;
+		border-left: buttonshadow 1px solid;
+		border-bottom: buttonhighlight 1px solid;
+	}
+
+	.inputBox
+	{
+		border: buttonshadow 1px solid;
+	}
+
+	.inputText
+	{
+		width: 45px;
+		height: 18px;
+		border: none;
+	}
+
+	.updownButton
+	{
+		width: 17px;
+		height: 9px;
+		font-size: 4px;
+		border-right: buttonshadow 2px solid;
+		border-top: buttonhighlight 1px solid;
+		border-left: buttonhighlight 1px solid;
+		border-bottom: buttonshadow 2px solid;
+		background-color: threedface;
+		color: #000000;
+		text-align: center;
+		cursor: pointer;
+	}
+
+	.onSelectColor
+	{
+		border: #000000 1px solid;
+		cursor: pointer;
+	}
+
+	.offSelectColor
+	{
+		border: threedface 1px solid;
+		cursor: pointer;
+	}
+</style>
+</head>
+<body onload="Init();">
+<table id="mainTable" width="490" height="290" border="0" cellpadding="0" cellspacing="0" onresize="ResizeTo();">
+ <form>
+ <tr>
+  <td width="152" align="center" valign="top">
+   <table width="152" border="0" cellpadding="0" cellspacing="0">
+    <tr>
+     <td width="152" height="25" align="left" valign="bottom" colspan="2">
+      <font HABYLang="LblColorDefaultList" color="#000000">Basic color</font>
+     </td>
+    </tr>
+    <tr>
+     <td width="152" align="center" valign="middle" colspan="2">
+      <table border="0" cellpadding="0" cellspacing="0">
+
+      <script type="text/javascript">
+              for(var i = 0; i < defaultColor.length; i++)
+              {
+                      document.write("       <tr>\n");
+
+                      for(var j = 0; j < defaultColor[0].length; j++)
+                      {
+                              document.write("        <td width=\"19\" height=\"19\" align=\"center\" bgcolor=\"#" + defaultColor[i][j] + "\">\n");
+                              document.write("         <img id=\"defaultColor[" + i + "][" + j + "]\" src=\"./images/colorline17.gif\" width=\"17\" height=\"17\" align=\"absmiddle\" onclick=\"UpdateInputColor('HEX', '" + defaultColor[i][j] + "'); this.className='onselectColor';\" class=\"offselectColor\">\n");
+                              document.write("        </td>\n");
+                      }
+
+                      document.write("       </tr>\n");
+               }
+      </script>
+
+      </table>
+     </td>
+    </tr>
+    <tr>
+     <td width="76" height="30" align="left" valign="bottom">
+      <font HABYLang="LblColorSelect" color="#000000">Select</font>
+     </td>
+     <td width="76" height="30" align="left" valign="bottom">
+      <font HABYLang="LblColorCurrent" color="#000000">Current</font>
+     </td>
+    </tr>
+    <tr>
+     <td width="76" height="55" align="center">
+      <div id="newcolor" style="width:70px; height:50px; background-color: #ffffff" class="inputBox"></div>
+     </td>
+     <td align="center">
+      <div id="oldcolor" style="width:70px; height:50px; background-color: #ffffff" class="inputBox"></div>
+     </td>
+    </tr>
+    <tr>
+     <td align="center">
+      <input id="newhex" name="newhex" type="text" maxlength="7" style="width:70px; background-color: #ffffff" onkeyup="UpdateInputColor('HEX', this.value);" onfocus="inputHex = true;" onblur="inputHex = false;" class="inputBox">
+     </td>
+     <td align="center">
+      <input id="oldhex" name="oldhex" type="text"maxlength="7" style="width:70px;" onchange="UpdateViewColor(this.value);" class="inputBox" readonly>
+     </td>
+    </tr>
+    <tr>
+     <td width="152" height="25" align="left" valign="bottom" colspan="2">
+      <font HABYLang="LblColorUserJust" color="#000000">User just color</font>
+     </td>
+    </tr>
+    <tr>
+     <td width="152" align="center" valign="middle" colspan="2">
+      <table border="0" cellpadding="0" cellspacing="0">
+
+      <script type="text/javascript">
+              for(var i = 0; i < userColor.length; i++)
+	      {
+                      document.write("       <tr>\n");
+
+		      for(var j = 0; j < userColor[0].length; j++)
+		      {
+                              if(GetUserColor("userColor[" + i + "][" + j + "]"))
+                              {
+                                      userColor[i][j] = GetUserColor("userColor[" + i + "][" + j + "]");
+                              }
+
+                              if(!userColor[i][j])
+                              {
+                                      userColor[i][j] = "ffffff";
+                              }
+
+                              document.write("        <td width=\"19\" height=\"19\" align=\"center\" bgcolor=\"#" + userColor[i][j] + "\">\n");
+                              document.write("         <img id=\"userColor[" + i + "][" + j + "]\" src=\"./images/colorline17.gif\" width=\"17\" height=\"17\" align=\"absmiddle\" onclick=\"UpdateInputColor('HEX', '#" + userColor[i][j] + "'); SelectUserColor('userColor[" + i + "][" + j + "]');\" style=\"background-color:" + userColor[i][j] + ";\" class=\"offselectColor\">\n");
+                              document.write("        </td>\n");
+		      }
+
+                      document.write("       </tr>\n");
+	      }
+      </script>
+
+      </table>
+     </td>
+    </tr>
+   </table>
+  </td>
+  <td width="250" align="right" valign="top">
+   <table width="235" border="0" cellpadding="0" cellspacing="0">
+    <tr height="160">
+     <td width="235" align="center" valign="bottom" onmousedown="ColorChartClick(event);" onmousemove="ColorChartMove(event);">
+      <table width="225" height="152" border="0" cellpadding="0" cellspacing="0" background="./images/colorchart.jpg" class="inputBox">
+       <tr>
+        <td align="center">
+         <img id="chartpointer" src="./images/chartpointer.gif" style="position:absolute; width:21; height:21; left:172; top:158; border:none;"> 
+        </td>
+       </tr>
+      </table>
+     </td>
+    </tr>
+    <tr height="30">
+     <td width="235" align="center" onmousedown="ColorBarClick(event);" onmousemove="ColorBarMove(event);">
+      <table width="225" border="0" cellpadding="0" cellspacing="0">
+       <tr>
+        <td align="center" class="inputBox">
+         <div id="colorbar" style="width:225; height:10;"></div>
+        </td>
+       </tr>
+      </table>
+      <img id="barpointer" src="./images/barpointer.gif" style="position:absolute; width:11; height:22; left:177; top:177; border: none;">
+     </td>
+    </tr>
+    <tr>
+     <td width="235" align="center">
+      <table width="235" border="0" cellpadding="0" cellspacing="0">
+       <tr height="25">
+        <td align="center">
+         <font HABYLang="LblColorHueAdd" color="#000000">Hue</font>
+        </td>
+        <td align="center">
+         <table border="0" cellpadding="0" cellspacing="0" class="inputTable">
+          <tr>
+           <td align="right">
+            <input type="text" id="hue" name="hue" value="0" maxlength="3" class="inputText" onkeyup="IsNumber(this); UpdateInputColor('HSL', '');">
+           </td>
+           <td align="left">
+            <table border="0" cellpadding="0" cellspacing="0">
+             <tr>
+              <td valign="bottom"><input HABYLang="BtnUpButton" type="button" value="" class="updownButton" onclick="UpDownBotton('hue', 'HSL', 'Up');"></td>
+             </tr>
+             <tr>
+              <td valign="top"><input HABYLang="BtnDnButton" type="button" value="" class="updownButton" onclick="UpDownBotton('hue', 'HSL', 'Down');"></td>
+             </tr>
+            </table>
+           </td>
+          </tr>
+         </table>
+        </td>
+        <td align="center">
+         <font HABYLang="LblColorRedAdd" color="#000000">Red</font>
+        </td>
+        <td align="center">
+         <table border="0" cellpadding="0" cellspacing="0" class="inputTable">
+          <tr>
+           <td align="right">
+            <input type="text" id="red" name="red" value="0" maxlength="3" class="inputText" onkeyup="IsNumber(this); UpdateInputColor('RGB', '');">
+           </td>
+           <td align="left">
+            <table border="0" cellpadding="0" cellspacing="0">
+             <tr>
+              <td valign="bottom"><input HABYLang="BtnUpButton" type="button" value="" class="updownButton" onclick="UpDownBotton('red', 'RGB', 'Up');"></td>
+             </tr>
+             <tr>
+              <td valign="top"><input HABYLang="BtnDnButton" type="button" value="" class="updownButton" onclick="UpDownBotton('red', 'RGB', 'Down');"></td>
+             </tr>
+            </table>
+           </td>
+          </tr>
+         </table>
+        </td>
+       </tr>
+       <tr height="25">
+        <td align="center">
+         <font HABYLang="LblColorSatAdd" color="#000000">Sat</font>
+        </td>
+        <td align="center">
+         <table border="0" cellpadding="0" cellspacing="0" class="inputTable">
+          <tr>
+           <td align="right">
+            <input type="text" id="sat" name="sat" value="0" maxlength="3" class="inputText" onkeyup="IsNumber(this); UpdateInputColor('HSL', '');">
+           </td>
+           <td align="left">
+            <table border="0" cellpadding="0" cellspacing="0">
+             <tr>
+              <td valign="bottom"><input HABYLang="BtnUpButton" type="button" value="" class="updownButton" onclick="UpDownBotton('sat', 'HSL', 'Up');"></td>
+             </tr>
+             <tr>
+              <td valign="top"><input HABYLang="BtnDnButton" type="button" value="" class="updownButton" onclick="UpDownBotton('sat', 'HSL', 'Down');"></td>
+             </tr>
+            </table>
+           </td>
+          </tr>
+         </table>
+        </td>
+        <td align="center">
+         <font HABYLang="LblColorGreenAdd" color="#000000">Green</font>
+        </td>
+        <td align="center">
+         <table border="0" cellpadding="0" cellspacing="0" class="inputTable">
+          <tr>
+           <td align="right">
+            <input type="text" id="green" name="green" value="0" maxlength="3" class="inputText" onkeyup="IsNumber(this); UpdateInputColor('RGB', '');">
+           </td>
+           <td align="left">
+            <table border="0" cellpadding="0" cellspacing="0">
+             <tr>
+              <td valign="bottom"><input HABYLang="BtnUpButton" type="button" value="" class="updownButton" onclick="UpDownBotton('green', 'RGB', 'Up');"></td>
+             </tr>
+             <tr>
+              <td valign="top"><input HABYLang="BtnDnButton" type="button" value="" class="updownButton" onclick="UpDownBotton('green', 'RGB', 'Down');"></td>
+             </tr>
+            </table>
+           </td>
+          </tr>
+         </table>
+        </td>
+       </tr>
+       <tr height="25">
+        <td align="center">
+         <font HABYLang="LblColorLumAdd" color="#000000">Lum</font>
+        </td>
+        <td align="center">
+         <table border="0" cellpadding="0" cellspacing="0" class="inputTable">
+          <tr>
+           <td align="right">
+            <input type="text" id="lum" name="lum" value="240" maxlength="3" class="inputText" onkeyup="IsNumber(this); UpdateInputColor('HSL', '');">
+           </td>
+           <td align="left">
+            <table border="0" cellpadding="0" cellspacing="0">
+             <tr>
+              <td valign="bottom"><input HABYLang="BtnUpButton" type="button" value="" class="updownButton" onclick="UpDownBotton('lum', 'HSL', 'Up');"></td>
+             </tr>
+             <tr>
+              <td valign="top"><input HABYLang="BtnDnButton" type="button" value="" class="updownButton" onclick="UpDownBotton('lum', 'HSL', 'Down');"></td>
+             </tr>
+            </table>
+           </td>
+          </tr>
+         </table>
+        </td>
+        <td align="center">
+         <font HABYLang="LblColorBlueAdd" color="#000000">Blue</font>
+        </td>
+        <td align="center">
+         <table border="0" cellpadding="0" cellspacing="0" class="inputTable">
+          <tr>
+           <td align="right">
+            <input type="text" id="blue" name="blue" value="0" maxlength="3" class="inputText" onkeyup="IsNumber(this); UpdateInputColor('RGB', '');">
+           </td>
+           <td align="left">
+            <table border="0" cellpadding="0" cellspacing="0">
+             <tr>
+              <td valign="bottom"><input HABYLang="BtnUpButton" type="button" value="" class="updownButton" onclick="UpDownBotton('blue', 'RGB', 'Up');"></td>
+             </tr>
+             <tr>
+              <td valign="top"><input HABYLang="BtnDnButton" type="button" value="" class="updownButton" onclick="UpDownBotton('blue', 'RGB', 'Down');"></td>
+             </tr>
+            </table>
+           </td>
+          </tr>
+         </table>
+        </td>
+       </tr>
+      </table>
+     </td>
+    </tr>
+    <tr height="25">
+     <td align="center" colspan="2">
+      <table border="0" cellpadding="0" cellspacing="0">
+       <tr>
+        <td align="center">
+         <table id="cmdUserColor" onColor="0" width="240" cellpadding="0" cellspacing="0" onclick="SetUserColor(this.onColor);" onmouseover="ButtonPlay(this, 'over');" onmouseout="ButtonPlay(this, 'out');">
+          <tr>
+           <td width="3" class="outBtnBegin"><img src="./images/space.gif" width="3" height="20" /></td>
+           <td width="234" class="outBtn"><span HABYLang="BtnColorUserAdd">In user just color addition</span></td>
+           <td width="3" class="outBtnEnd"><img src="./images/space.gif" width="3" height="20" /></td>
+          </tr>
+         </table>
+        </td>
+       </tr>
+      </table>
+     </td>
+    </tr>
+   </table>
+  </td>
+  <td width="10"><img src="./images/space.gif" width="10" /></td>
+  <td align="right" valign="top">
+   <table width="70" height="60" border="0" cellpadding="0" cellspacing="0">
+    <tr>
+     <td>
+      <table width="70" cellpadding="0" cellspacing="0" onclick="ExecuteColor();" onmouseover="ButtonPlay(this, 'over');" onmouseout="ButtonPlay(this, 'out');">
+       <tr>
+        <td width="3" class="outBtnBegin"><img src="./images/space.gif" width="3" height="20" /></td>
+        <td width="64" class="outBtn"><span HABYLang="BtnDialogOk">O k</span></td>
+        <td width="3" class="outBtnEnd"><img src="./images/space.gif" width="3" height="20" /></td>
+       </tr>
+      </table>
+     </td>
+    <tr>
+     <td>
+      <table width="70" cellpadding="0" cellspacing="0" onclick="DialogClose();" onmouseover="ButtonPlay(this, 'over');" onmouseout="ButtonPlay(this, 'out');">
+       <tr>
+        <td width="3" class="outBtnBegin"><img src="./images/space.gif" width="3" height="20" /></td>
+        <td width="64" class="outBtn"><span HABYLang="BtnDialogCancel">Cancel</span></td>
+        <td width="3" class="outBtnEnd"><img src="./images/space.gif" width="3" height="20" /></td>
+       </tr>
+      </table>
+     </td>
+    </tr>
+   </table>
+  </td>
+ </tr>
+ </form>
+</table>
+</body>
+</html>
